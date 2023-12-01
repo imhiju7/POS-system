@@ -17,6 +17,25 @@ import java.util.ArrayList;
  * @author Hieu PC
  */
 public class DAOSanPham {
+    public DTOSanPham getsp(DTOSanPham i) throws SQLException{
+        Connection con = Connect.connection();
+        String sql = "SELECT * FROM sanpham WHERE maSanPham = "+Integer.toString(i.getMaSanPham());
+        PreparedStatement pst =  con.prepareStatement(sql);
+        ResultSet rs = pst.executeQuery();
+        
+        DTOSanPham sp = new DTOSanPham();
+        sp.setMaSanPham(rs.getInt("maSanPham"));
+        sp.setTenSanPham(rs.getString("tenSanPham"));
+        sp.setSoLuong(rs.getInt("soLuong"));
+        sp.setGiaBan(rs.getDouble("giaBan"));
+        sp.setNgayThem(rs.getTimestamp("ngayThem"));
+        sp.setIshidden(rs.getInt("isHidden"));
+        sp.setIsdelete(rs.getInt("isDelete"));
+        sp.setImg(rs.getString("img"));
+        
+        con.close();
+        return sp;
+    }
     public ArrayList<DTOSanPham> getlist() throws SQLException, ParseException{
         Connection con = Connect.connection();
         String sql = "SELECT * FROM sanpham";

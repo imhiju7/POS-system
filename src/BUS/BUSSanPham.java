@@ -23,4 +23,7 @@ public class BUSSanPham {
     public int updatesanpham(DTOSanPham i) throws SQLException{
         return DAO.updatesanpham(i);
     }
+    public String getname(DTOSanPham i) throws SQLException{
+        return DAO.getsp(i).getTenSanPham();
+    }
 }

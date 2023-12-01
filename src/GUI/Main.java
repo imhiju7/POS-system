@@ -71,12 +71,10 @@ public class Main extends javax.swing.JFrame {
                             
                         }
                         else if(subMenuIndex == 1){
-                            main.showForm(new pn_macdinh());
-                            System.out.println(main.getSize());
+
                         }
                         else if(subMenuIndex == 2){
-                          //  main.showForm(new pnPhanQuyen());
-                            System.out.println(main.getSize());
+
                         }
                     }
                     else if(menuIndex == 2){

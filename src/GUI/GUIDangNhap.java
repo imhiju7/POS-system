@@ -3,7 +3,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package GUI;
-
+import BUS.*;
+import DTO.*;
 import javax.swing.AbstractButton;
 import javax.swing.JOptionPane;
 
@@ -18,6 +19,11 @@ public class GUIDangNhap extends javax.swing.JFrame {
      */
     public GUIDangNhap() {
         initComponents();
+    }
+    public void dangNhap() {
+        String tenDangNhap = jTextField1.getText();
+        String matKhau = String.valueOf(jPasswordField1.getPassword());
+        
     }
 
     /**
@@ -244,7 +250,7 @@ public class GUIDangNhap extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-      //  dangNhap();
+        dangNhap();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
