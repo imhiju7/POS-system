@@ -4,6 +4,8 @@
  */
 package GUI;
 
+import BUS.BUSTaiKhoan;
+import DTO.DTOTaiKhoan;
 import javax.swing.AbstractButton;
 import javax.swing.JOptionPane;
 
@@ -16,6 +18,9 @@ public class GUIDangNhap extends javax.swing.JFrame {
     /**
      * Creates new form GUIDangNhap1
      */
+    private DTOTaiKhoan DTOtk = new DTOTaiKhoan();
+    private BUSTaiKhoan BUStk = new BUSTaiKhoan();
+
     public GUIDangNhap() {
         initComponents();
     }
@@ -37,14 +42,14 @@ public class GUIDangNhap extends javax.swing.JFrame {
         jPanel4 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        txtTenDangNhap = new javax.swing.JTextField();
         jPanel6 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
-        jPasswordField1 = new javax.swing.JPasswordField();
+        txtMatKhau = new javax.swing.JPasswordField();
         jPanel7 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btnDangNhap = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -92,8 +97,8 @@ public class GUIDangNhap extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jTextField1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jTextField1.setPreferredSize(new java.awt.Dimension(80, 26));
+        txtTenDangNhap.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        txtTenDangNhap.setPreferredSize(new java.awt.Dimension(80, 26));
 
         jPanel6.setBackground(new java.awt.Color(245, 232, 183));
 
@@ -116,7 +121,7 @@ public class GUIDangNhap extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jPasswordField1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        txtMatKhau.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
 
         jPanel7.setLayout(new java.awt.BorderLayout());
 
@@ -140,16 +145,16 @@ public class GUIDangNhap extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setBackground(new java.awt.Color(161, 204, 209));
-        jButton2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jButton2.setForeground(new java.awt.Color(0, 0, 0));
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/SOURCE/Icon/login.png"))); // NOI18N
-        jButton2.setText("Login");
-        jButton2.setAlignmentY(0.2F);
-        jButton2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnDangNhap.setBackground(new java.awt.Color(161, 204, 209));
+        btnDangNhap.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        btnDangNhap.setForeground(new java.awt.Color(0, 0, 0));
+        btnDangNhap.setIcon(new javax.swing.ImageIcon(getClass().getResource("/SOURCE/Icon/login.png"))); // NOI18N
+        btnDangNhap.setText("Login");
+        btnDangNhap.setAlignmentY(0.2F);
+        btnDangNhap.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnDangNhap.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btnDangNhapActionPerformed(evt);
             }
         });
 
@@ -165,11 +170,11 @@ public class GUIDangNhap extends javax.swing.JFrame {
                             .addGroup(jPanel4Layout.createSequentialGroup()
                                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(txtTenDangNhap, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel4Layout.createSequentialGroup()
                                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jPasswordField1)))
+                                .addComponent(txtMatKhau)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
@@ -180,7 +185,7 @@ public class GUIDangNhap extends javax.swing.JFrame {
                         .addGap(83, 83, 83))))
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(125, 125, 125)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnDangNhap, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
@@ -188,19 +193,19 @@ public class GUIDangNhap extends javax.swing.JFrame {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(42, 42, 42)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txtTenDangNhap, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jPasswordField1))
+                        .addComponent(txtMatKhau))
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(72, 72, 72)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnDangNhap, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(118, Short.MAX_VALUE))
         );
 
@@ -236,16 +241,16 @@ public class GUIDangNhap extends javax.swing.JFrame {
         AbstractButton abstractButton = (AbstractButton) evt.getSource();
         boolean selected = abstractButton.getModel().isSelected();
         if (selected) {
-            jPasswordField1.setEchoChar((char) 0); // Hiển thị mật khẩu
+            txtMatKhau.setEchoChar((char) 0); // Hiển thị mật khẩu
         } else {
-            jPasswordField1.setEchoChar('*'); // Ẩn mật khẩu
+            txtMatKhau.setEchoChar('*'); // Ẩn mật khẩu
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void btnDangNhapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDangNhapActionPerformed
         // TODO add your handling code here:
-      //  dangNhap();
-    }//GEN-LAST:event_jButton2ActionPerformed
+        dangNhap();
+    }//GEN-LAST:event_btnDangNhapActionPerformed
 
     /**
      * @param args the command line arguments
@@ -283,9 +288,45 @@ public class GUIDangNhap extends javax.swing.JFrame {
         });
     }
 
+    // Đăng nhập
+    public void dangNhap() {
+        String tenDangNhap = txtTenDangNhap.getText();
+        String matKhau = String.valueOf(txtMatKhau.getPassword());
+        if (tenDangNhap.equals("") || matKhau.equals("")) {
+            JOptionPane.showMessageDialog(btnDangNhap, "Tên đăng hoặc mật khẩu không được để trống!");
+            return;
+        }
+        DTOtk = BUStk.kiemTraTaiKhoan(tenDangNhap, matKhau);
+        if (DTOtk == null) {
+            // Kiểm tra tài khoản có bị xóa không
+            if (!BUStk.checkTaiKhoan(tenDangNhap)) {
+                JOptionPane.showMessageDialog(btnDangNhap, "Tài khoản này không tồn tại!");
+            } else {
+                // Kiểm tra xem tên đăng nhập có tồn tại không
+                if (!BUStk.checkTenDangNhap(tenDangNhap)) {
+                    JOptionPane.showMessageDialog(btnDangNhap, "Tên đăng nhập không tồn tại!");
+                } else {
+                    // Kiểm tra xem mật khẩu có đúng không
+                    if (!BUStk.checkMatKhau(tenDangNhap, matKhau)) {
+                        JOptionPane.showMessageDialog(btnDangNhap, "Sai mật khẩu. Xin hãy thử lại!");
+                    } else {
+                        // Kiểm tra xem tài khoản có bị khóa không
+                        if (BUStk.checkKhoaTaiKhoan(tenDangNhap)) {
+                            JOptionPane.showMessageDialog(btnDangNhap, "Tài khoản của bạn đã bị khóa!");
+                        } else {
+                            JOptionPane.showMessageDialog(btnDangNhap, "Đăng nhập thành công với " + tenDangNhap);
+                        }
+                    }
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(btnDangNhap, "Đăng nhập thành công với " + tenDangNhap);
+        }
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnDangNhap;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -298,7 +339,7 @@ public class GUIDangNhap extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
-    private javax.swing.JPasswordField jPasswordField1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JPasswordField txtMatKhau;
+    private javax.swing.JTextField txtTenDangNhap;
     // End of variables declaration//GEN-END:variables
 }
