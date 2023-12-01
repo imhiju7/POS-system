@@ -10,7 +10,10 @@ import DTO.*;
 import BUS.*;
 import java.sql.SQLException;
 import java.text.ParseException;
-import javax.swing.DefaultComboBoxModel;
+import com.raven.datechooser.DateChooser;
+import com.raven.datechooser.EventDateChooser;
+import com.raven.datechooser.SelectedAction;
+import com.raven.datechooser.SelectedDate;
 import javax.swing.JComboBox;
 import javax.swing.table.DefaultTableModel;
 /**
@@ -57,6 +60,8 @@ public class GUINhanVien extends javax.swing.JPanel {
         
         jtimport(jTable1,nhanvien.getlist());
         cbimport(jComboBox1,chucvu.getlist());
+        
+
     }
 
     /**
@@ -68,6 +73,9 @@ public class GUINhanVien extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        dateChooser1 = new com.raven.datechooser.DateChooser();
+        dateChooser2 = new com.raven.datechooser.DateChooser();
+        dateChooser3 = new com.raven.datechooser.DateChooser();
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -107,6 +115,13 @@ public class GUINhanVien extends javax.swing.JPanel {
         jButton7 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+
+        dateChooser1.setDateFormat("yyyy-MM-dd");
+        dateChooser1.setTextRefernce(jTextField7);
+
+        dateChooser2.setTextRefernce(jTextField10);
+
+        dateChooser3.setTextRefernce(jTextField9);
 
         jPanel1.setLayout(new java.awt.BorderLayout());
 
@@ -184,16 +199,22 @@ public class GUINhanVien extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 354, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addComponent(jLabel9)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextField8)
+                        .addGap(46, 46, 46))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel5Layout.createSequentialGroup()
                                 .addComponent(jLabel7)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
                                 .addComponent(jLabel4)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(15, 15, 15))
                             .addGroup(jPanel5Layout.createSequentialGroup()
                                 .addComponent(jLabel6)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -202,16 +223,11 @@ public class GUINhanVien extends javax.swing.JPanel {
                                 .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jLabel8)))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(17, 17, 17))
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addComponent(jLabel9)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField8)
-                        .addGap(46, 46, 46))))
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jComboBox1, 0, 135, Short.MAX_VALUE)
+                            .addComponent(jTextField7))
+                        .addGap(17, 17, 17))))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -325,6 +341,8 @@ public class GUINhanVien extends javax.swing.JPanel {
 
         jPanel10.setPreferredSize(new java.awt.Dimension(190, 39));
 
+        jTextField10.setBackground(new java.awt.Color(255, 255, 255));
+
         javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
         jPanel10.setLayout(jPanel10Layout);
         jPanel10Layout.setHorizontalGroup(
@@ -345,6 +363,8 @@ public class GUINhanVien extends javax.swing.JPanel {
         jPanel9.add(jPanel10, java.awt.BorderLayout.WEST);
 
         jPanel11.setPreferredSize(new java.awt.Dimension(190, 39));
+
+        jTextField9.setBackground(new java.awt.Color(255, 255, 255));
 
         javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
         jPanel11.setLayout(jPanel11Layout);
@@ -483,12 +503,21 @@ public class GUINhanVien extends javax.swing.JPanel {
         int index = jTable1.getSelectedRow();
         jTextField3.setText(jTable1.getValueAt(index, 0).toString());
         jTextField4.setText(jTable1.getValueAt(index, 1).toString());
-        
+        String a =  jTable1.getValueAt(index, 2).toString();
+        String day[] = a.split("-");
+        dateChooser1.setSelectedDate(new SelectedDate(Integer.parseInt(day[2]), Integer.parseInt(day[1]), Integer.parseInt(day[0])));
+        jComboBox3.setSelectedItem(jTable1.getValueAt(index, 3).toString());
         jComboBox1.setSelectedItem(jTable1.getValueAt(index, 4).toString());
+        jTextField2.setText(jTable1.getValueAt(index, 5).toString());
+        jTextField5.setText(jTable1.getValueAt(index, 6).toString());
+        jTextField8.setText(jTable1.getValueAt(index, 7).toString());
     }//GEN-LAST:event_jTable1MouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private com.raven.datechooser.DateChooser dateChooser1;
+    private com.raven.datechooser.DateChooser dateChooser2;
+    private com.raven.datechooser.DateChooser dateChooser3;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
