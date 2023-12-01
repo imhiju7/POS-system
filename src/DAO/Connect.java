@@ -4,7 +4,6 @@
  */
 package DAO;
 import java.sql.*;
-import javax.swing.JOptionPane;
 /**
  *
  * @author Hieu PC
