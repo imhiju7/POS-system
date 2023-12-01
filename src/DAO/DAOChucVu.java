@@ -19,6 +19,20 @@ import java.util.Collections;
  */
 public class DAOChucVu {
 
+    public DTOChucVu getcv(DTOChucVu i) throws SQLException{
+        Connection con = Connect.connection();
+        String sql = "SELECT * FROM chucvu WHERE maChucVu = "+Integer.toString(i.getMaChucVu());
+        PreparedStatement pst =  con.prepareStatement(sql);
+        ResultSet rs = pst.executeQuery();
+        DTOChucVu cv = new DTOChucVu();
+        while(rs.next()){
+            cv.setMaChucVu(rs.getInt("maChucVu"));
+            cv.setTenChucVu(rs.getString("tenChucVu"));
+            cv.setIsHidden(rs.getInt("isDelete"));
+        }
+        con.close();
+        return cv;
+    }
     public ArrayList<DTOChucVu> getlist() throws SQLException, ParseException{
         Connection con = Connect.connection();
         String sql = "SELECT * FROM chucvu";

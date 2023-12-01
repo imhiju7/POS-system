@@ -24,4 +24,7 @@ public class BUSChucVu {
     public int updatechucvu(DTOChucVu i) throws SQLException{
         return DAO.updatechucvu(i);
     }
+    public String getTenChucVu(DTOChucVu i) throws SQLException{
+        return DAO.getcv(i).getTenChucVu();
+    }
 }

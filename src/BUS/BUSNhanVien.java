@@ -23,4 +23,7 @@ public class BUSNhanVien {
     public int updatenhanvien(DTONhanVien i) throws SQLException{
         return DAO.updatenhanvien(i);
     }
+    public int maChucVu(DTONhanVien i) throws SQLException{
+        return DAO.getnv(i).getMaChucVu();
+    }
 }

@@ -64,7 +64,20 @@ public class Main extends javax.swing.JFrame {
                 }
                 else{
                     if(menuIndex == 0){
-                        main.showForm(new GUITaiKhoan());
+                        if(subMenuIndex == 0){
+                            main.showForm(new GUITaiKhoan());
+                        }
+                        else if(subMenuIndex == 1){
+                            try {
+                                main.showForm(new GUINhanVien());
+                            } catch (SQLException ex) {
+                                Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+                            } catch (ParseException ex) {
+                                Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        }
+
+                        
                     }
                     else if(menuIndex == 1){
                         if(subMenuIndex == 0){

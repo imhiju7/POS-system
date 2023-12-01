@@ -18,9 +18,30 @@ import java.sql.Date;
  * @author Hieu PC
  */
 public class DAONhanVien {
+    public DTONhanVien getnv(DTONhanVien i) throws SQLException{
+        Connection con = Connect.connection();
+        String sql = "SELECT * FROM nhanvien where isDelete= 0";
+        PreparedStatement pst =  con.prepareStatement(sql);
+        ResultSet rs = pst.executeQuery();
+        DTONhanVien nv = new DTONhanVien();
+        while(rs.next()){
+            nv.setMaNhanVien(rs.getInt("maNhanVien"));
+            nv.setTenNhanVien(rs.getString("tenNhanVien"));
+            nv.setNgaySinh(rs.getDate("ngaySinh"));
+            nv.setEmail(rs.getString("Email"));
+            nv.setSDT(rs.getString("soDienThoai"));
+            nv.setDiaChi(rs.getString("diaChi"));
+            nv.setGioiTinh(rs.getInt("gioiTinh"));
+            nv.setMaChucVu(rs.getInt("maChucVu"));
+            nv.setIsdelete(rs.getInt("isDelete"));
+            nv.setImg(rs.getString("img"));
+        }
+        con.close();
+        return nv;
+    }
     public ArrayList<DTONhanVien> getlist() throws SQLException, ParseException{
         Connection con = Connect.connection();
-        String sql = "SELECT * FROM nhanvien";
+        String sql = "SELECT * FROM nhanvien where isDelete= 0";
         PreparedStatement pst =  con.prepareStatement(sql);
         ResultSet rs = pst.executeQuery();
         ArrayList<DTONhanVien> list = new ArrayList<>();
@@ -34,7 +55,6 @@ public class DAONhanVien {
             nv.setDiaChi(rs.getString("diaChi"));
             nv.setGioiTinh(rs.getInt("gioiTinh"));
             nv.setMaChucVu(rs.getInt("maChucVu"));
-            nv.setIsblock(rs.getInt("isBlock"));
             nv.setIsdelete(rs.getInt("isDelete"));
             nv.setImg(rs.getString("img"));
             list.add(nv);
@@ -56,9 +76,8 @@ public class DAONhanVien {
         pst.setString(5,nv.getDiaChi());
         pst.setInt(6,nv.getGioiTinh());
         pst.setInt(7, nv.getMaChucVu());
-        pst.setInt(8, nv.getIsblock());
-        pst.setInt(9, nv.getIsdelete());
-        pst.setString(10,nv.getImg());
+        pst.setInt(8, nv.getIsdelete());
+        pst.setString(9,nv.getImg());
         int rowaffect = pst.executeUpdate();
         con.close();
         return rowaffect;
@@ -74,10 +93,8 @@ public class DAONhanVien {
         pst.setString(5,nv.getDiaChi());
         pst.setInt(6,nv.getGioiTinh());
         pst.setInt(7, nv.getMaChucVu());
-        pst.setInt(8, nv.getIsblock());
-        pst.setInt(9, nv.getIsdelete());
-        pst.setString(10, nv.getImg());
-        pst.setInt(11, nv.getMaNhanVien());
+        pst.setInt(8, nv.getIsdelete());
+        pst.setString(9,nv.getImg());
         int rowaffect = pst.executeUpdate();
         con.close();
         return rowaffect;
