@@ -9,9 +9,7 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.Period;
-import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
@@ -59,7 +57,6 @@ public class BUSNhanVien {
     public ArrayList<DTONhanVien> jtexport(JTable jt) throws SQLException{
         ArrayList<DTONhanVien> list = new ArrayList<>();
         int size = jt.getRowCount();
-        System.out.println(size);
         for(int i = 0; i < size; i++){
             DTONhanVien a = new DTONhanVien();
             a.setMaNhanVien(Integer.parseInt(jt.getValueAt(i, 0).toString()));
@@ -98,6 +95,15 @@ public class BUSNhanVien {
     public boolean checkimg(String img) throws SQLException{
         return DAO.checkimg(img);
     }
+    public boolean checkgmailedit(String email,int manv) throws SQLException{
+        return DAO.checkgmailedit(email,manv);
+    }
+    public boolean checkphoneedit(String phone,int manv) throws SQLException{
+        return DAO.checkpphoneedit(phone,manv);
+    }
+    public boolean checkimgedit(String img,int manv) throws SQLException{
+        return DAO.checkimgedit(img,manv);
+    }
     public boolean isValidVietnamesePhoneNumber(String phoneNumber) {
         // Sử dụng biểu thức chính quy để kiểm tra số điện thoại Việt Nam
         String regex = "^0[0-9]{9}$";
@@ -135,5 +141,59 @@ public class BUSNhanVien {
             e.printStackTrace();
             return null; // Trả về null nếu có lỗi chuyển đổi
         }
+    }
+    public ArrayList<DTONhanVien> searchten(ArrayList<DTONhanVien> list,String ten){
+        ArrayList<DTONhanVien> result = new ArrayList<>();
+        for(DTONhanVien i: list){
+            if(i.getTenNhanVien().equals(ten)){
+                result.add(i);
+            }
+        }
+        return result;
+    }
+    public ArrayList<DTONhanVien> searchchucvu(ArrayList<DTONhanVien> list,int chucvu){
+        ArrayList<DTONhanVien> result = new ArrayList<>();
+        for(DTONhanVien i: list){
+            if(i.getMaChucVu()==chucvu){
+                result.add(i);
+            }
+        }
+        return result;
+    }
+    public ArrayList<DTONhanVien> searchgioitinh(ArrayList<DTONhanVien> list,String gioitinh){
+        ArrayList<DTONhanVien> result = new ArrayList<>();
+        for(DTONhanVien i: list){
+            if(i.getStringGioiTinh().equals(gioitinh)){
+                result.add(i);
+            }
+        }
+        return result;
+    }
+    public ArrayList<DTONhanVien> searchsdt(ArrayList<DTONhanVien> list,String sdt){
+        ArrayList<DTONhanVien> result = new ArrayList<>();
+        for(DTONhanVien i: list){
+            if(i.getSDT().equals(sdt)){
+                result.add(i);
+            }
+        }
+        return result;
+    }
+    public ArrayList<DTONhanVien> searchdiachi(ArrayList<DTONhanVien> list,String diachi){
+        ArrayList<DTONhanVien> result = new ArrayList<>();
+        for(DTONhanVien i: list){
+            if(i.getDiaChi().contains(diachi)){
+                result.add(i);
+            }
+        }
+        return result;
+    }
+    public ArrayList<DTONhanVien> searchdate(ArrayList<DTONhanVien> list,Date day1,Date day2){
+        ArrayList<DTONhanVien> result = new ArrayList<>();
+        for(DTONhanVien i: list){
+            if(i.getNgaySinh().after(day1) && i.getNgaySinh().before(day2)){
+                result.add(i);
+            }
+        }
+        return result;
     }
 }

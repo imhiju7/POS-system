@@ -85,7 +85,7 @@ public class DAONhanVien {
     }
     public int updatenhanvien(DTONhanVien nv) throws SQLException{
         Connection con = Connect.connection();
-        String sql = "UPDATE nhanvien set tenNhanVien = ?,ngaySinh = ?,Email = ?,soDienThoai=?,diaChi=?,gioiTinh=?,maChucVu=?,isDelete=?,img=?,ngayTao=? WHERE maNhanVien= ?";
+        String sql = "UPDATE nhanvien set tenNhanVien = ?,ngaySinh = ?,Email = ?,soDienThoai=?,diaChi=?,gioiTinh=?,maChucVu=?,isDelete=?,img=? WHERE maNhanVien= ?";
         PreparedStatement pst = con.prepareStatement(sql);
         pst.setString(1, nv.getTenNhanVien());
         pst.setDate(2, new java.sql.Date(nv.getNgaySinh().getTime()));
@@ -96,8 +96,7 @@ public class DAONhanVien {
         pst.setInt(7, nv.getMaChucVu());
         pst.setInt(8, nv.getIsdelete());
         pst.setString(9,nv.getImg());
-        pst.setTimestamp(10, new java.sql.Timestamp (nv.getNgayTao().getTime()));
-        pst.setInt(11,nv.getMaNhanVien());
+        pst.setInt(10,nv.getMaNhanVien());
         int rowaffect = pst.executeUpdate();
         con.close();
         return rowaffect;
@@ -145,6 +144,63 @@ public class DAONhanVien {
         String sql = "SELECT * FROM nhanvien where isDelete = 0 and img = ?";
         PreparedStatement pst =  con.prepareStatement(sql);
         pst.setString(1, img);
+        ResultSet rs = pst.executeQuery();
+        while(rs.next()){
+            i++;
+        }
+        con.close();
+        if(i > 0 ){
+            key = false;
+        }
+        else key = true;
+        return key;
+    }
+    public boolean checkgmailedit(String gmail,int manv) throws SQLException{
+        Connection con = Connect.connection();
+        int i = 0;
+        boolean key = false;
+        String sql = "SELECT * FROM nhanvien where maNhanVien != ? and email = ?";
+        PreparedStatement pst =  con.prepareStatement(sql);
+        pst.setInt(1, manv);
+        pst.setString(2, gmail);
+        ResultSet rs = pst.executeQuery();
+        while(rs.next()){
+            i++;
+        }
+        con.close();
+        if(i > 0 ){
+            key = false;
+        }
+        else key = true;
+        return key;
+    }
+    public boolean checkpphoneedit(String phone,int manv) throws SQLException{
+        Connection con = Connect.connection();
+        int i = 0;
+        boolean key = false;
+        String sql = "SELECT * FROM nhanvien where maNhanVien != ? and soDienThoai = ? ";
+        PreparedStatement pst =  con.prepareStatement(sql);
+        pst.setInt(1, manv);
+        pst.setString(2, phone);
+        ResultSet rs = pst.executeQuery();
+        while(rs.next()){
+            i++;
+        }
+        con.close();
+        if(i > 0 ){
+            key = false;
+        }
+        else key = true;
+        return key;
+    }
+    public boolean checkimgedit(String img,int manv) throws SQLException{
+        Connection con = Connect.connection();
+        int i = 0;
+        boolean key = false;
+        String sql = "SELECT * FROM nhanvien where maNhanVien != ? and img = ?";
+        PreparedStatement pst =  con.prepareStatement(sql);
+        pst.setInt(1, manv);
+        pst.setString(2, img);
         ResultSet rs = pst.executeQuery();
         while(rs.next()){
             i++;

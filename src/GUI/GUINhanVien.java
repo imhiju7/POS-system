@@ -5,23 +5,18 @@
 package GUI;
 
 import java.util.ArrayList;
-import javax.swing.JTable;
 import DTO.*;
 import BUS.*;
 import java.sql.SQLException;
 import java.text.ParseException;
-import com.raven.datechooser.DateChooser;
-import com.raven.datechooser.EventDateChooser;
-import com.raven.datechooser.SelectedAction;
+
 import com.raven.datechooser.SelectedDate;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
-import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
 /**
  *
  * @author Hieu PC
@@ -45,7 +40,7 @@ public class GUINhanVien extends javax.swing.JPanel {
     public void resetall(){
         jTextField3.setText("");
         jTextField4.setText("");
-        dateChooser1.setSelectedDate(new SelectedDate(04, 12, 2023));
+        jTextField7.setText("");
         jLabel2.setIcon(new ImageIcon());
         jComboBox3.setSelectedItem("Giới tính");
         jComboBox1.setSelectedItem("Chức vụ");
@@ -127,8 +122,10 @@ public class GUINhanVien extends javax.swing.JPanel {
         dateChooser1.setDateFormat("yyyy-MM-dd");
         dateChooser1.setTextRefernce(jTextField7);
 
+        dateChooser2.setDateFormat("yyyy-MM-dd");
         dateChooser2.setTextRefernce(jTextField10);
 
+        dateChooser3.setDateFormat("yyyy-MM-dd");
         dateChooser3.setTextRefernce(jTextField9);
 
         jPanel1.setLayout(new java.awt.BorderLayout());
@@ -393,8 +390,13 @@ public class GUINhanVien extends javax.swing.JPanel {
         jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/SOURCE/Icon/search.png"))); // NOI18N
         jButton5.setToolTipText("");
         jButton5.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Chọn", "Tên nhân viên", "Giới tính", "Chức vụ", "Số điện thoại", "Địa chỉ" }));
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
@@ -617,7 +619,21 @@ public class GUINhanVien extends javax.swing.JPanel {
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-
+        int select = jComboBox2.getSelectedIndex();
+        String day2 = jTextField9.getText().toString();
+        String day1 = jTextField10.getText().toString();
+        if(!day1.isEmpty() && !day2.isEmpty()){
+            ArrayList<DTONhanVien> list;
+            try {
+                list = nhanvien.jtexport(jTable1);
+                nhanvien.jtimport(jTable1, nhanvien.searchdate(list,nhanvien.convertStringToDate(day1),nhanvien.convertStringToDate(day2)));
+            } catch (SQLException ex) {
+                Logger.getLogger(GUINhanVien.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        else{
+            JOptionPane.showMessageDialog(jPanel1, "Chọn khoảng thời gian!");
+        }
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
@@ -701,7 +717,9 @@ public class GUINhanVien extends javax.swing.JPanel {
                         nv.setIsdelete(0);
                         nhanvien.addnhanvien(nv);
                         try {
+                            JOptionPane.showMessageDialog(jPanel1, "Thêm thành công!");
                             nhanvien.jtimport(jTable1, nhanvien.getlist());
+                            resetall();
                         } catch (ParseException ex) {
                             Logger.getLogger(GUINhanVien.class.getName()).log(Level.SEVERE, null, ex);
                         }
@@ -715,15 +733,134 @@ public class GUINhanVien extends javax.swing.JPanel {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
+        int manv = Integer.parseInt(jTextField3.getText().toString());
+        if(jTextField4.getText().isEmpty() || jTextField7.getText().isEmpty() || jTextField2.getText().isEmpty() || jTextField5.getText().isEmpty() || jTextField8.getText().isEmpty() || jLabel2.getIcon() == null || jComboBox3.getSelectedItem().toString().equals("Giới tính") || jComboBox1.getSelectedItem().toString().equals("Chức vụ")){
+            JOptionPane.showMessageDialog(jPanel1, "Hãy nhập đầy đủ thông tin trước khi sửa!");
+
+        }
+        else{
+            if(!nhanvien.isValidGmailAddress(jTextField5.getText().toString())){
+                JOptionPane.showMessageDialog(jPanel1, "Email không hợp lệ!");
+                jTextField5.setText("");
+            }
+            else if(!nhanvien.isValidVietnamesePhoneNumber(jTextField2.getText().toString())){
+                JOptionPane.showMessageDialog(jPanel1, "Số điện thoại không hợp lệ!");
+                jTextField2.setText("");
+            }
+            else if(!nhanvien.isEighteenOrOlder(jTextField7.getText().toString())){
+                JOptionPane.showMessageDialog(jPanel1, "Chưa đủ 18 tuổi hoặc chưa chọn ngày sinh!");
+
+            }
+            else{
+                try {
+                    if(!nhanvien.checkgmailedit(jTextField5.getText().toString(),manv)){
+                        JOptionPane.showMessageDialog(jPanel1, "Email bị trùng, hãy nhập lại!");
+                        jTextField5.setText("");
+                    }
+                    else if(!nhanvien.checkphoneedit(jTextField2.getText().toString(),manv)){
+                        JOptionPane.showMessageDialog(jPanel1, "Số điện thoại bị trùng, hãy nhập lại!");
+                        jTextField2.setText("");
+                    }
+                    else if(!nhanvien.checkimgedit(image,manv)){
+                        JOptionPane.showMessageDialog(jPanel1, "Ảnh bị trùng, hãy chọn lại!");
+                        jLabel2.setIcon(new ImageIcon());
+                    }
+                    else{
+                        System.out.println("er");
+                        DTONhanVien nv = new DTONhanVien();
+                        nv.setMaNhanVien(manv);
+                        nv.setTenNhanVien(jTextField4.getText().toString());
+                        nv.setNgaySinh(nhanvien.convertStringToDate(jTextField7.getText().toString()));
+                        nv.setMaChucVu(chucvu.getmacv(jComboBox1.getSelectedItem().toString()));
+                        nv.setGioiTinh(nv.getIntGioiTinh(jComboBox3.getSelectedItem().toString()));
+                        nv.setSDT(jTextField2.getText().toString());
+                        nv.setEmail(jTextField5.getText().toString());
+                        nv.setImg(image);
+                        nv.setDiaChi(jTextField8.getText().toString());
+                        nv.setIsdelete(0);
+                        nhanvien.updatenhanvien(nv);
+                        try {
+                            JOptionPane.showMessageDialog(jPanel1, "Sửa thành công!");
+                            nhanvien.jtimport(jTable1, nhanvien.getlist());
+                            resetall();
+                        } catch (ParseException ex) {
+                            Logger.getLogger(GUINhanVien.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+                } catch (SQLException ex) {
+                    Logger.getLogger(GUINhanVien.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
+        // TODO add your handling code here:jTextField4.getText().toString());
+        int manv = Integer.parseInt(jTextField3.getText().toString());
+        if(jTextField4.getText().toString().isEmpty()){
+            JOptionPane.showMessageDialog(jPanel1, "Vui lòng chọn nhân viên để xóa");
+        }
+        else{
+            DTONhanVien nv = new DTONhanVien();
+            try {
+                nv.setMaNhanVien(manv);
+                nv = nhanvien.getnv(nv);
+                nv.setIsdelete(1);
+                nhanvien.updatenhanvien(nv);
+                try {
+                    JOptionPane.showMessageDialog(jPanel1, "Xóa thành công!");
+                    nhanvien.jtimport(jTable1, nhanvien.getlist());
+                    resetall();
+                } catch (ParseException ex) {
+                    Logger.getLogger(GUINhanVien.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(GUINhanVien.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
         // TODO add your handling code here:
+        resetall();
+        jTextField6.setText("");
+        jTextField10.setText("");
+        jTextField9.setText("");
     }//GEN-LAST:event_jButton8ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        // TODO add your handling code here:
+        int select = jComboBox2.getSelectedIndex();
+        String item = jTextField6.getText().toString();
+        if(!item.isEmpty()){
+            try {
+                ArrayList<DTONhanVien> list = nhanvien.jtexport(jTable1);
+                if(select == 1){
+                    nhanvien.jtimport(jTable1, nhanvien.searchten(list, item));
+                }
+                else if(select == 2){
+                    nhanvien.jtimport(jTable1, nhanvien.searchgioitinh(list, item));
+                }
+                else if(select == 3){
+                    nhanvien.jtimport(jTable1, nhanvien.searchchucvu(list, chucvu.getmacv(item)));
+                }
+                else if(select == 4){
+                    nhanvien.jtimport(jTable1, nhanvien.searchsdt(list, item));
+                }
+                else if(select == 5){
+                    nhanvien.jtimport(jTable1, nhanvien.searchdiachi(list, item));
+                }
+                else{
+                    JOptionPane.showMessageDialog(jPanel1, "Hãy chọn loại tìm kiếm!");
+                }
+            } catch (SQLException ex) {
+            Logger.getLogger(GUINhanVien.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        else{
+            JOptionPane.showMessageDialog(jPanel1, "Nhập thông tin tìm kiếm!");
+        }
+    }//GEN-LAST:event_jButton5ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
