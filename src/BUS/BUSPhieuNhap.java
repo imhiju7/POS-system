@@ -27,8 +27,11 @@ public class BUSPhieuNhap {
     public int addphieunhap(DTOPhieuNhap i) throws SQLException{
         return DAO.addphieunhap(i);
     }
-    public int updatePhieuNhap(DTOPhieuNhap i) throws SQLException{
+    public int updatephieunhap(DTOPhieuNhap i) throws SQLException{
         return DAO.updatephieunhap(i);
+    }
+    public DTOPhieuNhap getpn(int mapn) throws SQLException, ParseException{
+        return DAO.getpn(mapn);
     }
     public void jtimport(JTable jt,ArrayList<DTOPhieuNhap> list) throws SQLException{
         

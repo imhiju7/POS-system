@@ -260,6 +260,11 @@ public class GUIPhieuNhap extends javax.swing.JPanel {
         jButton3.setBackground(new java.awt.Color(161, 204, 209));
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/SOURCE/Icon/trash.png"))); // NOI18N
         jButton3.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         jButton4.setBackground(new java.awt.Color(161, 204, 209));
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/SOURCE/Icon/reset.png"))); // NOI18N
@@ -317,6 +322,11 @@ public class GUIPhieuNhap extends javax.swing.JPanel {
         jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/SOURCE/Icon/search.png"))); // NOI18N
         jButton5.setToolTipText("");
         jButton5.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
 
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Loại tìm kiếm", "Tên nhà cung cấp", "Tên nhân viên", "Ghi chú" }));
 
@@ -394,6 +404,11 @@ public class GUIPhieuNhap extends javax.swing.JPanel {
         jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/SOURCE/Icon/search.png"))); // NOI18N
         jButton7.setToolTipText("");
         jButton7.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
+            }
+        });
 
         jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Loại", "Ngày", "Tiền" }));
 
@@ -534,7 +549,7 @@ public class GUIPhieuNhap extends javax.swing.JPanel {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        if(!jComboBox1.getSelectedItem().equals("Nhà cung cấp") && !jTextField5.getText().toString().isEmpty()){
+        if(!jComboBox1.getSelectedItem().equals("Nhà cung cấp")){
             DTOPhieuNhap pn = new DTOPhieuNhap();
             DTONhaCungCap ncc = new DTONhaCungCap();
             try {
@@ -556,37 +571,67 @@ public class GUIPhieuNhap extends javax.swing.JPanel {
             }
         }
         else{
-            JOptionPane.showMessageDialog(jPanel1, "Vui lòng nhập đầy đủ thông tin trước khi thêm!");
+            JOptionPane.showMessageDialog(jPanel1, "Vui lòng chọn nhà cung cấp trước khi thêm!");
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        if(!jComboBox1.getSelectedItem().equals("Nhà cung cấp") && !jTextField5.getText().toString().isEmpty()){
+        if(!jComboBox1.getSelectedItem().equals("Nhà cung cấp") && !jTextField8.getText().isEmpty()){
             DTOPhieuNhap pn = new DTOPhieuNhap();
             DTONhaCungCap ncc = new DTONhaCungCap();
             try {
+                pn = phieunhap.getpn(Integer.parseInt(jTextField8.getText().toString()));
                 pn.setMaNhaCungCap(nhacungcap.getmancc(ncc).getMaNhaCungCap());
                 pn.setGhiChu(jTextField5.getText().toString());
-                pn.setIsHidden(0);
-                pn.setNgayNhap(new Date());
-                pn.setMaNhanVien(2);
-                pn.setTongTien(0);
-                phieunhap.addphieunhap(pn);
+                phieunhap.updatephieunhap(pn);
                 try {
-                    JOptionPane.showMessageDialog(jPanel1, "Thêm thành công!");
+                    JOptionPane.showMessageDialog(jPanel1, "Sửa thành công!");
                     phieunhap.jtimport(jTable1, phieunhap.getlist());
                 } catch (ParseException ex) {
                     Logger.getLogger(GUIPhieuNhap.class.getName()).log(Level.SEVERE, null, ex);
                 }
             } catch (SQLException ex) {
                 Logger.getLogger(GUIPhieuNhap.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ParseException ex) {
+                Logger.getLogger(GUIPhieuNhap.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         else{
-            JOptionPane.showMessageDialog(jPanel1, "Vui lòng nhập đầy đủ thông tin trước khi thêm!");
+            JOptionPane.showMessageDialog(jPanel1, "Vui lòng chọn nhà cung cấp trước khi sửa!");
         }
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        if(!jTextField8.getText().isEmpty()){
+        DTOPhieuNhap pn = new DTOPhieuNhap();
+        pn.setMaPhieuNhap(Integer.parseInt(jTextField8.getText().toString()));
+        pn.setIsHidden(1);
+        try {
+            phieunhap.updatephieunhap(pn);
+            try {
+                JOptionPane.showMessageDialog(jPanel1, "Xửa thành công!");
+                phieunhap.jtimport(jTable1, phieunhap.getlist());
+            } catch (ParseException ex) {
+                Logger.getLogger(GUIPhieuNhap.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(GUIPhieuNhap.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        }
+        else{
+            JOptionPane.showMessageDialog(jPanel1, "Vui lòng chọn phiếu nhập trước khi xóa!");
+        }
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton7ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

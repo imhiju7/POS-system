@@ -30,13 +30,22 @@ public class DAOPhieuNhap {
     // delete
     
     public DTOPhieuNhap getpn(int mapn) throws SQLException, ParseException{
+        Connection con = Connect.connection();
+        String sql = "SELECT * FROM phieunhap WHERE isDelete = 0 AND maPhieuNhap = ?";
+        PreparedStatement pst =  con.prepareStatement(sql);
+        pst.setInt(1, mapn);
+        ResultSet rs = pst.executeQuery();
         DTOPhieuNhap pn = new DTOPhieuNhap();
-        ArrayList<DTOPhieuNhap> list = getlist();
-        for(DTOPhieuNhap i: list){
-            if(i.getMaPhieuNhap() == mapn){
-                pn = i;
-            }
+        while(rs.next()){
+            pn.setMaPhieuNhap(rs.getInt("maPhieuNhap"));
+            pn.setMaNhaCungCap(rs.getInt("maNhaCungCap"));
+            pn.setNgayNhap(rs.getTimestamp("ngayNhap"));
+            pn.setTongTien(rs.getDouble("tongTien"));
+            pn.setMaNhanVien(rs.getInt("maNhanVien"));
+            pn.setIsHidden(rs.getInt("isDelete"));
+            pn.setGhiChu(rs.getString("ghiChu"));
         }
+        con.close();
         return pn;
     }
     
