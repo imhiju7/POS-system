@@ -94,14 +94,4 @@ public class DAOPhieuNhap {
         int row = list.size();
         return row;
     }
-    public Date getaDate(int mpn){
-        ArrayList<DTOPhieuNhap> pnlist  = new ArrayList<>();
-        Date adate = null;
-        for(DTOPhieuNhap i: pnlist){
-            if(i.getMaPhieuNhap() == mpn){
-                adate = (Date) i.getNgayNhap();
-            }
-        }
-        return adate;
-    }
 }

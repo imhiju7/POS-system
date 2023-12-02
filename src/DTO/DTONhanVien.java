@@ -129,7 +129,9 @@ public class DTONhanVien {
             i = 0;
         }
         return i;
-    }
+    }   
+
+
     public DTONhanVien(){}
     public DTONhanVien(int maNhanVien, String tenNhanVien, int maChucVu, int gioiTinh, Date ngaySinh, String diaChi, String Email, String SDT, int isdelete, Date ngayTao,String img) {
         this.maNhanVien = maNhanVien;

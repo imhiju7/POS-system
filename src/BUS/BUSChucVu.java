@@ -27,4 +27,7 @@ public class BUSChucVu {
     public String getTenChucVu(DTOChucVu i) throws SQLException{
         return DAO.getcv(i).getTenChucVu();
     }
+    public int getmacv(String tencv) throws SQLException{
+        return DAO.getmachucvu(tencv);
+    }
 }
