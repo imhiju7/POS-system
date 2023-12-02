@@ -132,9 +132,6 @@ public class DAOTaiKhoan {
                 tk.setTenDangNhap(rs.getString("tenDangNhap"));
                 tk.setMatKhau(rs.getString("matKhau"));
                 tk.setNgayTao(rs.getDate("ngayTao"));
-                tk.setTenNhanVien(rs.getString("tenNhanVien"));
-                tk.setEmail(rs.getString("email"));
-                tk.setSDT(rs.getString("soDienThoai"));
                 tk.setIsblock(rs.getInt("isBlock"));
                 dstk.add(tk);
             }
@@ -203,7 +200,7 @@ public class DAOTaiKhoan {
         return rowaffect;
     }
 
-    public int edittaikhoan(DTOTaiKhoan tk) throws SQLException {
+    public int updatetaikhoan(DTOTaiKhoan tk) throws SQLException {
         Connection con = Connect.connection();
         String sql = "UPDATE taikhoan set matKhau= ?, ngayTao= ?,isBlock= ? WHERE tenDangNhap= ?";
         PreparedStatement pst = con.prepareStatement(sql);
@@ -217,43 +214,6 @@ public class DAOTaiKhoan {
         return rowaffect;
     }
 
-    // khóa tài khoản
-    public boolean khoaTaiKhoan(String tenDangNhap) {
-        Connection con = Connect.connection();
-
-        String sql = "UPDATE taikhoan "
-                + "JOIN nhanvien ON taikhoan.maNhanVien = nhanvien.maNhanVien "
-                + "SET taikhoan.isBlock = 1, nhanvien.isBlock = 1 "
-                + "WHERE taikhoan.tenDangNhap = ?";
-        try {
-            PreparedStatement pst = con.prepareStatement(sql);
-
-            pst.setString(1, tenDangNhap);
-            return pst.executeUpdate() > 0;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
-
-    //mở tài khoản
-    public boolean moKhoaTaiKhoan(String tenDangNhap) {
-        Connection con = Connect.connection();
-
-        String sql = "UPDATE taikhoan "
-                + "JOIN nhanvien ON taikhoan.maNhanVien = nhanvien.maNhanVien "
-                + "SET taikhoan.isBlock = 0, nhanvien.isBlock = 0 "
-                + "WHERE taikhoan.tenDangNhap = ?";
-        try {
-            PreparedStatement pst = con.prepareStatement(sql);
-
-            pst.setString(1, tenDangNhap);
-            return pst.executeUpdate() > 0;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
 
     /*
     public void exportDSTaiKhoan() {

@@ -8,6 +8,8 @@ import DTO.*;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.ArrayList;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 /**
  *
  * @author Hieu PC
@@ -22,5 +24,19 @@ public class BUSUuDai {
     }
     public int updateuudai(DTOUuDai i) throws SQLException{
         return DAO.updateuudai(i);
+    }
+    public void jtimport(JTable jt,ArrayList<DTOUuDai> list) throws SQLException{
+        
+        DefaultTableModel model = new DefaultTableModel();
+
+        model.addColumn("Mã Ưu đãi");
+        model.addColumn("Mốc điểm");
+        model.addColumn("Tỉ lệ giảm ( % )");
+
+        
+        for(DTOUuDai i: list){
+            model.addRow(new Object[]{i.getMaUuDai(),i.getMocUuDai(),i.getTiLeGiam()});
+        }
+        jt.setModel(model);
     }
 }

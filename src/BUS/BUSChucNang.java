@@ -25,4 +25,7 @@ public class BUSChucNang {
     public int updateChucNang(DTOChucNang i) throws SQLException{
         return DAO.updatechucnang(i);
     }
+    public ArrayList<DTOChucNang> getlistgroup(int magr) throws SQLException, ParseException{
+        return DAO.getlistgroup(magr);
+    }
 }

@@ -23,4 +23,7 @@ public class BUSNhaCungCap {
     public int updatenhacungcap(DTONhaCungCap i) throws SQLException{
         return DAO.updatenhacungcap(i);
     }
+    public DTONhaCungCap getmancc(DTONhaCungCap i) throws SQLException{
+        return DAO.getmancc(i);
+    }
 }

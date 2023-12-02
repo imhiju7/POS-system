@@ -11,6 +11,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 /**
  *
@@ -19,7 +21,7 @@ import java.util.ArrayList;
 public class DAOTichDiem {
     public ArrayList<DTOTichDiem> getlist() throws SQLException, ParseException{
         Connection con = Connect.connection();
-        String sql = "SELECT * FROM tichdiem";
+        String sql = "SELECT * FROM tichdiem WHERE isDelete = 0";
         PreparedStatement pst =  con.prepareStatement(sql);
         ResultSet rs = pst.executeQuery();
         ArrayList<DTOTichDiem> list = new ArrayList<>();
@@ -31,7 +33,28 @@ public class DAOTichDiem {
             list.add(td);
         }
         con.close();
+        Collections.sort(list, new Comparator<DTOTichDiem>() {
+            @Override
+            public int compare(DTOTichDiem person1, DTOTichDiem person2) {
+                return Double.compare(person1.getTien(), person2.getTien());
+            }
+        });
         return list;
+    }
+    public DTOTichDiem gettd(DTOTichDiem i) throws SQLException{
+        Connection con = Connect.connection();
+        String sql = "SELECT * FROM tichdiem WHERE maTichDiem = ?";
+        PreparedStatement pst =  con.prepareStatement(sql);
+        pst.setInt(1, i.getMaTichDiem());
+        ResultSet rs = pst.executeQuery();
+        DTOTichDiem td = new DTOTichDiem();
+        while(rs.next()){
+            td.setMaTichDiem(rs.getInt("maTichDiem"));
+            td.setTien(rs.getDouble("Tien"));
+            td.setDiemTichLuy(rs.getInt("diemTichLuy"));
+        }
+        con.close();
+        return td;
     }
     public int getrowcount() throws SQLException, ParseException{
         return getlist().size();
@@ -49,7 +72,7 @@ public class DAOTichDiem {
     }
     public int updatetichdiem(DTOTichDiem td) throws SQLException{
         Connection con = Connect.connection();
-        String sql = "UPDATE tichdiem set mocTichDiem = ?,tiLeGiam = ?,isDelete=? WHERE maTichDiem= ?";
+        String sql = "UPDATE tichdiem set Tien = ?,diemTichLuy = ?,isDelete=? WHERE maTichDiem= ?";
         PreparedStatement pst = con.prepareStatement(sql);
         pst.setDouble(1, td.getTien());
         pst.setInt(2, td.getDiemTichLuy());

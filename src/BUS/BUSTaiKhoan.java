@@ -10,6 +10,8 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import javax.swing.JComboBox;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -18,27 +20,7 @@ import javax.swing.JComboBox;
 public class BUSTaiKhoan {
 
     DAOTaiKhoan DAO = new DAOTaiKhoan();
-
-    public DTOTaiKhoan kiemTraTaiKhoan(String tenDangNhap, String matKhau) {
-        return DAO.kiemTraTaiKhoan(tenDangNhap, matKhau);
-    }
-
-    public boolean checkTenDangNhap(String tenDangNhap) {
-        return DAO.checkTenDangNhap(tenDangNhap);
-    }
-
-    public boolean checkMatKhau(String tenDangNhap, String matKhau) {
-        return DAO.checkMatKhau(tenDangNhap, matKhau);
-    }
-
-    public boolean checkTaiKhoan(String tenDangNhap) {
-        return DAO.checkTaiKhoan(tenDangNhap);
-    }
-
-    public boolean checkKhoaTaiKhoan(String tenDangNhap) {
-        return DAO.checkKhoaTaiKhoan(tenDangNhap);
-    }
-
+    DAONhanVien DAOnv = new DAONhanVien();
     public ArrayList<DTOTaiKhoan> getlist() throws SQLException, ParseException {
         return DAO.getList();
     }
@@ -47,16 +29,36 @@ public class BUSTaiKhoan {
         return DAO.addtaikhoan(i);
     }
 
-    public int edittaikhoan(DTOTaiKhoan i) throws SQLException {
-        return DAO.edittaikhoan(i);
+    public int updatetaikhoan(DTOTaiKhoan i) throws SQLException {
+        return DAO.updatetaikhoan(i);
     }
+    public void jtimport(JTable jt,ArrayList<DTOTaiKhoan> list) throws SQLException{
+        
+        DefaultTableModel model = new DefaultTableModel();
 
-    public boolean khoaTaiKhoan(String tenDangNhap) {
-        return DAO.khoaTaiKhoan(tenDangNhap);
+        model.addColumn("Tên nhân viên");
+        model.addColumn("Tên đăng nhập");
+        model.addColumn("Mật khẩu");
+        model.addColumn("Ngày tạo");
+        model.addColumn("isBlock");
+        
+        for(DTOTaiKhoan i: list){
+            DTONhanVien nv = new DTONhanVien();
+            nv.setMaNhanVien( i.getMaNhanVien());
+            String tennv = DAOnv.getnv(nv).getTenNhanVien();
+            model.addRow(new Object[]{tennv,i.getTenDangNhap(),i.getMatKhau(),i.getNgayTao(),i.getIsblock()});
+        }
+        jt.setModel(model);
     }
-
-    public boolean moKhoaTaiKhoan(String tenDangNhap) {
-        return DAO.moKhoaTaiKhoan(tenDangNhap);
+    public ArrayList<DTOTaiKhoan> jtexport(JTable jt) throws SQLException{
+        ArrayList<DTOTaiKhoan> list = new ArrayList<>();
+        int size = jt.getRowCount();
+        for(int i = 0; i < size; i++){
+            DTOTaiKhoan a = new DTOTaiKhoan();
+            a.setTenDangNhap(jt.getValueAt(i, 0).toString());
+            a = gettk(a);
+            list.add(a);
+        }
+        return list;
     }
-
 }

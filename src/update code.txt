@@ -1,12 +1,6 @@
-public static Date getCurrentDateTimeInVietnam() {
-        // Lấy múi giờ của Việt Nam
-        ZoneId vietnamZone = ZoneId.of("Asia/Ho_Chi_Minh");
-
-        // Lấy ngày giờ hiện tại ở Việt Nam
-        LocalDateTime currentDateTime = LocalDateTime.now(vietnamZone);
-
-        // Chuyển đổi LocalDateTime thành java.util.Date
-        Date currentDate = Date.from(currentDateTime.atZone(vietnamZone).toInstant());
-
-        return currentDate;
-    }
+Collections.sort(personList, new Comparator<Person>() {
+            @Override
+            public int compare(Person person1, Person person2) {
+                return Integer.compare(person1.getAge(), person2.getAge());
+            }
+        });

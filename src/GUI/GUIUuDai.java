@@ -5,8 +5,14 @@
 package GUI;
 
 import GUI.*;
+import BUS.*;
+import DTO.*;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.sql.SQLException;
+import java.text.ParseException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
 
 /**
@@ -18,6 +24,7 @@ public class GUIUuDai extends javax.swing.JFrame {
     /**
      * Creates new form GUITichDiem
      */
+    BUSUuDai uudai = new BUSUuDai();
     public GUIUuDai() {
         initComponents();
         
@@ -33,6 +40,14 @@ public class GUIUuDai extends javax.swing.JFrame {
         // Đặt vị trí của form
         this.setResizable(false);
         this.setLocation(x, y);
+        try {
+            uudai.jtimport(jTable1, uudai.getlist());
+        } catch (SQLException ex) {
+            Logger.getLogger(GUIUuDai.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
+            Logger.getLogger(GUIUuDai.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
         
     }
 

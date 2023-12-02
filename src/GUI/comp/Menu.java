@@ -1,6 +1,13 @@
 package GUI.comp;
 
+import BUS.*;
+import DTO.*;
 import java.awt.Component;
+import java.sql.SQLException;
+import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import net.miginfocom.swing.MigLayout;
 
@@ -41,27 +48,30 @@ public class Menu extends PanelTransparent {
         panel.setLayout(layout);
         setTransparent(1f);
     }
-
+    public void initsubmenu(){
+        BUSGroup group = new BUSGroup();
+        BUSChucNang chucnang = new BUSChucNang();
+        try {
+            ArrayList<DTOGroup> listgroup = group.getlist();
+            for(DTOGroup i: listgroup){
+                ArrayList<String> submenu = new ArrayList<>();
+                ArrayList<DTOChucNang> listcn = chucnang.getlistgroup(i.getMaGroup());
+                for(DTOChucNang a: listcn){
+                    submenu.add(a.getTenChucNang());
+                }
+                addMenu(new ModelMenu(new ImageIcon(getClass().getResource(i.getIcon())), i.getTenGroup(), submenu.toArray(new String[0])));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
+            Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+        
+    }
     public void initMenuItem(int menu) {
-        if(menu == 1){
-            addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/SOURCE/Icon/user.png")), "Cài đặt","Tài khoản","Đăng xuất"));
-        }
-        else if(menu == 2){
-            addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/SOURCE/Icon/user.png")), "Cài đặt","Tài khoản","Đăng xuất"));
-        }
-        else if(menu == 3){
-            addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/SOURCE/Icon/user.png")), "Cài đặt","Tài khoản","Đăng xuất"));
-        }
-        else{
-            addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/SOURCE/Icon/user.png")), "Quầy","Order","Hóa đơn"));
-            addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/SOURCE/Icon/user.png")), "Nhân viên","Thông tin nhân viên","Tài khoản","Phân quyền","Chức vụ"));
-            addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/SOURCE/Icon/user.png")), "Nhập kho","Phiếu nhập","Nhà cung cấp"));
-            addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/SOURCE/Icon/user.png")), "Sản phẩm"));
-            addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/SOURCE/Icon/user.png")), "Khuyến mãi"));
-            addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/SOURCE/Icon/user.png")), "Khách hàng"));
-            addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/SOURCE/Icon/user.png")), "Thống kê"));
-            addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/SOURCE/Icon/user.png")), "Cài đặt","Tài khoản","Đăng xuất"));
-        }
+        initsubmenu();
     }
 
     private void addMenu(ModelMenu menu) {

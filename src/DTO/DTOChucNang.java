@@ -26,13 +26,27 @@ public class DTOChucNang {
         this.tenChucNang = tenChucNang;
     }
     public DTOChucNang(){}
-    public DTOChucNang(int maChucNang, String tenChucNang,int isHidden) {
+
+    public DTOChucNang(int maChucNang, String tenChucNang, int maGroup, int isHidden) {
         this.maChucNang = maChucNang;
         this.tenChucNang = tenChucNang;
+        this.maGroup = maGroup;
         this.isHidden = isHidden;
     }
     private int maChucNang;
     private String tenChucNang;
+    private int maGroup;
+    private int isHidden;
+    public int getMaGroup() {
+        return maGroup;
+    }
+
+    public void setMaGroup(int maGroup) {
+        this.maGroup = maGroup;
+    }
+
+
+
 
     public int getIsHidden() {
         return isHidden;
@@ -41,5 +55,4 @@ public class DTOChucNang {
     public void setIsHidden(int isHidden) {
         this.isHidden = isHidden;
     }
-    private int isHidden;
 }

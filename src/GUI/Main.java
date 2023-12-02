@@ -53,67 +53,8 @@ public class Main extends javax.swing.JFrame {
         menu.addEvent(new EventMenuSelected() {
             @Override
             public void menuSelected(int menuIndex, int subMenuIndex) {
-                if(mapq == 1){
-                    
-                }
-                else if(mapq == 2){
-                    
-                }
-                else if(mapq == 3){
-                    
-                }
-                else{
-                    if(menuIndex == 0){
-                        if(subMenuIndex == 0){
-                            main.showForm(new GUITaiKhoan());
-                        }
-                        else if(subMenuIndex == 1){
-                            try {
-                                main.showForm(new GUINhanVien());
-                            } catch (SQLException ex) {
-                                Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-                            } catch (ParseException ex) {
-                                Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-                            }
-                        }
-
-                        
-                    }
-                    else if(menuIndex == 1){
-                        if(subMenuIndex == 0){
-                            
-                        }
-                        else if(subMenuIndex == 1){
-
-                        }
-                        else if(subMenuIndex == 2){
-
-                        }
-                    }
-                    else if(menuIndex == 2){
-                        if(subMenuIndex == 0){
-                            
-                        }
-                        else{
-                            
-                        }
-                    }
-                    else if(menuIndex == 3){
-                        
-                    }
-                    else if(menuIndex == 4){
-                        
-                    }
-                    else if(menuIndex == 5){
-                        
-                    }
-                    else if(menuIndex == 6){
-                        
-                    }
-                    else{
-                        
-                    }
-                }
+                
+                main.showForm(new GUIPhieuNhap());
             }
         });
         menu.addEventShowPopup(new EventShowPopupMenu() {

@@ -13,6 +13,7 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 
 
 /**
@@ -41,7 +42,7 @@ public class DAOPhieuNhap {
     
     public ArrayList<DTOPhieuNhap> getlist() throws SQLException, ParseException{
         Connection con = Connect.connection();
-        String sql = "SELECT * FROM phieunhap";
+        String sql = "SELECT * FROM phieunhap WHERE isDelete = 0";
         PreparedStatement pst =  con.prepareStatement(sql);
         ResultSet rs = pst.executeQuery();
         ArrayList<DTOPhieuNhap> list = new ArrayList<>();
@@ -57,7 +58,12 @@ public class DAOPhieuNhap {
             list.add(pn);
         }
         con.close();
-        Collections.reverse(list);
+        Collections.sort(list, new Comparator<DTOPhieuNhap>() {
+            @Override
+            public int compare(DTOPhieuNhap person1, DTOPhieuNhap person2) {
+                return person2.getNgayNhap().compareTo(person1.getNgayNhap());
+            }
+        });
         return list;
     }
     

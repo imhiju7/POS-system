@@ -3,10 +3,16 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package GUI;
-
+import BUS.*;
+import DTO.*;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.sql.SQLException;
+import java.text.ParseException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -17,6 +23,7 @@ public class GUITichDiem extends javax.swing.JFrame {
     /**
      * Creates new form GUITichDiem
      */
+    BUSTichDiem tichdiem = new BUSTichDiem();
     public GUITichDiem() {
         initComponents();
         
@@ -32,7 +39,13 @@ public class GUITichDiem extends javax.swing.JFrame {
         // Đặt vị trí của form
         this.setResizable(false);
         this.setLocation(x, y);
-        
+        try {
+            tichdiem.jtimport(jTable1, tichdiem.getlist());
+        } catch (SQLException ex) {
+            Logger.getLogger(GUITichDiem.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
+            Logger.getLogger(GUITichDiem.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -98,7 +111,7 @@ public class GUITichDiem extends javax.swing.JFrame {
         jTextField2.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel4.setText("Tiền");
+        jLabel4.setText("Điểm");
 
         jTextField3.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 
@@ -138,19 +151,39 @@ public class GUITichDiem extends javax.swing.JFrame {
         jButton1.setBackground(new java.awt.Color(161, 204, 209));
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/SOURCE/Icon/add.png"))); // NOI18N
         jButton1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setBackground(new java.awt.Color(161, 204, 209));
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/SOURCE/Icon/edit.png"))); // NOI18N
         jButton2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setBackground(new java.awt.Color(161, 204, 209));
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/SOURCE/Icon/trash.png"))); // NOI18N
         jButton3.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         jButton4.setBackground(new java.awt.Color(161, 204, 209));
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/SOURCE/Icon/reset.png"))); // NOI18N
         jButton4.setToolTipText("");
         jButton4.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -190,6 +223,11 @@ public class GUITichDiem extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -220,6 +258,105 @@ public class GUITichDiem extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        // TODO add your handling code here:
+        int index = jTable1.getSelectedRow();
+        jTextField1.setText(jTable1.getValueAt(index, 0).toString());
+        jTextField2.setText(jTable1.getValueAt(index, 1).toString());
+        jTextField3.setText(jTable1.getValueAt(index, 2).toString());
+    }//GEN-LAST:event_jTable1MouseClicked
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+        jTextField1.setText("");
+        jTextField2.setText("");
+        jTextField3.setText("");
+        try {
+            tichdiem.jtimport(jTable1, tichdiem.getlist());
+        } catch (SQLException ex) {
+            Logger.getLogger(GUITichDiem.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
+            Logger.getLogger(GUITichDiem.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        if(!jTextField2.getText().toString().isEmpty() && !jTextField3.getText().toString().isEmpty()){
+            DTOTichDiem td = new DTOTichDiem();
+            td.setTien(Double.parseDouble(jTextField2.getText().toString()));
+            td.setDiemTichLuy(Integer.parseInt(jTextField3.getText().toString()));
+            td.setIsHidden(0);
+            if(tichdiem.checkdiem(td.getDiemTichLuy(), td.getTien())){
+                try {
+                
+                    tichdiem.addtichdiem(td);
+                    JOptionPane.showMessageDialog(jPanel1, "Thêm thành công!");
+                    tichdiem.jtimport(jTable1, tichdiem.getlist());
+                } catch (SQLException ex) {
+                    Logger.getLogger(GUITichDiem.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (ParseException ex) {
+                    Logger.getLogger(GUITichDiem.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            else{
+                JOptionPane.showMessageDialog(jPanel1, "Điểm tích lũy chưa phù hợp");
+            }
+        }
+        else{
+            JOptionPane.showMessageDialog(jPanel1, "Hãy nhập thông tin trước khi thêm!");
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        if(!jTextField2.getText().toString().isEmpty() && !jTextField3.getText().toString().isEmpty()){
+            DTOTichDiem td = new DTOTichDiem();
+            td.setMaTichDiem(Integer.parseInt(jTextField1.getText().toString()));
+            td.setTien(Double.parseDouble(jTextField2.getText().toString()));
+            td.setDiemTichLuy(Integer.parseInt(jTextField3.getText().toString()));
+            td.setIsHidden(0);
+            if(tichdiem.checkdiem(td.getDiemTichLuy(), td.getTien())){
+                try {
+                
+                    tichdiem.updatetichdiem(td);
+                     JOptionPane.showMessageDialog(jPanel1, "Sửa thành công!");
+                    tichdiem.jtimport(jTable1, tichdiem.getlist());
+                } catch (SQLException ex) {
+                    Logger.getLogger(GUITichDiem.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (ParseException ex) {
+                    Logger.getLogger(GUITichDiem.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            else{
+                JOptionPane.showMessageDialog(jPanel1, "Điểm tích lũy chưa phù hợp");
+            }
+        }
+        else{
+            JOptionPane.showMessageDialog(jPanel1, "Hãy nhập thông tin trước khi thêm!");
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        if(!jTextField2.getText().toString().isEmpty()){
+             DTOTichDiem td = new DTOTichDiem();
+             td.setMaTichDiem(Integer.parseInt(jTextField2.getText().toString()));
+            try {
+                td = tichdiem.gettd(td);
+                td.setIsHidden(1);
+                JOptionPane.showMessageDialog(jPanel1, "Xóa thành công!");
+                tichdiem.updatetichdiem(td);
+            } catch (SQLException ex) {
+                Logger.getLogger(GUITichDiem.class.getName()).log(Level.SEVERE, null, ex);
+            }
+             
+        }
+        else{
+            JOptionPane.showMessageDialog(jPanel1, "Chưa chọn mốc tích điểm để xóa!");
+        }
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments

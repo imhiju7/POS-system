@@ -17,6 +17,44 @@ import java.util.ArrayList;
  * @author Hieu PC
  */
 public class DAONhaCungCap {
+    public DTONhaCungCap getncc(DTONhaCungCap i) throws SQLException{
+        Connection con = Connect.connection();
+        String sql = "SELECT * FROM nhacungcap WHERE maNhaCungCap = ?";
+        PreparedStatement pst =  con.prepareStatement(sql);
+        pst.setInt(1, i.getMaNhaCungCap());
+        ResultSet rs = pst.executeQuery();
+        DTONhaCungCap ncc = new DTONhaCungCap();
+        while(rs.next()){
+            ncc.setMaNhaCungCap(rs.getInt("maNhaCungCap"));
+            ncc.setTenNhaCungCap(rs.getString("tenNhaCungCap"));
+            ncc.setSDT(rs.getString("SDT"));
+            ncc.setEmail(rs.getString("Email"));
+            ncc.setNgayTao(rs.getTimestamp("ngayTao"));
+            ncc.setTrangThai(rs.getInt("trangThai"));
+            ncc.setIsHidden(rs.getInt("isDelete"));
+        }
+        con.close();
+        return ncc;
+    }
+    public DTONhaCungCap getmancc(DTONhaCungCap i) throws SQLException{
+        Connection con = Connect.connection();
+        String sql = "SELECT * FROM nhacungcap WHERE tenNhaCungCap = ?";
+        PreparedStatement pst =  con.prepareStatement(sql);
+        pst.setString(1, i.getTenNhaCungCap());
+        ResultSet rs = pst.executeQuery();
+        DTONhaCungCap ncc = new DTONhaCungCap();
+        while(rs.next()){
+            ncc.setMaNhaCungCap(rs.getInt("maNhaCungCap"));
+            ncc.setTenNhaCungCap(rs.getString("tenNhaCungCap"));
+            ncc.setSDT(rs.getString("SDT"));
+            ncc.setEmail(rs.getString("Email"));
+            ncc.setNgayTao(rs.getTimestamp("ngayTao"));
+            ncc.setTrangThai(rs.getInt("trangThai"));
+            ncc.setIsHidden(rs.getInt("isDelete"));
+        }
+        con.close();
+        return ncc;
+    }
     public ArrayList<DTONhaCungCap> getlist() throws SQLException, ParseException{
         Connection con = Connect.connection();
         String sql = "SELECT * FROM nhacungcap";
