@@ -62,9 +62,6 @@ public class DAONhanVien {
         con.close();
         return list;
     }
-    public int getrowcount() throws SQLException, ParseException{
-        return getlist().size();
-    }
     public int addnhanvien(DTONhanVien nv) throws SQLException{
         Connection con = Connect.connection();
         String sql = "INSERT INTO nhanvien(tenNhanVien,ngaySinh,Email,soDienThoai,diaChi,gioiTinh,maChucVu,isDelete,img,ngayTao) VALUES(?,?,?,?,?,?,?,?,?,?)";

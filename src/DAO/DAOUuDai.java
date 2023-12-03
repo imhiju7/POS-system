@@ -17,6 +17,23 @@ import java.util.ArrayList;
  * @author Hieu PC
  */
 public class DAOUuDai {
+    
+    public DTOUuDai getud(DTOUuDai i) throws SQLException, ParseException{
+        Connection con = Connect.connection();
+        String sql = "SELECT * FROM uudai WHERE maUuDai = ?";
+        PreparedStatement pst =  con.prepareStatement(sql);
+        pst.setInt(1, i.getMaUuDai());
+        ResultSet rs = pst.executeQuery();
+        DTOUuDai ud = new DTOUuDai();
+        while(rs.next()){
+            ud.setMaUuDai(rs.getInt("maUuDai"));
+            ud.setMocUuDai(rs.getInt("mocUuDai"));
+            ud.setTiLeGiam(rs.getInt("tiLeGiam"));
+            ud.setIsHidden(rs.getInt("isDelete"));
+        }
+        con.close();
+        return ud;
+    }
     public ArrayList<DTOUuDai> getlist() throws SQLException, ParseException{
         Connection con = Connect.connection();
         String sql = "SELECT * FROM uudai";
@@ -33,9 +50,6 @@ public class DAOUuDai {
         }
         con.close();
         return list;
-    }
-    public int getrowcount() throws SQLException, ParseException{
-        return getlist().size();
     }
     public int adduudai(DTOUuDai ud) throws SQLException{
         Connection con = Connect.connection();

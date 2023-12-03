@@ -39,4 +39,7 @@ public class BUSUuDai {
         }
         jt.setModel(model);
     }
+    public DTOUuDai getud(DTOUuDai i) throws SQLException, ParseException{
+        return DAO.getud(i);
+    }
 }

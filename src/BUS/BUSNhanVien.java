@@ -145,7 +145,7 @@ public class BUSNhanVien {
     public ArrayList<DTONhanVien> searchten(ArrayList<DTONhanVien> list,String ten){
         ArrayList<DTONhanVien> result = new ArrayList<>();
         for(DTONhanVien i: list){
-            if(i.getTenNhanVien().equals(ten)){
+            if(i.getTenNhanVien().contains(ten)){
                 result.add(i);
             }
         }
@@ -172,7 +172,7 @@ public class BUSNhanVien {
     public ArrayList<DTONhanVien> searchsdt(ArrayList<DTONhanVien> list,String sdt){
         ArrayList<DTONhanVien> result = new ArrayList<>();
         for(DTONhanVien i: list){
-            if(i.getSDT().equals(sdt)){
+            if(i.getSDT().contains(sdt)){
                 result.add(i);
             }
         }
