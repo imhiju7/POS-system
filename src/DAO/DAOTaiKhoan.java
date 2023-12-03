@@ -10,6 +10,8 @@ import DTO.*;
 import com.mysql.cj.jdbc.result.ResultSetMetaData;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Collections;
+import java.util.Comparator;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import org.apache.poi.ss.usermodel.*;
@@ -34,6 +36,7 @@ public class DAOTaiKhoan {
                 tk.setMatKhau(rs.getString("matKhau"));
                 tk.setNgayTao(rs.getTimestamp("ngayTao"));
                 tk.setIsblock(rs.getInt("isBlock"));
+                tk.setMaNhanVien(rs.getInt("maNhanVien"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -161,6 +164,12 @@ public class DAOTaiKhoan {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        Collections.sort(dstk, new Comparator<DTOTaiKhoan>() {
+            @Override
+            public int compare(DTOTaiKhoan person1, DTOTaiKhoan person2) {
+                return person2.getNgayTao().compareTo(person1.getNgayTao());
+            }
+        });
         return dstk;
     }
 
@@ -229,7 +238,7 @@ public class DAOTaiKhoan {
 
     public int updatetaikhoan(DTOTaiKhoan tk) throws SQLException {
         Connection con = Connect.connection();
-        String sql = "UPDATE taikhoan set matKhau= ?, ngayTao= ?,isBlock= ? WHERE tenDangNhap= ?";
+        String sql = "UPDATE taikhoan set matKhau= ?, ngayTao= ?,isBlock= ?,isDelete = ?,maNhanVien = ? WHERE tenDangNhap= ?";
         PreparedStatement pst = con.prepareStatement(sql);
         pst.setString(1, tk.getMatKhau());
         pst.setTimestamp(2, new java.sql.Timestamp(tk.getNgayTao().getTime()));
@@ -241,7 +250,38 @@ public class DAOTaiKhoan {
         con.close();
         return rowaffect;
     }
-
+    public boolean checktendn(String tendn) throws SQLException{
+        Connection con = Connect.connection();
+        String sql = "select * from taikhoan where tenDangNhap = ?";
+        int count = 0;
+        PreparedStatement pst = con.prepareStatement(sql);
+        pst.setString(1, tendn);
+        ResultSet rs = pst.executeQuery();
+        while (rs.next()) {
+             count++;
+        }
+        boolean key = false;
+        if(count > 0) key = false;
+        else key = true;
+        rs.close();
+        return key;
+    }
+    public boolean checktendnedit(String tendn) throws SQLException{
+        Connection con = Connect.connection();
+        String sql = "select * from taikhoan where tenDangNhap = ?";
+        int count = 0;
+        PreparedStatement pst = con.prepareStatement(sql);
+        pst.setString(1, tendn);
+        ResultSet rs = pst.executeQuery();
+        while (rs.next()) {
+             count++;
+        }
+        boolean key = false;
+        if(count > 1) key = false;
+        else key = true;
+        rs.close();
+        return key;
+    }
 
     /*
     public void exportDSTaiKhoan() {

@@ -8,10 +8,13 @@ import DAO.*;
 import DTO.*;
 import java.sql.SQLException;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import javax.swing.JComboBox;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+
 
 /**
  *
@@ -60,11 +63,20 @@ public class BUSTaiKhoan {
         int size = jt.getRowCount();
         for(int i = 0; i < size; i++){
             DTOTaiKhoan a = new DTOTaiKhoan();
-            a.setTenDangNhap(jt.getValueAt(i, 0).toString());
+            a.setTenDangNhap(jt.getValueAt(i, 3).toString());
             a = DAO.gettk(a);
             list.add(a);
         }
         return list;
+    }
+    public boolean checktendn(String tendn) throws SQLException{
+        return DAO.checktendn(tendn);
+    }
+    public boolean checktendnedit(String tendn) throws SQLException{
+        return DAO.checktendnedit(tendn);
+    }
+    public DTOTaiKhoan gettk(DTOTaiKhoan i){
+        return DAO.gettk(i);
     }
     public void cbimport(JComboBox jcb,ArrayList<DTOTaiKhoan> list) throws SQLException{
         jcb.removeAllItems();
@@ -82,5 +94,59 @@ public class BUSTaiKhoan {
         for(DTONhanVien i: list){
             jcb.addItem(i.getSDT());
         }
+    }
+    public Date convertStringToDate(String dateString) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            return dateFormat.parse(dateString);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return null; // Trả về null nếu có lỗi chuyển đổi
+        }
+    }
+    public ArrayList<DTOTaiKhoan> searchten(ArrayList<DTOTaiKhoan> list,String ten) throws SQLException{
+        ArrayList<DTOTaiKhoan> result = new ArrayList<>();
+        for(DTOTaiKhoan i: list){
+            DTONhanVien a = new DTONhanVien();
+            a.setMaNhanVien(i.getMaNhanVien());
+            a = DAOnv.getnv(a);
+            if(a.getTenNhanVien().contains(ten)){
+                result.add(i);
+            }
+        }
+        return result;
+    }
+    public ArrayList<DTOTaiKhoan> searchsdt(ArrayList<DTOTaiKhoan> list,String sdt) throws SQLException{
+        ArrayList<DTOTaiKhoan> result = new ArrayList<>();
+        for(DTOTaiKhoan i: list){
+            DTONhanVien a = new DTONhanVien();
+            a.setMaNhanVien(i.getMaNhanVien());
+            a = DAOnv.getnv(a);
+            if(a.getSDT().contains(sdt)){
+                result.add(i);
+            }
+        }
+        return result;
+    }
+    public ArrayList<DTOTaiKhoan> searchemail(ArrayList<DTOTaiKhoan> list,String email) throws SQLException{
+        ArrayList<DTOTaiKhoan> result = new ArrayList<>();
+        for(DTOTaiKhoan i: list){
+            DTONhanVien a = new DTONhanVien();
+            a.setMaNhanVien(i.getMaNhanVien());
+            a = DAOnv.getnv(a);
+            if(a.getEmail().contains(email)){
+                result.add(i);
+            }
+        }
+        return result;
+    }
+    public ArrayList<DTOTaiKhoan> searchdate(ArrayList<DTOTaiKhoan> list,Date day1,Date day2){
+        ArrayList<DTOTaiKhoan> result = new ArrayList<>();
+        for(DTOTaiKhoan i: list){
+            if(i.getNgayTao().after(day1) && i.getNgayTao().before(day2)){
+                result.add(i);
+            }
+        }
+        return result;
     }
 }

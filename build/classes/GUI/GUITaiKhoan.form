@@ -479,6 +479,9 @@
                               </Border>
                             </Property>
                           </Properties>
+                          <Events>
+                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
+                          </Events>
                         </Component>
                         <Component class="javax.swing.JButton" name="jButton2">
                           <Properties>
@@ -494,6 +497,9 @@
                               </Border>
                             </Property>
                           </Properties>
+                          <Events>
+                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton2ActionPerformed"/>
+                          </Events>
                         </Component>
                         <Component class="javax.swing.JButton" name="jButton3">
                           <Properties>
@@ -509,6 +515,9 @@
                               </Border>
                             </Property>
                           </Properties>
+                          <Events>
+                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton3ActionPerformed"/>
+                          </Events>
                         </Component>
                         <Component class="javax.swing.JButton" name="jButton4">
                           <Properties>
@@ -579,14 +588,17 @@
                               </Border>
                             </Property>
                           </Properties>
+                          <Events>
+                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton5ActionPerformed"/>
+                          </Events>
                         </Component>
                         <Component class="javax.swing.JComboBox" name="jComboBox2">
                           <Properties>
                             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                               <StringArray count="4">
                                 <StringItem index="0" value="Lo&#x1ea1;i t&#xec;m ki&#x1ebf;m"/>
-                                <StringItem index="1" value="S&#x1ed1; &#x111;i&#x1ec7;n tho&#x1ea1;i"/>
-                                <StringItem index="2" value="T&#xea;n nh&#xe2;n vi&#xea;n"/>
+                                <StringItem index="1" value="T&#xea;n nh&#xe2;n vi&#xea;n"/>
+                                <StringItem index="2" value="S&#x1ed1; &#x111;i&#x1ec7;n tho&#x1ea1;i"/>
                                 <StringItem index="3" value="Email"/>
                               </StringArray>
                             </Property>
@@ -636,8 +648,11 @@
                           <SubComponents>
                             <Component class="javax.swing.JTextField" name="jTextField10">
                               <Properties>
+                                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                                  <Font name="Segoe UI" size="14" style="1"/>
+                                </Property>
                                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                                  <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                                  <Color blue="0" green="0" red="0" type="rgb"/>
                                 </Property>
                               </Properties>
                             </Component>
@@ -678,8 +693,11 @@
                           <SubComponents>
                             <Component class="javax.swing.JTextField" name="jTextField9">
                               <Properties>
+                                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                                  <Font name="Segoe UI" size="14" style="1"/>
+                                </Property>
                                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                                  <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                                  <Color blue="0" green="0" red="0" type="rgb"/>
                                 </Property>
                               </Properties>
                             </Component>
@@ -739,6 +757,9 @@
                                   </Border>
                                 </Property>
                               </Properties>
+                              <Events>
+                                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton7ActionPerformed"/>
+                              </Events>
                             </Component>
                           </SubComponents>
                         </Container>

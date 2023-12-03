@@ -7,8 +7,11 @@ import BUS.*;
 import DTO.*;
 import java.sql.SQLException;
 import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 /**
  *
  * @author Hieu PC
@@ -20,6 +23,7 @@ public class GUITaiKhoan extends javax.swing.JPanel {
      */
     BUSTaiKhoan taikhoan = new BUSTaiKhoan();
     BUSNhanVien nhanvien = new BUSNhanVien();
+    String tendn="";
     public GUITaiKhoan() {
         initComponents();
         resetall();
@@ -276,14 +280,29 @@ public class GUITaiKhoan extends javax.swing.JPanel {
         jButton1.setBackground(new java.awt.Color(161, 204, 209));
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/SOURCE/Icon/add.png"))); // NOI18N
         jButton1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setBackground(new java.awt.Color(161, 204, 209));
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/SOURCE/Icon/edit.png"))); // NOI18N
         jButton2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setBackground(new java.awt.Color(161, 204, 209));
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/SOURCE/Icon/trash.png"))); // NOI18N
         jButton3.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         jButton4.setBackground(new java.awt.Color(161, 204, 209));
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/SOURCE/Icon/reset.png"))); // NOI18N
@@ -326,8 +345,13 @@ public class GUITaiKhoan extends javax.swing.JPanel {
         jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/SOURCE/Icon/search.png"))); // NOI18N
         jButton5.setToolTipText("");
         jButton5.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Loại tìm kiếm", "Số điện thoại", "Tên nhân viên", "Email" }));
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Loại tìm kiếm", "Tên nhân viên", "Số điện thoại", "Email" }));
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
@@ -357,7 +381,8 @@ public class GUITaiKhoan extends javax.swing.JPanel {
 
         jPanel10.setPreferredSize(new java.awt.Dimension(190, 39));
 
-        jTextField10.setForeground(new java.awt.Color(255, 255, 255));
+        jTextField10.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jTextField10.setForeground(new java.awt.Color(0, 0, 0));
 
         javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
         jPanel10.setLayout(jPanel10Layout);
@@ -380,7 +405,8 @@ public class GUITaiKhoan extends javax.swing.JPanel {
 
         jPanel11.setPreferredSize(new java.awt.Dimension(190, 39));
 
-        jTextField9.setForeground(new java.awt.Color(255, 255, 255));
+        jTextField9.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jTextField9.setForeground(new java.awt.Color(0, 0, 0));
 
         javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
         jPanel11.setLayout(jPanel11Layout);
@@ -407,6 +433,11 @@ public class GUITaiKhoan extends javax.swing.JPanel {
         jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/SOURCE/Icon/search.png"))); // NOI18N
         jButton7.setToolTipText("");
         jButton7.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel12Layout = new javax.swing.GroupLayout(jPanel12);
         jPanel12.setLayout(jPanel12Layout);
@@ -540,6 +571,7 @@ public class GUITaiKhoan extends javax.swing.JPanel {
         // TODO add your handling code here:
         int index = jTable1.getSelectedRow();
         jTextField3.setText(jTable1.getValueAt(index, 3).toString());
+        tendn=jTable1.getValueAt(index, 3).toString();
         jCheckBox1.setSelected(false);
         cbcheck();
         jComboBox1.setSelectedItem(jTable1.getValueAt(index, 1).toString());
@@ -559,6 +591,137 @@ public class GUITaiKhoan extends javax.swing.JPanel {
         // TODO add your handling code here:
         resetall();
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        // TODO add your handling code here:
+        int select = jComboBox2.getSelectedIndex();
+        String item = jTextField6.getText().toString();
+        if(!item.isEmpty()){
+            try {
+                ArrayList<DTOTaiKhoan> list = taikhoan.jtexport(jTable1);
+                if(select == 1){
+                    taikhoan.jtimport(jTable1, taikhoan.searchten(list, item));
+                }
+                else if(select == 2){
+                    taikhoan.jtimport(jTable1, taikhoan.searchsdt(list, item));
+                }
+                else if(select == 3){
+                    taikhoan.jtimport(jTable1, taikhoan.searchemail(list, item));
+                }
+                else{
+                    JOptionPane.showMessageDialog(jPanel1, "Hãy chọn loại tìm kiếm!");
+                }
+            } catch (SQLException ex) {
+            Logger.getLogger(GUITaiKhoan.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        else{
+            JOptionPane.showMessageDialog(jPanel1, "Nhập thông tin tìm kiếm!");
+        }
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        // TODO add your handling code here:
+        String day1 = jTextField10.getText().toString();
+        String day2 = jTextField9.getText().toString();
+        if(!day1.isEmpty() && !day2.isEmpty()){
+            ArrayList<DTOTaiKhoan> list;
+            try {
+                list  = taikhoan.jtexport(jTable1);
+                taikhoan.jtimport(jTable1, taikhoan.searchdate(list,taikhoan.convertStringToDate(day1),taikhoan.convertStringToDate(day2)));
+            } catch (SQLException ex) {
+                Logger.getLogger(GUITaiKhoan.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        else{
+            JOptionPane.showMessageDialog(jPanel1, "Bạn chưa nhập khoảng điếm!");
+        }
+    }//GEN-LAST:event_jButton7ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+            try {
+                if(taikhoan.checktendn(jTextField3.getText().toString()) && jCheckBox1.isSelected()){
+                    DTOTaiKhoan tk = new DTOTaiKhoan();
+                    tk.setTenDangNhap(jTextField3.getText().toString());
+                    if(jCheckBox2.isSelected()){
+                        tk.setIsblock(1);
+                    }
+                    else{
+                        tk.setIsblock(0);
+                    }
+                    tk.setMatKhau(jTextField4.getText().toString());
+                    tk.setNgayTao(new Date());
+                    DTONhanVien a = new DTONhanVien();
+                    a.setSDT(jComboBox1.getSelectedItem().toString());
+                    a = nhanvien.getnvbysdt(a);
+                    tk.setMaNhanVien(a.getMaNhanVien());
+                    taikhoan.addtaikhoan(tk);
+                    JOptionPane.showMessageDialog(jPanel1, "Thêm thành công!");
+                    resetall();
+                }
+                else{
+                     JOptionPane.showMessageDialog(jPanel1, "Tên đăng nhập hiện đã có người sử dụng!");
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(GUITaiKhoan.class.getName()).log(Level.SEVERE, null, ex);
+            }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        if(!jTextField5.getText().isEmpty()){
+            try {
+                if(taikhoan.checktendnedit(jTextField3.getText().toString())&& tendn.equals(jTextField3.getText().toString()) && jCheckBox1.isSelected()){
+                    DTOTaiKhoan tk = new DTOTaiKhoan();
+                    tk.setTenDangNhap(jTextField3.getText().toString());
+                    tk = taikhoan.gettk(tk);
+                    if(jCheckBox2.isSelected()){
+                        tk.setIsblock(1);
+                    }
+                    else{
+                        tk.setIsblock(0);
+                    }
+                    tk.setMatKhau(jTextField4.getText().toString());
+                    DTONhanVien a = new DTONhanVien();
+                    a.setSDT(jComboBox1.getSelectedItem().toString());
+                    a = nhanvien.getnvbysdt(a);
+                    tk.setMaNhanVien(a.getMaNhanVien());
+                    taikhoan.updatetaikhoan(tk);
+                    JOptionPane.showMessageDialog(jPanel1, "Sửa thành công!");
+                    resetall();
+                }
+                else{
+                    JOptionPane.showMessageDialog(jPanel1, "Nhân viên này hiện đã có tài khoản");
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(GUITaiKhoan.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        else{
+            JOptionPane.showMessageDialog(jPanel1, "Bạn chưa chọn tài khoản cần sửa!");
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        if(!jTextField5.getText().isEmpty()){
+            DTOTaiKhoan tk = new DTOTaiKhoan();
+            tk.setTenDangNhap(jTextField3.getText().toString());
+            tk = taikhoan.gettk(tk);
+            tk.setIsdelete(1);
+            try {
+                taikhoan.updatetaikhoan(tk);
+                JOptionPane.showMessageDialog(jPanel1, "Xóa thành công!");
+                resetall();
+            } catch (SQLException ex) {
+                Logger.getLogger(GUITaiKhoan.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        else{
+            JOptionPane.showMessageDialog(jPanel1, "Bạn chưa chọn tài khoản cần xóa!");
+        }
+    }//GEN-LAST:event_jButton3ActionPerformed
     public void cbcheck(){
         if(jCheckBox1.isSelected()){
             try {
