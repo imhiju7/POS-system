@@ -689,7 +689,7 @@ public class GUIPhieuNhap extends javax.swing.JPanel {
             }
         }
         else{
-            JOptionPane.showMessageDialog(jPanel1, "Chọn khoảng thời gian!");
+            JOptionPane.showMessageDialog(jPanel1, "Chưa nhập thông tin kiếm!");
         }
     }//GEN-LAST:event_jButton7ActionPerformed
 

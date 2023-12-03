@@ -26,4 +26,7 @@ public class BUSSanPham {
     public String getname(DTOSanPham i) throws SQLException{
         return DAO.getsp(i).getTenSanPham();
     }
+    public DTOSanPham getspbyname(DTOSanPham i) throws SQLException{
+        return DAO.getspbyname(i);
+    }
 }

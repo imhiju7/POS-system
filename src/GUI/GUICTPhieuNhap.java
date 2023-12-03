@@ -7,7 +7,14 @@ package GUI;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import javax.swing.JFrame;
-
+import BUS.*;
+import DTO.*;
+import java.sql.SQLException;
+import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 /**
  *
  * @author Hieu PC
@@ -18,7 +25,9 @@ public class GUICTPhieuNhap extends javax.swing.JFrame {
      * Creates new form GUICTPhieuNhap
      */
     static int mapn;
-    public GUICTPhieuNhap(int mapn) {
+    BUSCTPhieuNhap ctphieunhap = new BUSCTPhieuNhap();
+    BUSSanPham sanpham = new BUSSanPham();
+    public GUICTPhieuNhap(int ma) {
         initComponents();
         Toolkit toolkit = Toolkit.getDefaultToolkit();
         Dimension screenSize = toolkit.getScreenSize();
@@ -32,8 +41,9 @@ public class GUICTPhieuNhap extends javax.swing.JFrame {
         // Đặt vị trí của form
         this.setResizable(false);
         this.setLocation(x, y);
+        mapn = ma;
         jLabel1.setText("Phiếu nhập "+mapn);
-        
+        resetall();
     }
 
     /**
@@ -45,6 +55,7 @@ public class GUICTPhieuNhap extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        dateChooser1 = new com.raven.datechooser.DateChooser();
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -86,6 +97,9 @@ public class GUICTPhieuNhap extends javax.swing.JFrame {
         jComboBox3 = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+
+        dateChooser1.setDateFormat("yyyy-MM-dd");
+        dateChooser1.setTextRefernce(jTextField2);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(1182, 816));
@@ -163,9 +177,10 @@ public class GUICTPhieuNhap extends javax.swing.JFrame {
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGap(22, 22, 22)
+                .addGap(16, 16, 16)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel4)
                             .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.TRAILING)
@@ -176,15 +191,15 @@ public class GUICTPhieuNhap extends javax.swing.JFrame {
                             .addComponent(jTextField11, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addComponent(jLabel8)
-                        .addGap(0, 6, Short.MAX_VALUE)
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel6)
+                            .addComponent(jLabel10)
                             .addGroup(jPanel5Layout.createSequentialGroup()
-                                .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(30, 30, 30)
-                                .addComponent(jLabel7))
-                            .addComponent(jLabel10))
+                                .addComponent(jLabel8)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(63, 63, 63)
+                                .addComponent(jLabel7)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 284, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -208,20 +223,19 @@ public class GUICTPhieuNhap extends javax.swing.JFrame {
                     .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                    .addGroup(jPanel5Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jTextField11, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGap(54, 54, 54)
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(15, Short.MAX_VALUE))))
+                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel4.add(jPanel5, java.awt.BorderLayout.WEST);
@@ -493,103 +507,116 @@ public class GUICTPhieuNhap extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        /*
-        if(!jComboBox1.getSelectedItem().equals("Nhà cung cấp")){
-            DTOPhieuNhap pn = new DTOPhieuNhap();
-            DTONhaCungCap ncc = new DTONhaCungCap();
+        
+        if(!jComboBox1.getSelectedItem().equals("Sản phẩm") && !jTextField2.getText().isEmpty() && !jTextField4.getText().isEmpty() && !jTextField11.getText().isEmpty()){
+            DTOCTPhieuNhap ctpn = new DTOCTPhieuNhap();
+            DTOSanPham sp = new DTOSanPham();
             try {
-                ncc.setTenNhaCungCap(jComboBox1.getSelectedItem().toString());
-                pn.setMaNhaCungCap(nhacungcap.getmancc(ncc).getMaNhaCungCap());
-                pn.setGhiChu(jTextField5.getText().toString());
-                pn.setIsHidden(0);
-                pn.setNgayNhap(new Date());
-                pn.setMaNhanVien(2);
-                pn.setTongTien(0);
-                phieunhap.addphieunhap(pn);
-                try {
+                sp.setTenSanPham(jComboBox1.getSelectedItem().toString());
+                sp = sanpham.getspbyname(sp);
+                ctpn.setMaSanPham(sp.getMaSanPham());
+                if(ctphieunhap.checksp(sp.getMaSanPham(), ctpn.getMaCTPhieuNhap(),mapn)){
+                    ctpn.setMaPhieuNhap(mapn);
+                    ctpn.setDonGia(Double.parseDouble(jTextField4.getText().toString()));
+                    ctpn.setSoLuong(Integer.parseInt(jTextField11.getText().toString()));
+                    ctpn.setSoluongtonkho(ctpn.getSoLuong());
+                    ctpn.setNgayhethan(ctphieunhap.convertStringToDate(jTextField2.getText().toString()));
+                    ctpn.setIshidden(0);
+                    ctpn.setGhichu(jTextField5.getText().toString());
+                    ctphieunhap.addctphieunhap(ctpn);
                     JOptionPane.showMessageDialog(jPanel1, "Thêm thành công!");
-                    phieunhap.jtimport(jTable1, phieunhap.getlist());
-                } catch (ParseException ex) {
-                    Logger.getLogger(GUIPhieuNhap.class.getName()).log(Level.SEVERE, null, ex);
+                    resetall();
+                }
+                else{
+                    JOptionPane.showMessageDialog(jPanel1, "Sản phẩm hiện đã có trong phiếu nhập!");
                 }
             } catch (SQLException ex) {
-                Logger.getLogger(GUIPhieuNhap.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(GUICTPhieuNhap.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         else{
-            JOptionPane.showMessageDialog(jPanel1, "Vui lòng chọn nhà cung cấp trước khi thêm!");
+            JOptionPane.showMessageDialog(jPanel1, "Vui lòng chọn đầy đủ thông tin trước khi thêm!");
         }
-        */
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        /*
-        if(!jComboBox1.getSelectedItem().equals("Nhà cung cấp") && !jTextField8.getText().isEmpty()){
-            DTOPhieuNhap pn = new DTOPhieuNhap();
-            DTONhaCungCap ncc = new DTONhaCungCap();
+        if(!jComboBox1.getSelectedItem().equals("Sản phẩm") && !jTextField8.getText().isEmpty() && !jTextField2.getText().isEmpty() && !jTextField4.getText().isEmpty() && !jTextField11.getText().isEmpty()){
+            DTOCTPhieuNhap ctpn = new DTOCTPhieuNhap();
+            DTOSanPham sp = new DTOSanPham();
             try {
-                pn = phieunhap.getpn(Integer.parseInt(jTextField8.getText().toString()));
-                ncc.setTenNhaCungCap(jComboBox1.getSelectedItem().toString());
-                pn.setMaNhaCungCap(nhacungcap.getmancc(ncc).getMaNhaCungCap());
-                pn.setGhiChu(jTextField5.getText().toString());
-                System.out.println(pn.getMaPhieuNhap()+" "+pn.getMaNhaCungCap()+" "+pn.getGhiChu());
-                phieunhap.updatephieunhap(pn);
-                try {
+                sp.setTenSanPham(jComboBox1.getSelectedItem().toString());
+                sp = sanpham.getspbyname(sp);
+                ctpn.setMaSanPham(sp.getMaSanPham());
+                ctpn.setMaCTPhieuNhap(Integer.parseInt(jTextField8.getText().toString()));
+                if(ctphieunhap.checksp(sp.getMaSanPham(), ctpn.getMaCTPhieuNhap(),mapn)){
+                    ctpn.setMaPhieuNhap(mapn);
+                    ctpn.setDonGia(Double.parseDouble(jTextField4.getText().toString()));
+                    ctpn.setSoLuong(Integer.parseInt(jTextField11.getText().toString()));
+                    ctpn.setSoluongtonkho(Integer.parseInt(jTextField3.getText().toString()));
+                    ctpn.setNgayhethan(ctphieunhap.convertStringToDate(jTextField2.getText().toString()));
+                    ctpn.setIshidden(0);
+                    ctpn.setGhichu(jTextField5.getText().toString());
+                    ctphieunhap.updatectphieunhap(ctpn);
                     JOptionPane.showMessageDialog(jPanel1, "Sửa thành công!");
-                    phieunhap.jtimport(jTable1, phieunhap.getlist());
-                } catch (ParseException ex) {
-                    Logger.getLogger(GUIPhieuNhap.class.getName()).log(Level.SEVERE, null, ex);
+                    resetall();
+                }
+                else{
+                    JOptionPane.showMessageDialog(jPanel1, "Trùng sản phẩm, vui lòng chọn lại!");
                 }
             } catch (SQLException ex) {
-                Logger.getLogger(GUIPhieuNhap.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (ParseException ex) {
-                Logger.getLogger(GUIPhieuNhap.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(GUICTPhieuNhap.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         else{
-            JOptionPane.showMessageDialog(jPanel1, "Vui lòng chọn nhà cung cấp trước khi sửa!");
+            JOptionPane.showMessageDialog(jPanel1, "Vui lòng chọn sản phẩm trước khi sửa!");
         }
-        */
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
-        /*
+
         if(!jTextField8.getText().isEmpty()){
-            DTOPhieuNhap pn = new DTOPhieuNhap();
+            DTOCTPhieuNhap ctpn = new DTOCTPhieuNhap();
             try {
-                pn.setMaPhieuNhap(Integer.parseInt(jTextField8.getText().toString()));
-                pn = phieunhap.getpn(pn.getMaPhieuNhap());
-                pn.setIsHidden(1);
-                phieunhap.updatephieunhap(pn);
-                try {
-                    JOptionPane.showMessageDialog(jPanel1, "Xóa thành công!");
-                    phieunhap.jtimport(jTable1, phieunhap.getlist());
-                } catch (ParseException ex) {
-                    Logger.getLogger(GUIPhieuNhap.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                ctpn.setMaCTPhieuNhap(Integer.parseInt(jTextField8.getText().toString()));
+                ctpn = ctphieunhap.getctpn(ctpn);
+                ctphieunhap.deletephieunhap(ctpn);
+                JOptionPane.showMessageDialog(jPanel1, "Xóa thành công!");
+                resetall();
             } catch (SQLException ex) {
-                Logger.getLogger(GUIPhieuNhap.class.getName()).log(Level.SEVERE, null, ex);
-            }   catch (ParseException ex) {
                 Logger.getLogger(GUIPhieuNhap.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         else{
             JOptionPane.showMessageDialog(jPanel1, "Vui lòng chọn phiếu nhập trước khi xóa!");
         }
-        */
     }//GEN-LAST:event_jButton3ActionPerformed
-
+    public void resetall(){
+        jTextField8.setText("");
+       jTextField2.setText("");
+       jTextField4.setText("");
+       jTextField11.setText("");
+       jTextField3.setText("");
+       jTextField5.setText("");
+       jTextField6.setText("");
+       jTextField10.setText("");
+       jTextField9.setText("");
+       jComboBox2.setSelectedItem("Loại tìm kiếm");
+       jComboBox3.setSelectedItem("Loại");
+        try {
+            ctphieunhap.cbimport(jComboBox1, sanpham.getlist());
+            ctphieunhap.jtimport(jTable1, ctphieunhap.getlist(mapn));
+        } catch (SQLException ex) {
+            Logger.getLogger(GUICTPhieuNhap.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
+            Logger.getLogger(GUICTPhieuNhap.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
-        /*
-      //  resetall();
-        jTextField6.setText("");
-        jTextField10.setText("");
-        jTextField9.setText("");
-        jComboBox2.setSelectedItem("Loại tìm kiếm");
-        jComboBox3.setSelectedItem("Loại");*/
+       resetall();
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
@@ -598,20 +625,17 @@ public class GUICTPhieuNhap extends javax.swing.JFrame {
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
-        /*
+        
         int select = jComboBox2.getSelectedIndex();
         String item = jTextField6.getText().toString();
         if(!item.isEmpty()){
             try {
-                ArrayList<DTOPhieuNhap> list = phieunhap.jtexport(jTable1);
+                ArrayList<DTOCTPhieuNhap> list = ctphieunhap.jtexport(jTable1);
                 if(select == 1){
-                    phieunhap.jtimport(jTable1, phieunhap.searchtenncc(list, item));
+                    ctphieunhap.jtimport(jTable1, ctphieunhap.searchtensp(list, item));
                 }
                 else if(select == 2){
-                    phieunhap.jtimport(jTable1, phieunhap.searchtennv(list, item));
-                }
-                else if(select == 3){
-                    phieunhap.jtimport(jTable1, phieunhap.searchghichu(list, item));
+                    ctphieunhap.jtimport(jTable1, ctphieunhap.searchghichu(list, item));
                 }
                 else{
                     JOptionPane.showMessageDialog(jPanel1, "Hãy chọn loại tìm kiếm!");
@@ -622,24 +646,30 @@ public class GUICTPhieuNhap extends javax.swing.JFrame {
         }
         else{
             JOptionPane.showMessageDialog(jPanel1, "Nhập thông tin tìm kiếm!");
-        }*/
+        }
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
         // TODO add your handling code here:
-        /*
+        
         int select = jComboBox3.getSelectedIndex();
         String day2 = jTextField9.getText().toString();
         String day1 = jTextField10.getText().toString();
         if(!day1.isEmpty() && !day2.isEmpty()){
-            ArrayList<DTOPhieuNhap> list;
+            ArrayList<DTOCTPhieuNhap> list;
             try {
-                list = phieunhap.jtexport(jTable1);
+                list = ctphieunhap.jtexport(jTable1);
                 if(select == 1){
-                    phieunhap.jtimport(jTable1, phieunhap.searchdate(list,phieunhap.convertStringToDate(day1),phieunhap.convertStringToDate(day2)));
+                    ctphieunhap.jtimport(jTable1, ctphieunhap.searchdate(list,ctphieunhap.convertStringToDate(day1),ctphieunhap.convertStringToDate(day2)));
                 }
                 else if(select == 2){
-                    phieunhap.jtimport(jTable1, phieunhap.searchmoney(list, Double.parseDouble(day1),Double.parseDouble(day2)));
+                    ctphieunhap.jtimport(jTable1, ctphieunhap.searchsl(list, Integer.parseInt(day1),Integer.parseInt(day2)));
+                }
+                else if(select == 3){
+                    ctphieunhap.jtimport(jTable1, ctphieunhap.searchsltk(list, Integer.parseInt(day1),Integer.parseInt(day2)));
+                }
+                else if(select == 4){
+                    ctphieunhap.jtimport(jTable1, ctphieunhap.searchmoney(list, Double.parseDouble(day1),Double.parseDouble(day2)));
                 }
                 else{
                     JOptionPane.showMessageDialog(jPanel1, "Hãy chọn loại tìm kiếm!");
@@ -649,23 +679,23 @@ public class GUICTPhieuNhap extends javax.swing.JFrame {
             }
         }
         else{
-            JOptionPane.showMessageDialog(jPanel1, "Chọn khoảng thời gian!");
-        }*/
+            JOptionPane.showMessageDialog(jPanel1, "Hãy nhập đầy đủ thông tin tìm kiếm!");
+        }
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
         // TODO add your handling code here:
-        /*
+        
         int index = jTable1.getSelectedRow();
         jTextField8.setText(jTable1.getValueAt(index, 0).toString());
-        jComboBox1.setSelectedItem(jTable1.getValueAt(index, 1).toString());
-        jTextField7.setText(jTable1.getValueAt(index, 2).toString());
-        jTextField4.setText(jTable1.getValueAt(index, 3).toString());
-        jTextField2.setText(jTable1.getValueAt(index, 4).toString());
-        if(jTable1.getValueAt(index, 5)!=null){
-            jTextField5.setText(jTable1.getValueAt(index, 5).toString());
+        jTextField2.setText(jTable1.getValueAt(index, 5).toString());
+        jTextField4.setText(jTable1.getValueAt(index, 2).toString());
+        jTextField11.setText(jTable1.getValueAt(index, 3).toString());
+        jTextField3.setText(jTable1.getValueAt(index, 4).toString());
+        if(jTable1.getValueAt(index, 6)!=null){
+            jTextField5.setText(jTable1.getValueAt(index, 6).toString());
         }
-*/
+        jComboBox1.setSelectedItem(jTable1.getValueAt(index, 1).toString());
     }//GEN-LAST:event_jTable1MouseClicked
 
     /**
@@ -704,6 +734,7 @@ public class GUICTPhieuNhap extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private com.raven.datechooser.DateChooser dateChooser1;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;

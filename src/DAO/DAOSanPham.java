@@ -19,20 +19,41 @@ import java.util.ArrayList;
 public class DAOSanPham {
     public DTOSanPham getsp(DTOSanPham i) throws SQLException{
         Connection con = Connect.connection();
-        String sql = "SELECT * FROM sanpham WHERE maSanPham = "+Integer.toString(i.getMaSanPham());
+        String sql = "SELECT * FROM sanpham WHERE maSanPham = ? ";
         PreparedStatement pst =  con.prepareStatement(sql);
+        pst.setInt(1, i.getMaSanPham());
         ResultSet rs = pst.executeQuery();
-        
         DTOSanPham sp = new DTOSanPham();
-        sp.setMaSanPham(rs.getInt("maSanPham"));
-        sp.setTenSanPham(rs.getString("tenSanPham"));
-        sp.setSoLuong(rs.getInt("soLuong"));
-        sp.setGiaBan(rs.getDouble("giaBan"));
-        sp.setNgayThem(rs.getTimestamp("ngayThem"));
-        sp.setIshidden(rs.getInt("isHidden"));
-        sp.setIsdelete(rs.getInt("isDelete"));
-        sp.setImg(rs.getString("img"));
-        
+        while(rs.next()){
+            sp.setMaSanPham(rs.getInt("maSanPham"));
+            sp.setTenSanPham(rs.getString("tenSanPham"));
+            sp.setSoLuong(rs.getInt("soLuong"));
+            sp.setGiaBan(rs.getDouble("giaBan"));
+            sp.setNgayThem(rs.getTimestamp("ngayThem"));
+            sp.setIshidden(rs.getInt("isHidden"));
+            sp.setIsdelete(rs.getInt("isDelete"));
+            sp.setImg(rs.getString("img"));
+        }
+        con.close();
+        return sp;
+    }
+    public DTOSanPham getspbyname(DTOSanPham i ) throws SQLException{
+        Connection con = Connect.connection();
+        String sql = "SELECT * FROM sanpham WHERE tenSanPham = ? ";
+        PreparedStatement pst =  con.prepareStatement(sql);
+        pst.setString(1, i.getTenSanPham());
+        ResultSet rs = pst.executeQuery();
+        DTOSanPham sp = new DTOSanPham();
+        while(rs.next()){
+            sp.setMaSanPham(rs.getInt("maSanPham"));
+            sp.setTenSanPham(rs.getString("tenSanPham"));
+            sp.setSoLuong(rs.getInt("soLuong"));
+            sp.setGiaBan(rs.getDouble("giaBan"));
+            sp.setNgayThem(rs.getTimestamp("ngayThem"));
+            sp.setIshidden(rs.getInt("isHidden"));
+            sp.setIsdelete(rs.getInt("isDelete"));
+            sp.setImg(rs.getString("img"));
+        }
         con.close();
         return sp;
     }

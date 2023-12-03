@@ -85,9 +85,12 @@ public class DTOCTPhieuNhap {
         return ishidden;
     }
 
-    public void setIshidden() {
-        if(this.soluongtonkho == 0) this.ishidden = 1;
-        else this.ishidden = 0;
+    public void setIshidden(int hidden) {
+        if(hidden == 0){
+            if(this.soluongtonkho == 0 || this.ngayhethan.before(new Date())) this.ishidden = 1;
+            else this.ishidden = 0;
+        }
+        else this.ishidden = hidden;
     }
 
     public String getGhichu() {
