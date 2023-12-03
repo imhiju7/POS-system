@@ -7,6 +7,7 @@ import BUS.*;
 import DTO.*;
 import java.sql.SQLException;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -520,6 +521,13 @@ public class GUIPhieuNhap extends javax.swing.JPanel {
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         // TODO add your handling code here:
+        if(!jTextField8.getText().toString().isEmpty()){
+            int mapn = Integer.parseInt(jTextField8.getText().toString());
+            new GUICTPhieuNhap(mapn).setVisible(true);
+        }
+        else{
+            JOptionPane.showMessageDialog(jPanel1, "Vui lòng chọn phiếu nhập để xem");
+        }
 
     }//GEN-LAST:event_jButton6ActionPerformed
 
@@ -553,6 +561,7 @@ public class GUIPhieuNhap extends javax.swing.JPanel {
             DTOPhieuNhap pn = new DTOPhieuNhap();
             DTONhaCungCap ncc = new DTONhaCungCap();
             try {
+                ncc.setTenNhaCungCap(jComboBox1.getSelectedItem().toString());
                 pn.setMaNhaCungCap(nhacungcap.getmancc(ncc).getMaNhaCungCap());
                 pn.setGhiChu(jTextField5.getText().toString());
                 pn.setIsHidden(0);
@@ -582,6 +591,7 @@ public class GUIPhieuNhap extends javax.swing.JPanel {
             DTONhaCungCap ncc = new DTONhaCungCap();
             try {
                 pn = phieunhap.getpn(Integer.parseInt(jTextField8.getText().toString()));
+                ncc.setTenNhaCungCap(jComboBox1.getSelectedItem().toString());
                 pn.setMaNhaCungCap(nhacungcap.getmancc(ncc).getMaNhaCungCap());
                 pn.setGhiChu(jTextField5.getText().toString());
                 phieunhap.updatephieunhap(pn);
@@ -606,19 +616,22 @@ public class GUIPhieuNhap extends javax.swing.JPanel {
         // TODO add your handling code here:
         if(!jTextField8.getText().isEmpty()){
         DTOPhieuNhap pn = new DTOPhieuNhap();
-        pn.setMaPhieuNhap(Integer.parseInt(jTextField8.getText().toString()));
-        pn.setIsHidden(1);
         try {
+            pn.setMaPhieuNhap(Integer.parseInt(jTextField8.getText().toString()));
+            pn = phieunhap.getpn(pn.getMaPhieuNhap());
+            pn.setIsHidden(1);
             phieunhap.updatephieunhap(pn);
             try {
-                JOptionPane.showMessageDialog(jPanel1, "Xửa thành công!");
+                JOptionPane.showMessageDialog(jPanel1, "Xóa thành công!");
                 phieunhap.jtimport(jTable1, phieunhap.getlist());
             } catch (ParseException ex) {
                 Logger.getLogger(GUIPhieuNhap.class.getName()).log(Level.SEVERE, null, ex);
             }
         } catch (SQLException ex) {
             Logger.getLogger(GUIPhieuNhap.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        }   catch (ParseException ex) {
+                Logger.getLogger(GUIPhieuNhap.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         else{
             JOptionPane.showMessageDialog(jPanel1, "Vui lòng chọn phiếu nhập trước khi xóa!");
@@ -627,10 +640,57 @@ public class GUIPhieuNhap extends javax.swing.JPanel {
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
+        int select = jComboBox2.getSelectedIndex();
+        String item = jTextField6.getText().toString();
+        if(!item.isEmpty()){
+            try {
+                ArrayList<DTOPhieuNhap> list = phieunhap.jtexport(jTable1);
+                if(select == 1){
+                    phieunhap.jtimport(jTable1, phieunhap.searchtenncc(list, item));
+                }
+                else if(select == 2){
+                    phieunhap.jtimport(jTable1, phieunhap.searchtennv(list, item));
+                }
+                else if(select == 3){
+                    phieunhap.jtimport(jTable1, phieunhap.searchghichu(list, item));
+                }
+                else{
+                    JOptionPane.showMessageDialog(jPanel1, "Hãy chọn loại tìm kiếm!");
+                }
+            } catch (SQLException ex) {
+            Logger.getLogger(GUIPhieuNhap.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        else{
+            JOptionPane.showMessageDialog(jPanel1, "Nhập thông tin tìm kiếm!");
+        }
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
         // TODO add your handling code here:
+        int select = jComboBox3.getSelectedIndex();
+        String day2 = jTextField9.getText().toString();
+        String day1 = jTextField10.getText().toString();
+        if(!day1.isEmpty() && !day2.isEmpty()){
+            ArrayList<DTOPhieuNhap> list;
+            try {
+                list = phieunhap.jtexport(jTable1);
+                if(select == 1){
+                    phieunhap.jtimport(jTable1, phieunhap.searchdate(list,phieunhap.convertStringToDate(day1),phieunhap.convertStringToDate(day2)));
+                }
+                else if(select == 2){
+                    phieunhap.jtimport(jTable1, phieunhap.searchmoney(list, Double.parseDouble(day1),Double.parseDouble(day2)));
+                }
+                else{
+                    JOptionPane.showMessageDialog(jPanel1, "Hãy chọn loại tìm kiếm!");
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(GUIPhieuNhap.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        else{
+            JOptionPane.showMessageDialog(jPanel1, "Chọn khoảng thời gian!");
+        }
     }//GEN-LAST:event_jButton7ActionPerformed
 
 

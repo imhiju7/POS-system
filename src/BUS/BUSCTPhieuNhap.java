@@ -8,6 +8,8 @@ import DAO.*;
 import DTO.*;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -24,7 +26,24 @@ public class BUSCTPhieuNhap {
     public int updateCTPhieuNhap(DTOCTPhieuNhap i) throws SQLException{
         return DAO.updatectphieunhap(i);
     }
-    public int deleteCTPhieuNhap(DTOCTPhieuNhap i) throws SQLException{
-        return DAO.deletectphieunhap(i);
+    public void jtimport(JTable jt,ArrayList<DTONhanVien> list) throws SQLException{
+        
+        DefaultTableModel model = new DefaultTableModel();
+
+        model.addColumn("Mã CT Phiếu nhập");
+        model.addColumn("Tên sản phẩm");
+        model.addColumn("Ngày Sinh");
+        model.addColumn("Giới Tính");
+        model.addColumn("Tên Chức Vụ");
+        model.addColumn("Số Điện Thoại");
+        model.addColumn("Email");
+        model.addColumn("Địa Chỉ");
+        
+        for(DTONhanVien i: list){
+            DTOChucVu cv = new DTOChucVu();
+            cv.setMaChucVu(i.getMaChucVu());
+            model.addRow(new Object[]{i.getMaNhanVien(),i.getTenNhanVien(),i.getNgaySinh(),i.getStringGioiTinh(),DAOcv.getcv(cv).getTenChucVu(),i.getSDT(),i.getEmail(),i.getDiaChi()});
+        }
+        jt.setModel(model);
     }
 }

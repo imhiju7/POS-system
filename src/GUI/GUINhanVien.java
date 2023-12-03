@@ -619,7 +619,7 @@ public class GUINhanVien extends javax.swing.JPanel {
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        int select = jComboBox2.getSelectedIndex();
+        
         String day2 = jTextField9.getText().toString();
         String day1 = jTextField10.getText().toString();
         if(!day1.isEmpty() && !day2.isEmpty()){

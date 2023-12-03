@@ -63,8 +63,9 @@ public class DAOCTPhieuNhap {
     }*/
     public ArrayList<DTOCTPhieuNhap> getlist(int maPhieuNhap) throws SQLException{
         Connection con = Connect.connection();
-        String sql = "SELECT * FROM chitietphieunhap WHERE maPhieuNhap= "+maPhieuNhap;
+        String sql = "SELECT * FROM chitietphieunhap WHERE isDelete = 0 and maPhieuNhap=? ";
         PreparedStatement pst =  con.prepareStatement(sql);
+        pst.setInt(1, maPhieuNhap);
         ResultSet rs = pst.executeQuery();
         ArrayList<DTOCTPhieuNhap> list = new ArrayList<>();
         while(rs.next()){
@@ -122,13 +123,5 @@ public class DAOCTPhieuNhap {
         con.close();
         return rowaffect;
     }
-    public int deletectphieunhap(DTOCTPhieuNhap ctpn) throws SQLException{
-        Connection con = Connect.connection();
-        String sql = "DELETE FROM chitietphieunhap WHERE maCTPhieuNhap= ?";
-        PreparedStatement pst = con.prepareStatement(sql);
-        pst.setInt(1, ctpn.getMaCTPhieuNhap());
-        int rowaffect = pst.executeUpdate();
-        con.close();
-        return rowaffect;
-    }
+
 }
