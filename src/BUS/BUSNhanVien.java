@@ -84,7 +84,9 @@ public class BUSNhanVien {
     public String getimg(DTONhanVien i) throws SQLException{
         return DAO.getnv(i).getImg();
     }
-    
+    public DTONhanVien getnvbysdt(DTONhanVien i) throws SQLException{
+        return DAO.getnvbysdt(i);
+    }
     
     public boolean checkgmail(String email) throws SQLException{
         return DAO.checkgmail(email);

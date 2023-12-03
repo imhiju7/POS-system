@@ -32,11 +32,16 @@ public class BUSTaiKhoan {
     public int updatetaikhoan(DTOTaiKhoan i) throws SQLException {
         return DAO.updatetaikhoan(i);
     }
+    public ArrayList<DTONhanVien> getlistsdtnvchcotk(){
+        return DAO.ListComboboxSDT();
+    }
     public void jtimport(JTable jt,ArrayList<DTOTaiKhoan> list) throws SQLException{
         
         DefaultTableModel model = new DefaultTableModel();
 
         model.addColumn("Tên nhân viên");
+        model.addColumn("Số điện thoại");
+        model.addColumn("Email");
         model.addColumn("Tên đăng nhập");
         model.addColumn("Mật khẩu");
         model.addColumn("Ngày tạo");
@@ -45,8 +50,8 @@ public class BUSTaiKhoan {
         for(DTOTaiKhoan i: list){
             DTONhanVien nv = new DTONhanVien();
             nv.setMaNhanVien( i.getMaNhanVien());
-            String tennv = DAOnv.getnv(nv).getTenNhanVien();
-            model.addRow(new Object[]{tennv,i.getTenDangNhap(),i.getMatKhau(),i.getNgayTao(),i.getIsblock()});
+            nv= DAOnv.getnv(nv);
+            model.addRow(new Object[]{nv.getTenNhanVien(),nv.getSDT(),nv.getEmail(),i.getTenDangNhap(),i.getMatKhau(),i.getNgayTao(),i.getIsblock()});
         }
         jt.setModel(model);
     }
@@ -56,9 +61,26 @@ public class BUSTaiKhoan {
         for(int i = 0; i < size; i++){
             DTOTaiKhoan a = new DTOTaiKhoan();
             a.setTenDangNhap(jt.getValueAt(i, 0).toString());
-            a = gettk(a);
+            a = DAO.gettk(a);
             list.add(a);
         }
         return list;
+    }
+    public void cbimport(JComboBox jcb,ArrayList<DTOTaiKhoan> list) throws SQLException{
+        jcb.removeAllItems();
+        jcb.addItem("Số điện thoại");
+        for(DTOTaiKhoan i: list){
+            DTONhanVien nv = new DTONhanVien();
+            nv.setMaNhanVien( i.getMaNhanVien());
+            nv= DAOnv.getnv(nv);
+            jcb.addItem(nv.getSDT());
+        }
+    }
+    public void cbimchtkport(JComboBox jcb,ArrayList<DTONhanVien> list) throws SQLException{
+        jcb.removeAllItems();
+        jcb.addItem("Số điện thoại");
+        for(DTONhanVien i: list){
+            jcb.addItem(i.getSDT());
+        }
     }
 }

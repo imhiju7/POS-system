@@ -18,10 +18,33 @@ import java.sql.Date;
  * @author Hieu PC
  */
 public class DAONhanVien {
+    public DTONhanVien getnvbysdt(DTONhanVien i) throws SQLException{
+        Connection con = Connect.connection();
+        String sql = "SELECT * FROM nhanvien where isDelete= 0 and soDienThoai = ?";
+        PreparedStatement pst =  con.prepareStatement(sql);
+        pst.setString(1, i.getSDT());
+        ResultSet rs = pst.executeQuery();
+        DTONhanVien nv = new DTONhanVien();
+        while(rs.next()){
+            nv.setMaNhanVien(rs.getInt("maNhanVien"));
+            nv.setTenNhanVien(rs.getString("tenNhanVien"));
+            nv.setNgaySinh(rs.getDate("ngaySinh"));
+            nv.setEmail(rs.getString("Email"));
+            nv.setSDT(rs.getString("soDienThoai"));
+            nv.setDiaChi(rs.getString("diaChi"));
+            nv.setGioiTinh(rs.getInt("gioiTinh"));
+            nv.setMaChucVu(rs.getInt("maChucVu"));
+            nv.setIsdelete(rs.getInt("isDelete"));
+            nv.setImg(rs.getString("img"));
+        }
+        con.close();
+        return nv;
+    }
     public DTONhanVien getnv(DTONhanVien i) throws SQLException{
         Connection con = Connect.connection();
-        String sql = "SELECT * FROM nhanvien where isDelete= 0 and maNhanVien ="+Integer.toString(i.getMaNhanVien());
+        String sql = "SELECT * FROM nhanvien where isDelete= 0 and maNhanVien = ?";
         PreparedStatement pst =  con.prepareStatement(sql);
+        pst.setInt(1, i.getMaNhanVien());
         ResultSet rs = pst.executeQuery();
         DTONhanVien nv = new DTONhanVien();
         while(rs.next()){
