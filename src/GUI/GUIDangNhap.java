@@ -6,6 +6,7 @@ package GUI;
 
 import BUS.BUSTaiKhoan;
 import DTO.DTOTaiKhoan;
+import java.awt.event.KeyEvent;
 import javax.swing.AbstractButton;
 import javax.swing.JOptionPane;
 
@@ -99,6 +100,11 @@ public class GUIDangNhap extends javax.swing.JFrame {
 
         txtTenDangNhap.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         txtTenDangNhap.setPreferredSize(new java.awt.Dimension(80, 26));
+        txtTenDangNhap.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtTenDangNhapKeyPressed(evt);
+            }
+        });
 
         jPanel6.setBackground(new java.awt.Color(245, 232, 183));
 
@@ -122,6 +128,11 @@ public class GUIDangNhap extends javax.swing.JFrame {
         );
 
         txtMatKhau.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        txtMatKhau.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtMatKhauKeyPressed(evt);
+            }
+        });
 
         jPanel7.setLayout(new java.awt.BorderLayout());
 
@@ -252,6 +263,18 @@ public class GUIDangNhap extends javax.swing.JFrame {
         dangNhap();
     }//GEN-LAST:event_btnDangNhapActionPerformed
 
+    private void txtTenDangNhapKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTenDangNhapKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            dangNhap();
+        }
+    }//GEN-LAST:event_txtTenDangNhapKeyPressed
+
+    private void txtMatKhauKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtMatKhauKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            dangNhap();
+        }
+    }//GEN-LAST:event_txtMatKhauKeyPressed
+
     /**
      * @param args the command line arguments
      */
@@ -298,29 +321,26 @@ public class GUIDangNhap extends javax.swing.JFrame {
         }
         DTOtk = BUStk.kiemTraTaiKhoan(tenDangNhap, matKhau);
         if (DTOtk == null) {
-            // Kiểm tra tài khoản có bị xóa không
-            if (!BUStk.checkTaiKhoan(tenDangNhap)) {
-                JOptionPane.showMessageDialog(btnDangNhap, "Tài khoản này không tồn tại!");
+            // Kiểm tra xem tên đăng nhập có tồn tại không
+            if (!BUStk.checkTenDangNhap(tenDangNhap)) {
+                JOptionPane.showMessageDialog(btnDangNhap, "Tên đăng nhập không tồn tại!");
             } else {
-                // Kiểm tra xem tên đăng nhập có tồn tại không
-                if (!BUStk.checkTenDangNhap(tenDangNhap)) {
-                    JOptionPane.showMessageDialog(btnDangNhap, "Tên đăng nhập không tồn tại!");
+                // Kiểm tra xem mật khẩu có đúng không
+                if (!BUStk.checkMatKhau(tenDangNhap, matKhau)) {
+                    JOptionPane.showMessageDialog(btnDangNhap, "Sai mật khẩu. Xin hãy thử lại!");
                 } else {
-                    // Kiểm tra xem mật khẩu có đúng không
-                    if (!BUStk.checkMatKhau(tenDangNhap, matKhau)) {
-                        JOptionPane.showMessageDialog(btnDangNhap, "Sai mật khẩu. Xin hãy thử lại!");
+                    // Kiểm tra xem tài khoản có bị khóa không
+                    if (BUStk.checkKhoaTaiKhoan(tenDangNhap)) {
+                        JOptionPane.showMessageDialog(btnDangNhap, "Tài khoản của bạn đã bị khóa!");
                     } else {
-                        // Kiểm tra xem tài khoản có bị khóa không
-                        if (BUStk.checkKhoaTaiKhoan(tenDangNhap)) {
-                            JOptionPane.showMessageDialog(btnDangNhap, "Tài khoản của bạn đã bị khóa!");
-                        } else {
-                            JOptionPane.showMessageDialog(btnDangNhap, "Đăng nhập thành công với " + tenDangNhap);
-                        }
+                        int maNhanVien = BUStk.layMaNhanVien(tenDangNhap);
+                        JOptionPane.showMessageDialog(btnDangNhap, "Đăng nhập thành công với " + tenDangNhap);
+                        new Main(maNhanVien).setVisible(true);
                     }
                 }
             }
         } else {
-            JOptionPane.showMessageDialog(btnDangNhap, "Đăng nhập thành công với " + tenDangNhap);
+            JOptionPane.showMessageDialog(btnDangNhap, "Đăng nhập thất bại");
         }
     }
 

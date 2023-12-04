@@ -31,12 +31,12 @@ public class BUSTaiKhoan {
         return DAO.checkMatKhau(tenDangNhap, matKhau);
     }
 
-    public boolean checkTaiKhoan(String tenDangNhap) {
-        return DAO.checkTaiKhoan(tenDangNhap);
-    }
-
     public boolean checkKhoaTaiKhoan(String tenDangNhap) {
         return DAO.checkKhoaTaiKhoan(tenDangNhap);
+    }
+
+    public int layMaNhanVien(String tenDangNhap) {
+        return DAO.layMaNhanVien(tenDangNhap);
     }
 
     public ArrayList<DTOTaiKhoan> getlist() throws SQLException, ParseException {
@@ -47,8 +47,8 @@ public class BUSTaiKhoan {
         return DAO.addtaikhoan(i);
     }
 
-    public int edittaikhoan(DTOTaiKhoan i) throws SQLException {
-        return DAO.edittaikhoan(i);
+    public int uppdatetaikhoan(DTOTaiKhoan i) throws SQLException {
+        return DAO.uppdatetaikhoan(i);
     }
 
     public boolean khoaTaiKhoan(String tenDangNhap) {

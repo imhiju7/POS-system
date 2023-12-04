@@ -20,7 +20,7 @@ public class DAOTaiKhoan {
 
     public DTOTaiKhoan kiemTraTaiKhoan(String tenDangNhap, String matKhau) {
         Connection con = Connect.connection();
-        String sql = "select * from taikhoan where tenDangNhap = ? and matKhau = ? and isBlock = 0 and isDelete = 0";
+        String sql = "select * from taikhoan where tenDangNhap = ? and matKhau = ? and isBlock = 0";
         ArrayList<DTOTaiKhoan> dstk = new ArrayList<>();
         try {
             PreparedStatement pst = con.prepareStatement(sql);
@@ -84,23 +84,7 @@ public class DAOTaiKhoan {
         return false;
     }
 
-    //Kiểm tra xem tài khoản có bị xóa không
-    public boolean checkTaiKhoan(String tenDangNhap) {
-        Connection con = Connect.connection();
-        String sql = "select * from taikhoan where tenDangNhap = ? and isDelete = 1 ";
-        try {
-            PreparedStatement pst = con.prepareStatement(sql);
-
-            pst.setString(1, tenDangNhap);
-            ResultSet rs = pst.executeQuery();
-            return rs.next();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
-
+    //Kiểm tra trạng thái
     public boolean checkKhoaTaiKhoan(String tenDangNhap) {
         Connection con = Connect.connection();
         String sql = "select * from taikhoan where tenDangNhap = ? and isBlock = 1 ";
@@ -115,6 +99,26 @@ public class DAOTaiKhoan {
             e.printStackTrace();
         }
         return false;
+    }
+
+    //Lấy mã nhân viên theo tên đăng nhập
+    public int layMaNhanVien(String tenDangNhap) {
+        int maNhanVien = -1;
+        Connection con = Connect.connection();
+        String sql = "SELECT maNhanvien "
+                + "FROM taikhoan "
+                + "WHERE taikhoan.tenDangNhap = ? ";
+        try {
+            PreparedStatement pst = con.prepareStatement(sql);
+            pst.setString(1, tenDangNhap);
+            ResultSet rs = pst.executeQuery();
+            if (rs.next()) {
+                maNhanVien = rs.getInt("maNhanVien");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return maNhanVien;
     }
 
     public ArrayList<DTOTaiKhoan> getList() throws SQLException, ParseException {
@@ -174,9 +178,10 @@ public class DAOTaiKhoan {
         String sql = "SELECT n.tenNhanVien"
                 + " FROM taikhoan AS t "
                 + "INNER JOIN nhanvien AS n ON t.maNhanVien = n.maNhanVien "
-                + "WHERE t.tenDangNhap = '" + tenDangNhap + "'";
+                + "WHERE t.tenDangNhap = ?";
         try {
             PreparedStatement pst = con.prepareStatement(sql);
+            pst.setString(1, tenDangNhap);
 
             ResultSet rs = pst.executeQuery();
             while (rs.next()) {
@@ -203,7 +208,7 @@ public class DAOTaiKhoan {
         return rowaffect;
     }
 
-    public int edittaikhoan(DTOTaiKhoan tk) throws SQLException {
+    public int uppdatetaikhoan(DTOTaiKhoan tk) throws SQLException {
         Connection con = Connect.connection();
         String sql = "UPDATE taikhoan set matKhau= ?, ngayTao= ?,isBlock= ? WHERE tenDangNhap= ?";
         PreparedStatement pst = con.prepareStatement(sql);
