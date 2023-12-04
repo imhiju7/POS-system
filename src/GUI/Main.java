@@ -54,7 +54,7 @@ public class Main extends javax.swing.JFrame {
             @Override
             public void menuSelected(int menuIndex, int subMenuIndex) {
                 
-                main.showForm(new GUIKhuyenMai());
+                main.showForm(new GUINhaCungCap());
             }
         });
         menu.addEventShowPopup(new EventShowPopupMenu() {
@@ -136,6 +136,11 @@ public class Main extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_formMouseClicked
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */

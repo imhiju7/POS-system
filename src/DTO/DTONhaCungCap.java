@@ -67,6 +67,14 @@ public class DTONhaCungCap {
     public void setNgayTao(Date ngayTao) {
         this.ngayTao = ngayTao;
     }
+    public String trangthaistr(){
+        if(this.trangThai == 1) return "Dừng cung ứng";
+        else return "Đang cung ứng";
+    }
+    public void settrangthaistr(String tt){
+        if(tt.equals("Dừng cung ứng")) this.trangThai = 1;
+        else this.trangThai = 0;
+    }
     public DTONhaCungCap(){}
     public DTONhaCungCap(int maNhaCungCap, String tenNhaCungCap, String SDT, String Email, String diaChi, int trangThai, Date ngayTao,int isHidden) {
         this.maNhaCungCap = maNhaCungCap;

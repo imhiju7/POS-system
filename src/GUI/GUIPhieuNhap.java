@@ -25,20 +25,7 @@ public class GUIPhieuNhap extends javax.swing.JPanel {
     BUSNhaCungCap nhacungcap = new BUSNhaCungCap();
     public GUIPhieuNhap() {
         initComponents();
-        try {
-            phieunhap.jtimport(jTable1, phieunhap.getlist());
-        } catch (SQLException ex) {
-            Logger.getLogger(GUIPhieuNhap.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ParseException ex) {
-            Logger.getLogger(GUIPhieuNhap.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        try {
-            phieunhap.cbnccimport(jComboBox1, nhacungcap.getlist());
-        } catch (SQLException ex) {
-            Logger.getLogger(GUIPhieuNhap.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ParseException ex) {
-            Logger.getLogger(GUIPhieuNhap.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        resetall();
     }
     public void resetall(){
         jTextField8.setText("");
@@ -49,19 +36,12 @@ public class GUIPhieuNhap extends javax.swing.JPanel {
         jTextField5.setText("");
         try {
             phieunhap.jtimport(jTable1, phieunhap.getlist());
+            phieunhap.cbnccimport(jComboBox1, nhacungcap.getlistcb());
         } catch (SQLException ex) {
             Logger.getLogger(GUIPhieuNhap.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ParseException ex) {
             Logger.getLogger(GUIPhieuNhap.class.getName()).log(Level.SEVERE, null, ex);
         }
-        try {
-            phieunhap.cbnccimport(jComboBox1, nhacungcap.getlist());
-        } catch (SQLException ex) {
-            Logger.getLogger(GUIPhieuNhap.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ParseException ex) {
-            Logger.getLogger(GUIPhieuNhap.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
     }
     /**
      * This method is called from within the constructor to initialize the form.
