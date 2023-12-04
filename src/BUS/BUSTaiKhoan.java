@@ -66,7 +66,10 @@ public class BUSTaiKhoan {
         int size = jt.getRowCount();
         for(int i = 0; i < size; i++){
             DTOTaiKhoan a = new DTOTaiKhoan();
-            a.setTenDangNhap(jt.getValueAt(i, 3).toString());
+            DTONhanVien nv = new DTONhanVien();
+            nv.setSDT(jt.getValueAt(i, 1).toString());
+            nv = DAOnv.getnvbysdt(nv);
+            a.setMaNhanVien(nv.getMaNhanVien());
             a = DAO.gettk(a);
             list.add(a);
         }
@@ -138,6 +141,15 @@ public class BUSTaiKhoan {
             a.setMaNhanVien(i.getMaNhanVien());
             a = DAOnv.getnv(a);
             if(a.getEmail().contains(email)){
+                result.add(i);
+            }
+        }
+        return result;
+    }
+    public ArrayList<DTOTaiKhoan> searchblock(ArrayList<DTOTaiKhoan> list,int block) throws SQLException{
+        ArrayList<DTOTaiKhoan> result = new ArrayList<>();
+        for(DTOTaiKhoan i: list){
+            if(i.getIsblock() == 1){
                 result.add(i);
             }
         }

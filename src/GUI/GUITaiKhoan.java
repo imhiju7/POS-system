@@ -99,6 +99,7 @@ public class GUITaiKhoan extends javax.swing.JPanel {
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
+        jButton6 = new javax.swing.JButton();
         jPanel8 = new javax.swing.JPanel();
         jTextField6 = new javax.swing.JTextField();
         jButton5 = new javax.swing.JButton();
@@ -256,17 +257,14 @@ public class GUITaiKhoan extends javax.swing.JPanel {
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addComponent(jCheckBox2)
                 .addGap(18, 18, 18))
@@ -314,6 +312,18 @@ public class GUITaiKhoan extends javax.swing.JPanel {
             }
         });
 
+        jButton6.setBackground(new java.awt.Color(161, 204, 209));
+        jButton6.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jButton6.setForeground(new java.awt.Color(0, 0, 0));
+        jButton6.setText("Export");
+        jButton6.setToolTipText("");
+        jButton6.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
         jPanel7Layout.setHorizontalGroup(
@@ -327,6 +337,8 @@ public class GUITaiKhoan extends javax.swing.JPanel {
                 .addComponent(jButton3)
                 .addGap(18, 18, 18)
                 .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(62, 62, 62)
+                .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel7Layout.setVerticalGroup(
@@ -337,7 +349,8 @@ public class GUITaiKhoan extends javax.swing.JPanel {
                     .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -351,7 +364,7 @@ public class GUITaiKhoan extends javax.swing.JPanel {
             }
         });
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Loại tìm kiếm", "Tên nhân viên", "Số điện thoại", "Email" }));
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Loại tìm kiếm", "Tên nhân viên", "Số điện thoại", "Email", "Block" }));
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
@@ -558,8 +571,23 @@ public class GUITaiKhoan extends javax.swing.JPanel {
                 nv.setSDT(jComboBox1.getSelectedItem().toString());
                 try {
                     nv = nhanvien.getnvbysdt(nv);
+                    DTOTaiKhoan tk = new DTOTaiKhoan();
+                    tk.setMaNhanVien(nv.getMaNhanVien());
+                    tk = taikhoan.gettk(tk);
                     jTextField5.setText(nv.getEmail());
                     jTextField7.setText(nv.getTenNhanVien());
+                    jTextField3.setText(tk.getTenDangNhap());
+                    jTextField4.setText(tk.getMatKhau());
+                    if(tk.getNgayTao() !=null){
+                        jTextField2.setText(tk.getNgayTao().toString());
+                    }
+                   // jTextField2.setText(tk.getNgayTao().toString());
+                    if(tk.getIsblock()==1){
+                        jCheckBox2.setSelected(true);
+                    }
+                    else{
+                        jCheckBox2.setSelected(false);
+                    }
                 } catch (SQLException ex) {
                     Logger.getLogger(GUITaiKhoan.class.getName()).log(Level.SEVERE, null, ex);
                 }     
@@ -624,6 +652,9 @@ public class GUITaiKhoan extends javax.swing.JPanel {
                 else if(select == 3){
                     taikhoan.jtimport(jTable1, taikhoan.searchemail(list, item));
                 }
+                else if(select == 4){
+                    taikhoan.jtimport(jTable1, taikhoan.searchblock(list, Integer.parseInt(item)));
+                }
                 else{
                     JOptionPane.showMessageDialog(jPanel1, "Hãy chọn loại tìm kiếm!");
                 }
@@ -687,31 +718,36 @@ public class GUITaiKhoan extends javax.swing.JPanel {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         if(!jTextField5.getText().isEmpty()){
-            try {
-                if(taikhoan.checktendnedit(jTextField3.getText().toString())&& tendn.equals(jTextField3.getText().toString()) && jCheckBox1.isSelected()){
-                    DTOTaiKhoan tk = new DTOTaiKhoan();
-                    tk.setTenDangNhap(jTextField3.getText().toString());
-                    tk = taikhoan.gettk(tk);
-                    if(jCheckBox2.isSelected()){
-                        tk.setIsblock(1);
+            if(!jCheckBox1.isSelected()){
+                try {
+                    if(taikhoan.checktendnedit(jTextField3.getText().toString())&& tendn.equals(jTextField3.getText().toString())){
+                        DTOTaiKhoan tk = new DTOTaiKhoan();
+                        DTONhanVien a = new DTONhanVien();
+                        a.setSDT(jComboBox1.getSelectedItem().toString());
+                        a = nhanvien.getnvbysdt(a);
+                        tk.setMaNhanVien(a.getMaNhanVien());
+                        tk = taikhoan.gettk(tk);
+                        if(jCheckBox2.isSelected()){
+                            tk.setIsblock(1);
+                        }
+                        else{
+                            tk.setIsblock(0);
+                        }
+                        tk.setTenDangNhap(jTextField3.getText().toString());
+                        tk.setMatKhau(jTextField4.getText().toString());
+                        taikhoan.updatetaikhoan(tk);
+                        JOptionPane.showMessageDialog(jPanel1, "Sửa thành công!");
+                        resetall();
                     }
                     else{
-                        tk.setIsblock(0);
+                        JOptionPane.showMessageDialog(jPanel1, "Nhân viên này hiện đã có tài khoản");
                     }
-                    tk.setMatKhau(jTextField4.getText().toString());
-                    DTONhanVien a = new DTONhanVien();
-                    a.setSDT(jComboBox1.getSelectedItem().toString());
-                    a = nhanvien.getnvbysdt(a);
-                    tk.setMaNhanVien(a.getMaNhanVien());
-                    taikhoan.updatetaikhoan(tk);
-                    JOptionPane.showMessageDialog(jPanel1, "Sửa thành công!");
-                    resetall();
+                } catch (SQLException ex) {
+                    Logger.getLogger(GUITaiKhoan.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                else{
-                    JOptionPane.showMessageDialog(jPanel1, "Nhân viên này hiện đã có tài khoản");
-                }
-            } catch (SQLException ex) {
-                Logger.getLogger(GUITaiKhoan.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            else{
+                JOptionPane.showMessageDialog(jPanel1, "Nhân viên hiện chưa có tài khoản nên không thể sửa!");
             }
         }
         else{
@@ -745,6 +781,10 @@ public class GUITaiKhoan extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(jPanel1, "Bạn chưa chọn tài khoản cần xóa!");
         }
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton6ActionPerformed
     public void cbcheck(){
         if(jCheckBox1.isSelected()){
             try {
@@ -772,6 +812,7 @@ public class GUITaiKhoan extends javax.swing.JPanel {
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
     private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JCheckBox jCheckBox2;

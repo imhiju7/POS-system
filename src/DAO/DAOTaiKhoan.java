@@ -25,11 +25,11 @@ public class DAOTaiKhoan {
         String sql = "SELECT taikhoan.*, nhanvien.* "
                 + "FROM taikhoan "
                 + "JOIN nhanvien ON taikhoan.maNhanVien = nhanvien.maNhanVien "
-                + "WHERE taikhoan.tenDangNhap=? ";
+                + "WHERE taikhoan.maNhanVien=? ";
         DTOTaiKhoan tk = new DTOTaiKhoan();
         try {
             PreparedStatement pst = con.prepareStatement(sql);
-            pst.setString(1, i.getTenDangNhap());
+            pst.setInt(1, i.getMaNhanVien());
             ResultSet rs = pst.executeQuery();
             while (rs.next()) {
                 tk.setTenDangNhap(rs.getString("tenDangNhap"));
@@ -179,27 +179,6 @@ public class DAOTaiKhoan {
         return list;
     }
 
-    // Lấy nhân viên đã có tài khoản
-    public void ListComboboxTenNhanVien1(JComboBox c, String tenDangNhap) {
-        Connection con = Connect.connection();
-
-        String sql = "SELECT n.tenNhanVien"
-                + " FROM taikhoan AS t "
-                + "INNER JOIN nhanvien AS n ON t.maNhanVien = n.maNhanVien "
-                + "WHERE t.tenDangNhap = '" + tenDangNhap + "'";
-        try {
-            PreparedStatement pst = con.prepareStatement(sql);
-
-            ResultSet rs = pst.executeQuery();
-            while (rs.next()) {
-                String pat = rs.getString("tenNhanVien");
-                c.addItem(pat.trim());
-            }
-            rs.close();
-        } catch (Exception e) {
-
-        }
-    }
 
     public int addtaikhoan(DTOTaiKhoan tk) throws SQLException {
         Connection con = Connect.connection();
@@ -209,7 +188,7 @@ public class DAOTaiKhoan {
         pst.setString(2, tk.getMatKhau());
         pst.setTimestamp(3, new java.sql.Timestamp(tk.getNgayTao().getTime()));
         pst.setInt(4, tk.getIsblock());
-        pst.setInt(6, tk.getMaNhanVien());
+        pst.setInt(5, tk.getMaNhanVien());
         int rowaffect = pst.executeUpdate();
         con.close();
         return rowaffect;
@@ -217,13 +196,12 @@ public class DAOTaiKhoan {
 
     public int updatetaikhoan(DTOTaiKhoan tk) throws SQLException {
         Connection con = Connect.connection();
-        String sql = "UPDATE taikhoan set matKhau= ?, ngayTao= ?,isBlock= ?,maNhanVien = ? WHERE tenDangNhap= ?";
+        String sql = "UPDATE taikhoan set tenDangNhap = ?,matKhau= ?,isBlock= ? WHERE maNhanVien = ?";
         PreparedStatement pst = con.prepareStatement(sql);
-        pst.setString(1, tk.getMatKhau());
-        pst.setTimestamp(2, new java.sql.Timestamp(tk.getNgayTao().getTime()));
+        pst.setString(1, tk.getTenDangNhap());
+        pst.setString(2, tk.getMatKhau());
         pst.setInt(3, tk.getIsblock());
-        pst.setInt(5, tk.getMaNhanVien());
-        pst.setString(6, tk.getTenDangNhap());
+        pst.setInt(4, tk.getMaNhanVien());
         int rowaffect = pst.executeUpdate();
         con.close();
         return rowaffect;
