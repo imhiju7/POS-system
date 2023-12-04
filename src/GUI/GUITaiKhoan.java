@@ -553,18 +553,34 @@ public class GUITaiKhoan extends javax.swing.JPanel {
     private void jComboBox1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox1ItemStateChanged
         // TODO add your handling code here:
         DTONhanVien nv = new DTONhanVien();
-        if(jComboBox1.getSelectedItem() != null){
-            nv.setSDT(jComboBox1.getSelectedItem().toString());
-            try {
-                nv = nhanvien.getnvbysdt(nv);
-                jTextField5.setText(nv.getEmail());
-                jTextField7.setText(nv.getTenNhanVien());
-            } catch (SQLException ex) {
-                Logger.getLogger(GUITaiKhoan.class.getName()).log(Level.SEVERE, null, ex);
+        if(!jCheckBox1.isSelected()){
+            if(jComboBox1.getSelectedItem() != null){
+                nv.setSDT(jComboBox1.getSelectedItem().toString());
+                try {
+                    nv = nhanvien.getnvbysdt(nv);
+                    jTextField5.setText(nv.getEmail());
+                    jTextField7.setText(nv.getTenNhanVien());
+                } catch (SQLException ex) {
+                    Logger.getLogger(GUITaiKhoan.class.getName()).log(Level.SEVERE, null, ex);
+                }     
             }
-            
         }
-        
+        else{
+            if(jComboBox1.getSelectedItem() != null){
+                nv.setSDT(jComboBox1.getSelectedItem().toString());
+                try {
+                    nv = nhanvien.getnvbysdt(nv);
+                    jTextField5.setText(nv.getEmail());
+                    jTextField7.setText(nv.getTenNhanVien());
+                    jTextField3.setText("");
+                    jTextField4.setText("");
+                    jTextField2.setText("");
+                    
+                } catch (SQLException ex) {
+                    Logger.getLogger(GUITaiKhoan.class.getName()).log(Level.SEVERE, null, ex);
+                }     
+            }
+        }
     }//GEN-LAST:event_jComboBox1ItemStateChanged
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
@@ -709,11 +725,18 @@ public class GUITaiKhoan extends javax.swing.JPanel {
             DTOTaiKhoan tk = new DTOTaiKhoan();
             tk.setTenDangNhap(jTextField3.getText().toString());
             tk = taikhoan.gettk(tk);
-            tk.setIsdelete(1);
+            DTONhanVien nv = new DTONhanVien();
+            nv.setMaNhanVien(tk.getMaNhanVien());
             try {
-                taikhoan.updatetaikhoan(tk);
-                JOptionPane.showMessageDialog(jPanel1, "Xóa thành công!");
-                resetall();
+                nv = nhanvien.getnv(nv);
+                if(nv.getMaChucVu()!=1){
+                    taikhoan.deletetaikhoan(tk);
+                    JOptionPane.showMessageDialog(jPanel1, "Xóa thành công!");
+                    resetall();
+                }
+                else{
+                    JOptionPane.showMessageDialog(jPanel1, "Không thể xóa tài khoản này!");
+                }
             } catch (SQLException ex) {
                 Logger.getLogger(GUITaiKhoan.class.getName()).log(Level.SEVERE, null, ex);
             }

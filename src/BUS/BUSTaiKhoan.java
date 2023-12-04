@@ -35,6 +35,9 @@ public class BUSTaiKhoan {
     public int updatetaikhoan(DTOTaiKhoan i) throws SQLException {
         return DAO.updatetaikhoan(i);
     }
+    public int deletetaikhoan(DTOTaiKhoan i) throws SQLException{
+        return DAO.deletetaikhoan(i);
+    }
     public ArrayList<DTONhanVien> getlistsdtnvchcotk(){
         return DAO.ListComboboxSDT();
     }

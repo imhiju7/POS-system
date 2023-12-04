@@ -25,7 +25,7 @@ public class DAOTaiKhoan {
         String sql = "SELECT taikhoan.*, nhanvien.* "
                 + "FROM taikhoan "
                 + "JOIN nhanvien ON taikhoan.maNhanVien = nhanvien.maNhanVien "
-                + "WHERE taikhoan.isDelete = 0 AND nhanvien.isDelete = 0 AND taikhoan.tenDangNhap=? ";
+                + "WHERE taikhoan.tenDangNhap=? ";
         DTOTaiKhoan tk = new DTOTaiKhoan();
         try {
             PreparedStatement pst = con.prepareStatement(sql);
@@ -45,7 +45,7 @@ public class DAOTaiKhoan {
     }
     public DTOTaiKhoan kiemTraTaiKhoan(String tenDangNhap, String matKhau) {
         Connection con = Connect.connection();
-        String sql = "select * from taikhoan where tenDangNhap = ? and matKhau = ? and isBlock = 0 and isDelete = 0";
+        String sql = "select * from taikhoan where tenDangNhap = ? and matKhau = ? and isBlock = 0 ";
         ArrayList<DTOTaiKhoan> dstk = new ArrayList<>();
         try {
             PreparedStatement pst = con.prepareStatement(sql);
@@ -61,7 +61,6 @@ public class DAOTaiKhoan {
                 tk.setMatKhau(rs.getString("matKhau"));
                 tk.setNgayTao(rs.getTimestamp("ngayTao"));
                 tk.setIsblock(rs.getInt("isBlock"));
-                tk.setIsdelete(rs.getInt("isDelete"));
                 tk.setMaNhanVien(rs.getInt("maNhanVien"));
                 dstk.add(tk);
                 return dstk.get(0);
@@ -109,22 +108,6 @@ public class DAOTaiKhoan {
         return false;
     }
 
-    //Kiểm tra xem tài khoản có bị xóa không
-    public boolean checkTaiKhoan(String tenDangNhap) {
-        Connection con = Connect.connection();
-        String sql = "select * from taikhoan where tenDangNhap = ? and isDelete = 1 ";
-        try {
-            PreparedStatement pst = con.prepareStatement(sql);
-
-            pst.setString(1, tenDangNhap);
-            ResultSet rs = pst.executeQuery();
-            return rs.next();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
 
     public boolean checkKhoaTaiKhoan(String tenDangNhap) {
         Connection con = Connect.connection();
@@ -144,10 +127,7 @@ public class DAOTaiKhoan {
 
     public ArrayList<DTOTaiKhoan> getList() throws SQLException, ParseException {
         Connection con = Connect.connection();
-        String sql = "SELECT taikhoan.*, nhanvien.* "
-                + "FROM taikhoan "
-                + "JOIN nhanvien ON taikhoan.maNhanVien = nhanvien.maNhanVien "
-                + "WHERE taikhoan.isDelete = 0 AND nhanvien.isDelete = 0 ";
+        String sql = "SELECT * FROM taikhoan";
         ArrayList<DTOTaiKhoan> dstk = new ArrayList<>();
         try {
             PreparedStatement pst = con.prepareStatement(sql);
@@ -180,7 +160,7 @@ public class DAOTaiKhoan {
         String sql = "SELECT soDienThoai"
                 + " FROM nhanvien "
                 + "WHERE maNhanVien "
-                + "NOT IN (SELECT maNhanVien FROM taikhoan) AND isDelete= 0";
+                + "NOT IN (SELECT maNhanVien FROM taikhoan) AND isDelete = 0";
         ArrayList<DTONhanVien> list = new ArrayList<>();
         try {
             PreparedStatement pst = con.prepareStatement(sql);
@@ -223,13 +203,12 @@ public class DAOTaiKhoan {
 
     public int addtaikhoan(DTOTaiKhoan tk) throws SQLException {
         Connection con = Connect.connection();
-        String sql = "INSERT INTO taikhoan(tenDangNhap,matKhau,ngayTao,isBlock,isDelete,maNhanVien) VALUES(?,?,?,?,?,?)";
+        String sql = "INSERT INTO taikhoan(tenDangNhap,matKhau,ngayTao,isBlock,maNhanVien) VALUES(?,?,?,?,?)";
         PreparedStatement pst = con.prepareStatement(sql);
         pst.setString(1, tk.getTenDangNhap());
         pst.setString(2, tk.getMatKhau());
         pst.setTimestamp(3, new java.sql.Timestamp(tk.getNgayTao().getTime()));
         pst.setInt(4, tk.getIsblock());
-        pst.setInt(5, tk.getIsdelete());
         pst.setInt(6, tk.getMaNhanVien());
         int rowaffect = pst.executeUpdate();
         con.close();
@@ -238,14 +217,22 @@ public class DAOTaiKhoan {
 
     public int updatetaikhoan(DTOTaiKhoan tk) throws SQLException {
         Connection con = Connect.connection();
-        String sql = "UPDATE taikhoan set matKhau= ?, ngayTao= ?,isBlock= ?,isDelete = ?,maNhanVien = ? WHERE tenDangNhap= ?";
+        String sql = "UPDATE taikhoan set matKhau= ?, ngayTao= ?,isBlock= ?,maNhanVien = ? WHERE tenDangNhap= ?";
         PreparedStatement pst = con.prepareStatement(sql);
         pst.setString(1, tk.getMatKhau());
         pst.setTimestamp(2, new java.sql.Timestamp(tk.getNgayTao().getTime()));
         pst.setInt(3, tk.getIsblock());
-        pst.setInt(4, tk.getIsdelete());
         pst.setInt(5, tk.getMaNhanVien());
         pst.setString(6, tk.getTenDangNhap());
+        int rowaffect = pst.executeUpdate();
+        con.close();
+        return rowaffect;
+    }
+    public int deletetaikhoan(DTOTaiKhoan tk) throws SQLException{
+        Connection con = Connect.connection();
+        String sql = "DELETE FROM taikhoan  WHERE tenDangNhap= ?";
+        PreparedStatement pst = con.prepareStatement(sql);
+        pst.setString(1,tk.getTenDangNhap() );
         int rowaffect = pst.executeUpdate();
         con.close();
         return rowaffect;

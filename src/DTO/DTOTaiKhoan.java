@@ -16,7 +16,6 @@ public class DTOTaiKhoan {
     private String matKhau;
     private Date ngayTao;
     private int isblock;
-    private int isdelete;
     private int maNhanVien;
 
     public DTOTaiKhoan() {
@@ -27,7 +26,6 @@ public class DTOTaiKhoan {
         this.matKhau = matKhau;
         this.ngayTao = ngayTao;
         this.isblock = isblock;
-        this.isdelete = isdelete;
         this.maNhanVien = maNhanVien;
     }
 
@@ -68,14 +66,6 @@ public class DTOTaiKhoan {
 
     public void setIsblock(int isblock) {
         this.isblock = isblock;
-    }
-
-    public int getIsdelete() {
-        return isdelete;
-    }
-
-    public void setIsdelete(int isdelete) {
-        this.isdelete = isdelete;
     }
 
     public int getMaNhanVien() {
