@@ -72,9 +72,6 @@ public class GUINhanVien extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        dateChooser1 = new com.raven.datechooser.DateChooser();
-        dateChooser2 = new com.raven.datechooser.DateChooser();
-        dateChooser3 = new com.raven.datechooser.DateChooser();
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -84,13 +81,13 @@ public class GUINhanVien extends javax.swing.JPanel {
         jTextField2 = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jTextField3 = new javax.swing.JTextField();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        jComboBox1 = new javax.swing.JComboBox<String>();
         jTextField4 = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jTextField5 = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
-        jComboBox3 = new javax.swing.JComboBox<>();
+        jComboBox3 = new javax.swing.JComboBox<String>();
         jTextField7 = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
@@ -108,7 +105,7 @@ public class GUINhanVien extends javax.swing.JPanel {
         jPanel8 = new javax.swing.JPanel();
         jTextField6 = new javax.swing.JTextField();
         jButton5 = new javax.swing.JButton();
-        jComboBox2 = new javax.swing.JComboBox<>();
+        jComboBox2 = new javax.swing.JComboBox<String>();
         jPanel9 = new javax.swing.JPanel();
         jPanel10 = new javax.swing.JPanel();
         jTextField10 = new javax.swing.JTextField();
@@ -118,15 +115,6 @@ public class GUINhanVien extends javax.swing.JPanel {
         jButton7 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-
-        dateChooser1.setDateFormat("yyyy-MM-dd");
-        dateChooser1.setTextRefernce(jTextField7);
-
-        dateChooser2.setDateFormat("yyyy-MM-dd");
-        dateChooser2.setTextRefernce(jTextField10);
-
-        dateChooser3.setDateFormat("yyyy-MM-dd");
-        dateChooser3.setTextRefernce(jTextField9);
 
         jPanel1.setLayout(new java.awt.BorderLayout());
 
@@ -160,7 +148,7 @@ public class GUINhanVien extends javax.swing.JPanel {
         jTextField3.setEditable(false);
         jTextField3.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<String>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         jTextField4.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 
@@ -178,7 +166,7 @@ public class GUINhanVien extends javax.swing.JPanel {
         jLabel7.setForeground(new java.awt.Color(0, 0, 0));
         jLabel7.setText("ID");
 
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Giới tính", "Nam", "Nữ" }));
+        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<String>(new String[] { "Giới tính", "Nam", "Nữ" }));
 
         jTextField7.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 
@@ -396,7 +384,7 @@ public class GUINhanVien extends javax.swing.JPanel {
             }
         });
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Chọn", "Tên nhân viên", "Giới tính", "Chức vụ", "Số điện thoại", "Địa chỉ" }));
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<String>(new String[] { "Chọn", "Tên nhân viên", "Giới tính", "Chức vụ", "Số điện thoại", "Địa chỉ" }));
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
@@ -864,9 +852,6 @@ public class GUINhanVien extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private com.raven.datechooser.DateChooser dateChooser1;
-    private com.raven.datechooser.DateChooser dateChooser2;
-    private com.raven.datechooser.DateChooser dateChooser3;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;

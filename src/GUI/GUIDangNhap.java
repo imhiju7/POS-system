@@ -3,15 +3,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package GUI;
-<<<<<<< HEAD
+
 import BUS.*;
 import DTO.*;
-=======
 
 import BUS.BUSTaiKhoan;
 import DTO.DTOTaiKhoan;
 import java.awt.event.KeyEvent;
->>>>>>> 98cac09a5cbe84ff9403aca978fe6cb7d4f87030
 import javax.swing.AbstractButton;
 import javax.swing.JOptionPane;
 
@@ -268,13 +266,12 @@ public class GUIDangNhap extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void btnDangNhapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDangNhapActionPerformed
+    private void btnDangNhapActionPerformed(java.awt.event.ActionEvent evt) {                                            
         // TODO add your handling code here:
         dangNhap();
-<<<<<<< HEAD
-    }//GEN-LAST:event_jButton2ActionPerformed
-=======
-    }//GEN-LAST:event_btnDangNhapActionPerformed
+
+    }                                        
+                                     
 
     private void txtTenDangNhapKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTenDangNhapKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {

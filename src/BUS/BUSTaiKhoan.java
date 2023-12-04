@@ -23,9 +23,8 @@ import javax.swing.table.DefaultTableModel;
 public class BUSTaiKhoan {
 
     DAOTaiKhoan DAO = new DAOTaiKhoan();
-<<<<<<< HEAD
     DAONhanVien DAOnv = new DAONhanVien();
-=======
+
 
     public DTOTaiKhoan kiemTraTaiKhoan(String tenDangNhap, String matKhau) {
         return DAO.kiemTraTaiKhoan(tenDangNhap, matKhau);
@@ -47,7 +46,7 @@ public class BUSTaiKhoan {
         return DAO.layMaNhanVien(tenDangNhap);
     }
 
->>>>>>> 98cac09a5cbe84ff9403aca978fe6cb7d4f87030
+
     public ArrayList<DTOTaiKhoan> getlist() throws SQLException, ParseException {
         return DAO.getList();
     }
@@ -56,13 +55,9 @@ public class BUSTaiKhoan {
         return DAO.addtaikhoan(i);
     }
 
-<<<<<<< HEAD
+
     public int updatetaikhoan(DTOTaiKhoan i) throws SQLException {
         return DAO.updatetaikhoan(i);
-=======
-    public int uppdatetaikhoan(DTOTaiKhoan i) throws SQLException {
-        return DAO.uppdatetaikhoan(i);
->>>>>>> 98cac09a5cbe84ff9403aca978fe6cb7d4f87030
     }
     public int deletetaikhoan(DTOTaiKhoan i) throws SQLException{
         return DAO.deletetaikhoan(i);

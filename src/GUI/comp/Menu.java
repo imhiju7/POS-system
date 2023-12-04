@@ -115,7 +115,6 @@ public class Menu extends PanelTransparent {
 
         sp = new javax.swing.JScrollPane();
         panel = new javax.swing.JPanel();
-        profile1 = new GUI.comp.Profile();
 
         setBackground(new java.awt.Color(153, 0, 0));
 
@@ -138,31 +137,22 @@ public class Menu extends PanelTransparent {
 
         sp.setViewportView(panel);
 
-        profile1.setBackground(new java.awt.Color(204, 51, 0));
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(sp, javax.swing.GroupLayout.DEFAULT_SIZE, 230, Short.MAX_VALUE)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addComponent(profile1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(16, 16, 16)
-                .addComponent(profile1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(44, 44, 44)
                 .addComponent(sp, javax.swing.GroupLayout.DEFAULT_SIZE, 616, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel panel;
-    private GUI.comp.Profile profile1;
     private javax.swing.JScrollPane sp;
     // End of variables declaration//GEN-END:variables
 }

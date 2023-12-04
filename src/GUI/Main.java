@@ -54,54 +54,11 @@ public class Main extends javax.swing.JFrame {
         menu.addEvent(new EventMenuSelected() {
             @Override
             public void menuSelected(int menuIndex, int subMenuIndex) {
-<<<<<<< HEAD
                 
                 main.showForm(new GUIKhuyenMai());
-=======
-                if (mapq == 1) {
 
-                } else if (mapq == 2) {
+               
 
-                } else if (mapq == 3) {
-
-                } else {
-                    if (menuIndex == 0) {
-                        try {
-                            main.showForm(new GUITaiKhoan());
-                        } catch (SQLException ex) {
-                            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-                        } catch (ParseException ex) {
-                            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-                        }
-                    } else if (menuIndex == 1) {
-                        if (subMenuIndex == 0) {
-
-                        } else if (subMenuIndex == 1) {
-                            main.showForm(new pn_macdinh());
-                            System.out.println(main.getSize());
-                        } else if (subMenuIndex == 2) {
-                            //  main.showForm(new pnPhanQuyen());
-                            System.out.println(main.getSize());
-                        }
-                    } else if (menuIndex == 2) {
-                        if (subMenuIndex == 0) {
-
-                        } else {
-
-                        }
-                    } else if (menuIndex == 3) {
-
-                    } else if (menuIndex == 4) {
-
-                    } else if (menuIndex == 5) {
-
-                    } else if (menuIndex == 6) {
-
-                    } else {
-
-                    }
-                }
->>>>>>> 98cac09a5cbe84ff9403aca978fe6cb7d4f87030
             }
         });
         menu.addEventShowPopup(new EventShowPopupMenu() {
@@ -150,34 +107,18 @@ public class Main extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        bg = new GUI.comp.PanelTransparent();
-
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
-
-        bg.setOpaque(true);
-        bg.setPreferredSize(new java.awt.Dimension(1256, 705));
-
-        javax.swing.GroupLayout bgLayout = new javax.swing.GroupLayout(bg);
-        bg.setLayout(bgLayout);
-        bgLayout.setHorizontalGroup(
-            bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1400, Short.MAX_VALUE)
-        );
-        bgLayout.setVerticalGroup(
-            bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 800, Short.MAX_VALUE)
-        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(bg, javax.swing.GroupLayout.DEFAULT_SIZE, 1400, Short.MAX_VALUE)
+            .addGap(0, 1400, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(bg, javax.swing.GroupLayout.DEFAULT_SIZE, 800, Short.MAX_VALUE)
+            .addGap(0, 800, Short.MAX_VALUE)
         );
 
         pack();
@@ -221,6 +162,5 @@ public class Main extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private GUI.comp.PanelTransparent bg;
     // End of variables declaration//GEN-END:variables
 }
