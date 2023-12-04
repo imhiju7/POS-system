@@ -19,7 +19,7 @@ import java.util.ArrayList;
 public class DAOChucNang {
     public ArrayList<DTOChucNang> getlist() throws SQLException, ParseException{
         Connection con = Connect.connection();
-        String sql = "SELECT * FROM chucnang";
+        String sql = "SELECT * FROM chucnang WHERE isDelete = 0";
         PreparedStatement pst =  con.prepareStatement(sql);
         ResultSet rs = pst.executeQuery();
         ArrayList<DTOChucNang> list = new ArrayList<>();
@@ -34,9 +34,37 @@ public class DAOChucNang {
         con.close();
         return list;
     }
-    public int getrowcount() throws SQLException, ParseException{
-        return getlist().size();
+    public DTOChucNang getcn(DTOChucNang i) throws SQLException, ParseException{
+        Connection con = Connect.connection();
+        String sql = "SELECT * FROM chucnang WHERE isDelete = 0 and maChucNang = ?";
+        PreparedStatement pst =  con.prepareStatement(sql);
+        pst.setInt(1,i.getMaChucNang());
+        ResultSet rs = pst.executeQuery();
+        DTOChucNang cn = new DTOChucNang();
+        while(rs.next()){
+            cn.setMaChucNang(rs.getInt("maChucNang"));
+            cn.setTenChucNang(rs.getString("tenChucNang"));
+            cn.setIsHidden(rs.getInt("isDelete"));
+            cn.setMaGroup(rs.getInt("maGr"));
+        }
+        con.close();
+        return cn;
     }
+    public boolean checktencn(String ten) throws SQLException, ParseException{
+        Connection con = Connect.connection();
+        String sql = "SELECT * FROM chucnang WHERE isDelete = 0 and tenChucNang = ?";
+        PreparedStatement pst =  con.prepareStatement(sql);
+        pst.setString(1, ten);
+        ResultSet rs = pst.executeQuery();
+        int count = 0;
+        while(rs.next()){
+            count++;
+        }
+        con.close();
+        if(count > 0) return false;
+        return true;
+    }
+    
     public int addchucnang(DTOChucNang cn) throws SQLException{
         Connection con = Connect.connection();
         String sql = "INSERT INTO ChucNang(tenChucNang,isDelete,maGr) VALUES(?,?,?)";
@@ -62,7 +90,7 @@ public class DAOChucNang {
     }
     public ArrayList<DTOChucNang> getlistgroup(int magroup) throws SQLException, ParseException{
         Connection con = Connect.connection();
-        String sql = "SELECT * FROM chucnang WHERE maGr = ?";
+        String sql = "SELECT * FROM chucnang WHERE isDelete = 0 and maGr = ?";
         PreparedStatement pst =  con.prepareStatement(sql);
         pst.setInt(1, magroup);
         ResultSet rs = pst.executeQuery();

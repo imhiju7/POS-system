@@ -33,9 +33,24 @@ public class DAOChucVu {
         con.close();
         return cv.getMaChucVu();
     }
+    public boolean checktencv(String tencv) throws SQLException{
+        Connection con = Connect.connection();
+        String sql = "SELECT * FROM chucvu WHERE isDelete = 0 and tenChucVu = ?";
+        PreparedStatement pst =  con.prepareStatement(sql);
+        pst.setString(1, tencv);
+        ResultSet rs = pst.executeQuery();
+        int count = 0;
+        while(rs.next()){
+            count++;
+        }
+        con.close();
+        
+        if(count > 0) return false;
+        else return true;
+    }
     public DTOChucVu getcv(DTOChucVu i) throws SQLException{
         Connection con = Connect.connection();
-        String sql = "SELECT * FROM chucvu WHERE maChucVu = ?";
+        String sql = "SELECT * FROM chucvu WHERE isDelete = 0 and maChucVu = ?";
         PreparedStatement pst =  con.prepareStatement(sql);
         pst.setInt(1, i.getMaChucVu());
         ResultSet rs = pst.executeQuery();
@@ -50,7 +65,7 @@ public class DAOChucVu {
     }
     public ArrayList<DTOChucVu> getlist() throws SQLException, ParseException{
         Connection con = Connect.connection();
-        String sql = "SELECT * FROM chucvu";
+        String sql = "SELECT * FROM chucvu WHERE isDelete = 0";
         PreparedStatement pst =  con.prepareStatement(sql);
         ResultSet rs = pst.executeQuery();
         ArrayList<DTOChucVu> list = new ArrayList<>();

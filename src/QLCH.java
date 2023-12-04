@@ -14,7 +14,7 @@ import java.text.ParseException;
  */
 public class QLCH {
     public static void main(String[] args) throws SQLException, ParseException{
-       new GUIThemKhachHang().setVisible(true);
+       new GUIPhanLoai().setVisible(true);
        //new Main(1).setVisible(true);
     }
 }

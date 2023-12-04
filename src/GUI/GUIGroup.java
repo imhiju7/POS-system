@@ -3,7 +3,18 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package GUI;
-
+import BUS.*;
+import DTO.*;
+import java.awt.Dimension;
+import java.awt.Toolkit;
+import java.sql.SQLException;
+import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 /**
  *
  * @author Hieu PC
@@ -13,10 +24,38 @@ public class GUIGroup extends javax.swing.JFrame {
     /**
      * Creates new form GUIGroup
      */
+    BUSGroup group = new BUSGroup();
+    String img = "";
     public GUIGroup() {
         initComponents();
-    }
+        Toolkit toolkit = Toolkit.getDefaultToolkit();
+        Dimension screenSize = toolkit.getScreenSize();
+        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        // Lấy kích thước của form
+        Dimension frameSize = this.getSize();
+        // Tính toán vị trí trung tâm
+        int x = (screenSize.width - frameSize.width) / 2;
+        int y = (screenSize.height - frameSize.height) / 2;
 
+        // Đặt vị trí của form
+        this.setResizable(false);
+        this.setLocation(x, y);
+        resetall();
+    }
+    public void resetall(){
+        
+        jTextField3.setText("");
+        jTextField2.setText("");
+        jTextField1.setText("");
+        try {
+            group.jtimport(jTable1, group.getlist());
+        } catch (SQLException ex) {
+            Logger.getLogger(GUIGroup.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
+            Logger.getLogger(GUIGroup.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -35,6 +74,9 @@ public class GUIGroup extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jTextField2 = new javax.swing.JTextField();
+        jPanel6 = new javax.swing.JPanel();
+        jLabel4 = new javax.swing.JLabel();
+        jButton6 = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
@@ -66,18 +108,52 @@ public class GUIGroup extends javax.swing.JFrame {
         jPanel3.setBackground(new java.awt.Color(245, 232, 183));
         jPanel3.setPreferredSize(new java.awt.Dimension(600, 700));
 
+        jPanel4.setBackground(new java.awt.Color(204, 255, 204));
+
         jTextField1.setEditable(false);
         jTextField1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jTextField1.setText("ID");
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("ID");
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(0, 0, 0));
         jLabel3.setText("Tên nhóm chức năng");
 
         jTextField2.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+
+        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
+        jPanel6.setLayout(jPanel6Layout);
+        jPanel6Layout.setHorizontalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 52, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel6Layout.setVerticalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        jButton6.setBackground(new java.awt.Color(161, 204, 209));
+        jButton6.setForeground(new java.awt.Color(0, 0, 0));
+        jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/SOURCE/icon/image.png"))); // NOI18N
+        jButton6.setText("Chọn icon");
+        jButton6.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -87,11 +163,18 @@ public class GUIGroup extends javax.swing.JFrame {
                 .addGap(26, 26, 26)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(53, 53, 53)
-                .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(42, 42, 42)
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(79, 79, 79)
+                        .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
@@ -103,30 +186,59 @@ public class GUIGroup extends javax.swing.JFrame {
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, 57, Short.MAX_VALUE))
+                .addContainerGap(21, Short.MAX_VALUE))
         );
 
         jButton1.setBackground(new java.awt.Color(161, 204, 209));
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/SOURCE/Icon/add.png"))); // NOI18N
         jButton1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setBackground(new java.awt.Color(161, 204, 209));
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/SOURCE/Icon/edit.png"))); // NOI18N
         jButton2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setBackground(new java.awt.Color(161, 204, 209));
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/SOURCE/Icon/trash.png"))); // NOI18N
         jButton3.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         jButton4.setBackground(new java.awt.Color(161, 204, 209));
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/SOURCE/Icon/reset.png"))); // NOI18N
         jButton4.setToolTipText("");
         jButton4.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         jButton5.setBackground(new java.awt.Color(161, 204, 209));
         jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/SOURCE/Icon/search.png"))); // NOI18N
         jButton5.setToolTipText("");
         jButton5.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -172,6 +284,11 @@ public class GUIGroup extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -189,11 +306,11 @@ public class GUIGroup extends javax.swing.JFrame {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 493, Short.MAX_VALUE)
-                .addGap(38, 38, 38))
+                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(29, 29, 29)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 392, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(36, Short.MAX_VALUE))
         );
 
         jPanel1.add(jPanel3, java.awt.BorderLayout.PAGE_END);
@@ -221,6 +338,164 @@ public class GUIGroup extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+        resetall();
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        // TODO add your handling code here:
+        int index = jTable1.getSelectedRow();
+        jTextField2.setText(jTable1.getValueAt(index, 1).toString());
+        jTextField1.setText(jTable1.getValueAt(index, 0).toString());
+        DTOGroup cv = new DTOGroup();
+        cv.setMaGroup(Integer.parseInt(jTextField1.getText().toString()));
+        try {
+            cv = group.getgr(cv);
+            img = cv.getIcon();
+            jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource(img)));
+        } catch (SQLException ex) {
+            Logger.getLogger(GUIGroup.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
+            Logger.getLogger(GUIGroup.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jTable1MouseClicked
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        // TODO add your handling code here:
+        String item = jTextField3.getText().toString();
+        if(!jTextField3.getText().isEmpty()){
+            ArrayList<DTOGroup> list;
+            try {
+                list = group.jtexport(jTable1);
+                group.jtimport(jTable1, group.searchten(list, item));
+            } catch (SQLException ex) {
+                Logger.getLogger(GUIGroup.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ParseException ex) {
+                Logger.getLogger(GUIGroup.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        else{
+            JOptionPane.showMessageDialog(jPanel1, "Chưa nhập thông tin tìm kiếm!");
+        }
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        if(!jTextField2.getText().isEmpty()){
+            try {
+                if(group.checktengr(jTextField2.getText().toString())){
+                    DTOGroup cv = new DTOGroup();
+                    cv.setTenGroup(jTextField2.getText().toString());
+                    cv.setIsdelete(0);
+                    cv.setIcon(img);
+                    group.addgroup(cv);
+                    JOptionPane.showMessageDialog(jPanel1, "Thêm thành công!");
+                    resetall();
+                }
+                else{
+                    JOptionPane.showMessageDialog(jPanel1, "Nhóm chức năng hiện đã có!");
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(GUIGroup.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ParseException ex) {
+                Logger.getLogger(GUIGroup.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        else{
+            JOptionPane.showMessageDialog(jPanel1, "Chưa nhập thông tin để thêm!");
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        if(!jTextField1.getText().isEmpty()){
+            if(!jTextField2.getText().isEmpty()){
+            try {
+                if(group.checktengredit(jTextField2.getText().toString(),Integer.parseInt(jTextField1.getText().toString()))){
+                    DTOGroup cv = new DTOGroup();
+                    cv.setMaGroup(Integer.parseInt(jTextField1.getText().toString()));
+                    cv = group.getgr(cv);
+                    cv.setTenGroup(jTextField2.getText().toString());
+                    cv.setIcon(img);
+                    group.updategroup(cv);  
+                    JOptionPane.showMessageDialog(jPanel1, "Sửa thành công!");
+                    resetall();
+                }
+                else{
+                    JOptionPane.showMessageDialog(jPanel1, "Nhóm chức năng hiện đã có!");
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(GUIGroup.class.getName()).log(Level.SEVERE, null, ex);
+            }   catch (ParseException ex) {
+                    Logger.getLogger(GUIGroup.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            else{
+                JOptionPane.showMessageDialog(jPanel1, "Chưa nhập thông tin để sửa!");
+            }
+        }
+        else{
+            JOptionPane.showMessageDialog(jPanel1, "Chưa chọn nhóm chức năng để sửa!");
+        }
+
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        if(!jTextField1.getText().isEmpty()){
+                DTOGroup cv = new DTOGroup();
+                cv.setMaGroup(Integer.parseInt(jTextField1.getText().toString()));
+                try {
+                    cv = group.getgr(cv);
+                    cv.setTenGroup(jTextField2.getText().toString());
+                    cv.setIsdelete(1);
+                    cv.setIcon(img);
+                    group.updategroup(cv);
+                    JOptionPane.showMessageDialog(jPanel1, "Xóa thành công!");
+                    resetall();
+                } catch (SQLException ex) {
+                    Logger.getLogger(GUIGroup.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (ParseException ex) {
+                Logger.getLogger(GUIGroup.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }else{
+            JOptionPane.showMessageDialog(jPanel1, "Chưa chọn nhóm chức năng để xóa!");
+        }
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        // TODO add your handling code here:
+        JFileChooser fileChooser = new JFileChooser();
+                // Thiết lập để chỉ chọn file hình ảnh
+                fileChooser.setFileFilter(new javax.swing.filechooser.FileFilter() {
+                    public boolean accept(java.io.File f) {
+                        return f.getName().toLowerCase().endsWith(".jpg")
+                                || f.getName().toLowerCase().endsWith(".jpeg")
+                                || f.getName().toLowerCase().endsWith(".png")
+                                || f.isDirectory();
+                    }
+
+                    public String getDescription() {
+                        return "Images (*.jpg, *.jpeg, *.png)";
+                    }
+                });
+
+                int result = fileChooser.showOpenDialog(jPanel1);
+                if (result == JFileChooser.APPROVE_OPTION) {
+                    // Lấy đường dẫn của tập tin đã chọn
+                    java.io.File selectedFile = fileChooser.getSelectedFile();
+                    String imagePath = selectedFile.getAbsolutePath();
+                    
+                String path = imagePath.substring(27);
+                path = path.replace('\\', '/');
+                    // In đường dẫn tập tin ảnh
+                img=path;
+                jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource(path)));
+
+                }
+    }//GEN-LAST:event_jButton6ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -263,14 +538,17 @@ public class GUIGroup extends javax.swing.JFrame {
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;

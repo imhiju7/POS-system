@@ -3,10 +3,18 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package GUI;
+import DTO.*;
+import BUS.*;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.sql.SQLException;
+import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -17,6 +25,7 @@ public class GUIChucVu extends javax.swing.JFrame {
     /**
      * Creates new form GUIChucVu
      */
+    BUSChucVu chucvu = new BUSChucVu();
     public GUIChucVu() {
         initComponents();
         
@@ -32,8 +41,20 @@ public class GUIChucVu extends javax.swing.JFrame {
         // Đặt vị trí của form
         this.setResizable(false);
         this.setLocation(x, y);
+        resetall();
     }
-
+    public void resetall(){
+        jTextField3.setText("");
+        jTextField2.setText("");
+        jTextField1.setText("");
+        try {
+            chucvu.jtimport(jTable1, chucvu.getlist());
+        } catch (SQLException ex) {
+            Logger.getLogger(GUIChucVu.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
+            Logger.getLogger(GUIChucVu.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -104,12 +125,12 @@ public class GUIChucVu extends javax.swing.JFrame {
                 .addGap(26, 26, 26)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(99, 99, 99)
+                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(86, 86, 86)
                 .addComponent(jLabel3)
                 .addGap(18, 18, 18)
                 .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(39, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -126,24 +147,49 @@ public class GUIChucVu extends javax.swing.JFrame {
         jButton1.setBackground(new java.awt.Color(161, 204, 209));
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/SOURCE/Icon/add.png"))); // NOI18N
         jButton1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setBackground(new java.awt.Color(161, 204, 209));
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/SOURCE/Icon/edit.png"))); // NOI18N
         jButton2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setBackground(new java.awt.Color(161, 204, 209));
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/SOURCE/Icon/trash.png"))); // NOI18N
         jButton3.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         jButton4.setBackground(new java.awt.Color(161, 204, 209));
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/SOURCE/Icon/reset.png"))); // NOI18N
         jButton4.setToolTipText("");
         jButton4.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         jButton5.setBackground(new java.awt.Color(161, 204, 209));
         jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/SOURCE/Icon/search.png"))); // NOI18N
         jButton5.setToolTipText("");
         jButton5.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -189,6 +235,11 @@ public class GUIChucVu extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -238,6 +289,111 @@ public class GUIChucVu extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+        resetall();
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        // TODO add your handling code here:
+        int index = jTable1.getSelectedRow();
+        jTextField2.setText(jTable1.getValueAt(index, 1).toString());
+        jTextField1.setText(jTable1.getValueAt(index, 0).toString());
+    }//GEN-LAST:event_jTable1MouseClicked
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        // TODO add your handling code here:
+        String item = jTextField3.getText().toString();
+        if(!jTextField3.getText().isEmpty()){
+            ArrayList<DTOChucVu> list;
+            try {
+                list = chucvu.jtexport(jTable1);
+                chucvu.jtimport(jTable1, chucvu.searchten(list, item));
+            } catch (SQLException ex) {
+                Logger.getLogger(GUIChucVu.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        else{
+            JOptionPane.showMessageDialog(jPanel1, "Chưa nhập thông tin tìm kiếm!");
+        }
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        if(!jTextField2.getText().isEmpty()){
+            try {
+                if(chucvu.checktencv(jTextField2.getText().toString())){
+                    DTOChucVu cv = new DTOChucVu();
+                    cv.setTenChucVu(jTextField2.getText().toString());
+                    cv.setIsHidden(0);
+                    chucvu.addchucvu(cv);
+                    JOptionPane.showMessageDialog(jPanel1, "Thêm thành công!");
+                    resetall();
+                }
+                else{
+                    JOptionPane.showMessageDialog(jPanel1, "Chức vụ hiện đã có!");
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(GUIChucVu.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        else{
+            JOptionPane.showMessageDialog(jPanel1, "Chưa nhập thông tin để thêm!");
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        if(!jTextField1.getText().isEmpty()){
+            if(!jTextField2.getText().isEmpty()){
+            try {
+                if(chucvu.checktencvedit(jTextField2.getText().toString(),Integer.parseInt(jTextField1.getText().toString()))){
+                    DTOChucVu cv = new DTOChucVu();
+                    cv.setMaChucVu(Integer.parseInt(jTextField1.getText().toString()));
+                    cv = chucvu.getcv(cv);
+                    cv.setTenChucVu(jTextField2.getText().toString());
+                    chucvu.updatechucvu(cv);  
+                    JOptionPane.showMessageDialog(jPanel1, "Sửa thành công!");
+                    resetall();
+                }
+                else{
+                    JOptionPane.showMessageDialog(jPanel1, "Chức vụ hiện đã có!");
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(GUIChucVu.class.getName()).log(Level.SEVERE, null, ex);
+            }   catch (ParseException ex) {
+                    Logger.getLogger(GUIChucVu.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            else{
+                JOptionPane.showMessageDialog(jPanel1, "Chưa nhập thông tin để sửa!");
+            }
+        }
+        else{
+            JOptionPane.showMessageDialog(jPanel1, "Chưa chọn chức vụ để sửa!");
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        if(!jTextField1.getText().isEmpty()){
+                DTOChucVu cv = new DTOChucVu();
+                cv.setMaChucVu(Integer.parseInt(jTextField1.getText().toString()));
+                try {
+                    cv = chucvu.getcv(cv);
+                     cv.setTenChucVu(jTextField2.getText().toString());
+                     cv.setIsHidden(1);
+                    chucvu.updatechucvu(cv);
+                    JOptionPane.showMessageDialog(jPanel1, "Xóa thành công!");
+                    resetall();
+                } catch (SQLException ex) {
+                    Logger.getLogger(GUIChucVu.class.getName()).log(Level.SEVERE, null, ex);
+                }
+        }else{
+            JOptionPane.showMessageDialog(jPanel1, "Chưa chọn chức vụ để xóa!");
+        }
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments

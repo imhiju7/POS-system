@@ -3,7 +3,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
 package GUI;
-
+import BUS.*;
+import DTO.*;
 /**
  *
  * @author Hieu PC
@@ -13,6 +14,7 @@ public class GUINhaCungCap extends javax.swing.JPanel {
     /**
      * Creates new form GUINhaCungCap
      */
+    BUSNhaCungCap nhacungcap = new BUSNhaCungCap();
     public GUINhaCungCap() {
         initComponents();
     }

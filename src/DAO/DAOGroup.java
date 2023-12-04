@@ -17,9 +17,25 @@ import java.util.ArrayList;
  * @author Hieu PC
  */
 public class DAOGroup {
+    public DTOGroup getgr(DTOGroup i) throws SQLException, ParseException{
+        Connection con = Connect.connection();
+        String sql = "SELECT * FROM qlcuahangtienloi.group WHERE maGroup = ?";
+        PreparedStatement pst =  con.prepareStatement(sql);
+        pst.setInt(1, i.getMaGroup());
+        ResultSet rs = pst.executeQuery();
+        DTOGroup gr = new DTOGroup();
+        while(rs.next()){
+            gr.setMaGroup(rs.getInt("maGroup"));
+            gr.setTenGroup(rs.getString("tenGroup"));
+            gr.setIcon(rs.getString("icon"));
+            gr.setIsdelete(rs.getInt("isDelete"));
+        }
+        con.close();
+        return gr;
+    }
     public ArrayList<DTOGroup> getlist() throws SQLException, ParseException{
         Connection con = Connect.connection();
-        String sql = "SELECT * FROM qlcuahangtienloi.group";
+        String sql = "SELECT * FROM qlcuahangtienloi.group WHERE isDelete = 0";
         PreparedStatement pst =  con.prepareStatement(sql);
         ResultSet rs = pst.executeQuery();
         ArrayList<DTOGroup> list = new ArrayList<>();
@@ -34,8 +50,35 @@ public class DAOGroup {
         con.close();
         return list;
     }
-    public int getrowcount() throws SQLException, ParseException{
-        return getlist().size();
+    public DTOGroup getmagr(DTOGroup i) throws SQLException, ParseException{
+        Connection con = Connect.connection();
+        String sql = "SELECT * FROM qlcuahangtienloi.group WHERE tenGroup = ?";
+        PreparedStatement pst =  con.prepareStatement(sql);
+        pst.setString(1, i.getTenGroup());
+        ResultSet rs = pst.executeQuery();
+        DTOGroup gr = new DTOGroup();
+        while(rs.next()){
+            gr.setMaGroup(rs.getInt("maGroup"));
+            gr.setTenGroup(rs.getString("tenGroup"));
+            gr.setIcon(rs.getString("icon"));
+            gr.setIsdelete(rs.getInt("isDelete"));
+        }
+        con.close();
+        return gr;
+    }
+    public boolean checktengr(String ten) throws SQLException, ParseException{
+        Connection con = Connect.connection();
+        String sql = "SELECT * FROM qlcuahangtienloi.group WHERE tenGroup = ?";
+        PreparedStatement pst =  con.prepareStatement(sql);
+        pst.setString(1, ten);
+        ResultSet rs = pst.executeQuery();
+        int count = 0;
+        while(rs.next()){
+            count++;
+        }
+        con.close();
+        if(count > 0) return false;
+        return true;
     }
     public int addgroup(DTOGroup gr) throws SQLException{
         Connection con = Connect.connection();

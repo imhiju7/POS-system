@@ -43,6 +43,20 @@ public class DAOPhanLoai {
         con.close();
         return pl;
     }
+    public DTOPhanLoai getplbyname(DTOPhanLoai i) throws SQLException{
+        Connection con = Connect.connection();
+        String sql = "SELECT * FROM phanloai WHERE tenPhanLoai = ?";
+        PreparedStatement pst =  con.prepareStatement(sql);
+        pst.setString(1, i.getTenPhanLoai());
+        ResultSet rs = pst.executeQuery();
+        DTOPhanLoai pl = new DTOPhanLoai();
+        while(rs.next()){
+            pl.setMaPhanLoai(rs.getInt("maPhanLoai"));
+            pl.setTenPhanLoai(rs.getString("tenPhanLoai"));
+        }
+        con.close();
+        return pl;
+    }
     public int addphanloai(DTOPhanLoai i) throws SQLException{
         Connection con = Connect.connection();
         String sql = "INSERT INTO phanloai(tenPhanLoai) VALUES(?)";
@@ -57,7 +71,7 @@ public class DAOPhanLoai {
         String sql = "UPDATE phanloai set tenPhanLoai= ?WHERE maPhanLoai= ?";
         PreparedStatement pst = con.prepareStatement(sql);
         pst.setString(1, i.getTenPhanLoai());
-        pst.setInt(3, i.getMaPhanLoai());
+        pst.setInt(2, i.getMaPhanLoai());
         int rowaffect = pst.executeUpdate();
         con.close();
         return rowaffect;
@@ -70,5 +84,34 @@ public class DAOPhanLoai {
         int rowaffect = pst.executeUpdate();
         con.close();
         return rowaffect;
+    }
+    public boolean checkpltodelete(DTOPhanLoai i) throws SQLException{
+        Connection con = Connect.connection();
+        String sql = "SELECT * FROM sanpham WHERE maPhanLoai = ?";
+        PreparedStatement pst =  con.prepareStatement(sql);
+        pst.setInt(1, i.getMaPhanLoai());
+        ResultSet rs = pst.executeQuery();
+        int count = 0;
+        while(rs.next()){
+            count++;
+        }
+        if(count > 0) return false;
+        return true;
+        
+    }
+    public boolean checktenpl(String tencv) throws SQLException{
+        Connection con = Connect.connection();
+        String sql = "SELECT * FROM phanloai WHERE tenPhanLoai = ?";
+        PreparedStatement pst =  con.prepareStatement(sql);
+        pst.setString(1, tencv);
+        ResultSet rs = pst.executeQuery();
+        int count = 0;
+        while(rs.next()){
+            count++;
+        }
+        con.close();
+        
+        if(count > 0) return false;
+        else return true;
     }
 }
