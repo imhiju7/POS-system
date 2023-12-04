@@ -4,9 +4,18 @@
  */
 package GUI;
 
+import BUS.BUSChucNang;
+import DTO.DTOChucNang;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.sql.SQLException;
+import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -14,12 +23,16 @@ import javax.swing.JFrame;
  */
 public class GUIChucNang extends javax.swing.JFrame {
 
+    private DTOChucNang DTOcn = new DTOChucNang();
+    private BUSChucNang BUScn = new BUSChucNang();
+
     /**
      * Creates new form GUIChucNang
      */
-    public GUIChucNang() {
+    public GUIChucNang() throws SQLException, ParseException {
         initComponents();
-        
+        ListTableTaiKhoan(BUScn.getlist());
+
         Toolkit toolkit = Toolkit.getDefaultToolkit();
         Dimension screenSize = toolkit.getScreenSize();
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -48,19 +61,19 @@ public class GUIChucNang extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
-        jTextField1 = new javax.swing.JTextField();
+        txtMaChucNang = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        txtTenChucNang = new javax.swing.JTextField();
         jPanel5 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        btnThem = new javax.swing.JButton();
+        btnSua = new javax.swing.JButton();
+        btnXoa = new javax.swing.JButton();
+        btnRefesh = new javax.swing.JButton();
         jTextField3 = new javax.swing.JTextField();
-        jButton5 = new javax.swing.JButton();
+        btnTim = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tableChucNang = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -83,9 +96,8 @@ public class GUIChucNang extends javax.swing.JFrame {
         jPanel3.setBackground(new java.awt.Color(245, 232, 183));
         jPanel3.setPreferredSize(new java.awt.Dimension(600, 700));
 
-        jTextField1.setEditable(false);
-        jTextField1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField1.setText("ID");
+        txtMaChucNang.setEditable(false);
+        txtMaChucNang.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -94,7 +106,7 @@ public class GUIChucNang extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel3.setText("Tên chức năng");
 
-        jTextField2.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtTenChucNang.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -104,11 +116,11 @@ public class GUIChucNang extends javax.swing.JFrame {
                 .addGap(26, 26, 26)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtMaChucNang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(99, 99, 99)
                 .addComponent(jLabel3)
                 .addGap(18, 18, 18)
-                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtTenChucNang, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
@@ -116,34 +128,39 @@ public class GUIChucNang extends javax.swing.JFrame {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(16, 16, 16)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtTenChucNang, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtMaChucNang, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(16, Short.MAX_VALUE))
         );
 
-        jButton1.setBackground(new java.awt.Color(161, 204, 209));
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/SOURCE/Icon/add.png"))); // NOI18N
-        jButton1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnThem.setBackground(new java.awt.Color(161, 204, 209));
+        btnThem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/SOURCE/Icon/add.png"))); // NOI18N
+        btnThem.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
-        jButton2.setBackground(new java.awt.Color(161, 204, 209));
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/SOURCE/Icon/edit.png"))); // NOI18N
-        jButton2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnSua.setBackground(new java.awt.Color(161, 204, 209));
+        btnSua.setIcon(new javax.swing.ImageIcon(getClass().getResource("/SOURCE/Icon/edit.png"))); // NOI18N
+        btnSua.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
-        jButton3.setBackground(new java.awt.Color(161, 204, 209));
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/SOURCE/Icon/trash.png"))); // NOI18N
-        jButton3.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnXoa.setBackground(new java.awt.Color(161, 204, 209));
+        btnXoa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/SOURCE/Icon/trash.png"))); // NOI18N
+        btnXoa.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
-        jButton4.setBackground(new java.awt.Color(161, 204, 209));
-        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/SOURCE/Icon/reset.png"))); // NOI18N
-        jButton4.setToolTipText("");
-        jButton4.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnRefesh.setBackground(new java.awt.Color(161, 204, 209));
+        btnRefesh.setIcon(new javax.swing.ImageIcon(getClass().getResource("/SOURCE/Icon/reset.png"))); // NOI18N
+        btnRefesh.setToolTipText("");
+        btnRefesh.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnRefesh.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRefeshActionPerformed(evt);
+            }
+        });
 
-        jButton5.setBackground(new java.awt.Color(161, 204, 209));
-        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/SOURCE/Icon/search.png"))); // NOI18N
-        jButton5.setToolTipText("");
-        jButton5.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnTim.setBackground(new java.awt.Color(161, 204, 209));
+        btnTim.setIcon(new javax.swing.ImageIcon(getClass().getResource("/SOURCE/Icon/search.png"))); // NOI18N
+        btnTim.setToolTipText("");
+        btnTim.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -151,17 +168,17 @@ public class GUIChucNang extends javax.swing.JFrame {
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addGap(33, 33, 33)
-                .addComponent(jButton1)
+                .addComponent(btnThem)
                 .addGap(18, 18, 18)
-                .addComponent(jButton2)
+                .addComponent(btnSua)
                 .addGap(18, 18, 18)
-                .addComponent(jButton3)
+                .addComponent(btnXoa)
                 .addGap(38, 38, 38)
                 .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnTim, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnRefesh, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(36, 36, 36))
         );
         jPanel5Layout.setVerticalGroup(
@@ -169,27 +186,27 @@ public class GUIChucNang extends javax.swing.JFrame {
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addGap(17, 17, 17)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, 46, Short.MAX_VALUE)
+                    .addComponent(btnSua, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnTim, javax.swing.GroupLayout.DEFAULT_SIZE, 46, Short.MAX_VALUE)
                     .addComponent(jTextField3, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnRefesh, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnXoa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnThem, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(14, Short.MAX_VALUE))
         );
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tableChucNang.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Mã chức năng", "Tên chức năng"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tableChucNang);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -239,6 +256,16 @@ public class GUIChucNang extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnRefeshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefeshActionPerformed
+        try {
+            refesh();
+        } catch (SQLException ex) {
+            Logger.getLogger(GUIChucNang.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
+            Logger.getLogger(GUIChucNang.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnRefeshActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -269,17 +296,129 @@ public class GUIChucNang extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new GUIChucNang().setVisible(true);
+                try {
+                    new GUIChucNang().setVisible(true);
+                } catch (SQLException ex) {
+                    Logger.getLogger(GUIChucNang.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (ParseException ex) {
+                    Logger.getLogger(GUIChucNang.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
 
+    // Đổ thông tin vào bảng
+    public void ListTableTaiKhoan(ArrayList<DTOChucNang> tk) {
+        DefaultTableModel df = (DefaultTableModel) tableChucNang.getModel();
+        df.setRowCount(0);
+        for (DTOChucNang chucNangDTO : tk) {
+            Object dataRow[] = new Object[7];
+            dataRow[0] = chucNangDTO.getMaChucNang();
+            dataRow[1] = chucNangDTO.getTenChucNang().trim();
+            df.addRow(dataRow);
+        }
+    }
+
+    // lấy thông tin khi click
+    public void getEventDSTaiKhoan() {
+        DefaultTableModel df = (DefaultTableModel) tableChucNang.getModel();
+        int indexRow = tableChucNang.getSelectedRow();
+        txtMaChucNang.setText(df.getValueAt(indexRow, 0).toString());
+        txtTenChucNang.setText(df.getValueAt(indexRow, 1).toString());
+    }
+
+    // Thêm chức năng mới
+    public void them() throws SQLException, ParseException {
+        String tenChucNang = txtTenChucNang.getText();
+        int isDelete = 0;
+        DTOcn = new DTOChucNang(tenChucNang, isDelete);
+        if (BUScn.addchucnang(DTOcn) == true) {
+            JOptionPane.showMessageDialog(btnThem, "Thêm thành công");
+            ListTableTaiKhoan(BUScn.getlist());
+            refesh();
+        }
+    }
+
+    // Xóa
+    public void xoa() throws SQLException, ParseException {
+        DefaultTableModel df = (DefaultTableModel) tableChucNang.getModel();
+        int indexRow = tableChucNang.getSelectedRow();
+
+        if (indexRow == -1) {
+            JOptionPane.showMessageDialog(btnXoa, "Bạn chưa chọn chức năng để xóa");
+            return;
+        }
+
+        if (txtMaChucNang.getText().equals("")) {
+            JOptionPane.showMessageDialog(btnXoa, "Mã chức năng không được để trống");
+            return;
+        }
+
+        int maChucNang = Integer.parseInt(txtMaChucNang.getText());
+        int dialog = JOptionPane.showConfirmDialog(btnSua, "Bạn có chức muốn xóa chức năng này không ?", "Xóa chức năng", JOptionPane.YES_NO_OPTION);
+        if (dialog == JOptionPane.YES_OPTION) {
+            boolean update = BUScn.xoaChucNang(maChucNang);
+            if (update == true) {
+                JOptionPane.showMessageDialog(btnSua, "Xóa thành công");
+                ListTableTaiKhoan(BUScn.getlist());
+                refesh();
+            } else {
+                JOptionPane.showMessageDialog(btnSua, "Xóa thất bại");
+            }
+        }
+    }
+
+    // Sửa
+    public void sua() throws SQLException, ParseException {
+        DefaultTableModel df = (DefaultTableModel) tableChucNang.getModel();
+        int indexRow = tableChucNang.getSelectedRow();
+
+        if (indexRow == -1) {
+            JOptionPane.showMessageDialog(btnXoa, "Bạn chưa chọn chức năng để xóa");
+            return;
+        }
+
+        if (txtMaChucNang.getText().equals("")) {
+            JOptionPane.showMessageDialog(btnXoa, "Mã chức năng không được để trống");
+            return;
+        } else if (txtTenChucNang.getText().equals("")) {
+            JOptionPane.showMessageDialog(btnXoa, "Tên chức năng không được để trống");
+            return;
+        }
+
+        int maChucNang = Integer.parseInt(txtMaChucNang.getText());
+        String tenChucNang = txtTenChucNang.getText();
+        int dialog = JOptionPane.showConfirmDialog(btnSua, "Bạn có chức muốn sửa chức năng này không ?", "Sửa chức năng", JOptionPane.YES_NO_OPTION);
+        if (dialog == JOptionPane.YES_OPTION) {
+            boolean update = BUScn.suaChucNang(maChucNang, tenChucNang);
+            if (update == true) {
+                JOptionPane.showMessageDialog(btnSua, "Sửa thành công");
+                ListTableTaiKhoan(BUScn.getlist());
+                refesh();
+            } else {
+                JOptionPane.showMessageDialog(btnSua, "Sửa thất bại");
+            }
+        }
+    }
+
+    //Tìm
+    public void tim() {
+
+    }
+
+    // Tải lại
+    public void refesh() throws SQLException, ParseException {
+        txtMaChucNang.setText("");
+        txtTenChucNang.setText("");
+        ListTableTaiKhoan(BUScn.getlist());
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
+    private javax.swing.JButton btnRefesh;
+    private javax.swing.JButton btnSua;
+    private javax.swing.JButton btnThem;
+    private javax.swing.JButton btnTim;
+    private javax.swing.JButton btnXoa;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -289,9 +428,9 @@ public class GUIChucNang extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
+    private javax.swing.JTable tableChucNang;
+    private javax.swing.JTextField txtMaChucNang;
+    private javax.swing.JTextField txtTenChucNang;
     // End of variables declaration//GEN-END:variables
 }

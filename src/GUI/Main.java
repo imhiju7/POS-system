@@ -12,7 +12,6 @@ import org.jdesktop.animation.timing.Animator;
 import org.jdesktop.animation.timing.TimingTarget;
 import org.jdesktop.animation.timing.TimingTargetAdapter;
 
-
 public class Main extends javax.swing.JFrame {
 
     private MigLayout layout;
@@ -29,6 +28,7 @@ public class Main extends javax.swing.JFrame {
     public static void setMapq(int mapq) {
         Main.mapq = mapq;
     }
+
     public int getManv() {
         return manv;
     }
@@ -36,6 +36,7 @@ public class Main extends javax.swing.JFrame {
     public void setManv(int manv) {
         this.manv = manv;
     }
+
     public Main(int mnv) {
         initComponents();
         init();
@@ -44,7 +45,7 @@ public class Main extends javax.swing.JFrame {
 
     private void init() {
         layout = new MigLayout("fill", "[][100%, fill]", "[fill, top]");
-        bg.setLayout(layout); 
+        bg.setLayout(layout);
         menu = new Menu();
         main = new MainForm();
         mapq = 0;
@@ -53,8 +54,54 @@ public class Main extends javax.swing.JFrame {
         menu.addEvent(new EventMenuSelected() {
             @Override
             public void menuSelected(int menuIndex, int subMenuIndex) {
+<<<<<<< HEAD
                 
                 main.showForm(new GUIKhuyenMai());
+=======
+                if (mapq == 1) {
+
+                } else if (mapq == 2) {
+
+                } else if (mapq == 3) {
+
+                } else {
+                    if (menuIndex == 0) {
+                        try {
+                            main.showForm(new GUITaiKhoan());
+                        } catch (SQLException ex) {
+                            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+                        } catch (ParseException ex) {
+                            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    } else if (menuIndex == 1) {
+                        if (subMenuIndex == 0) {
+
+                        } else if (subMenuIndex == 1) {
+                            main.showForm(new pn_macdinh());
+                            System.out.println(main.getSize());
+                        } else if (subMenuIndex == 2) {
+                            //  main.showForm(new pnPhanQuyen());
+                            System.out.println(main.getSize());
+                        }
+                    } else if (menuIndex == 2) {
+                        if (subMenuIndex == 0) {
+
+                        } else {
+
+                        }
+                    } else if (menuIndex == 3) {
+
+                    } else if (menuIndex == 4) {
+
+                    } else if (menuIndex == 5) {
+
+                    } else if (menuIndex == 6) {
+
+                    } else {
+
+                    }
+                }
+>>>>>>> 98cac09a5cbe84ff9403aca978fe6cb7d4f87030
             }
         });
         menu.addEventShowPopup(new EventShowPopupMenu() {
@@ -96,7 +143,7 @@ public class Main extends javax.swing.JFrame {
         animator.setDeceleration(0.5f);
         animator.setAcceleration(0.5f);
         //  Start with this form
-        
+
     }
 
     @SuppressWarnings("unchecked")

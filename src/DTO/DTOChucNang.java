@@ -10,6 +10,24 @@ package DTO;
  */
 public class DTOChucNang {
 
+    private int maChucNang;
+    private String tenChucNang;
+    private int isDelete;
+
+    public DTOChucNang() {
+    }
+
+    public DTOChucNang(String tenChucNang, int isDelete) {
+        this.tenChucNang = tenChucNang;
+        this.isDelete = isDelete;
+    }
+
+    public DTOChucNang(int maChucNang, String tenChucNang, int isDelete) {
+        this.maChucNang = maChucNang;
+        this.tenChucNang = tenChucNang;
+        this.isDelete = isDelete;
+    }
+
     public int getMaChucNang() {
         return maChucNang;
     }
@@ -25,6 +43,7 @@ public class DTOChucNang {
     public void setTenChucNang(String tenChucNang) {
         this.tenChucNang = tenChucNang;
     }
+<<<<<<< HEAD
     public DTOChucNang(){}
 
     public DTOChucNang(int maChucNang, String tenChucNang, int maGroup, int isHidden) {
@@ -47,12 +66,14 @@ public class DTOChucNang {
 
 
 
+=======
+>>>>>>> 98cac09a5cbe84ff9403aca978fe6cb7d4f87030
 
-    public int getIsHidden() {
-        return isHidden;
+    public int getIsDelete() {
+        return isDelete;
     }
 
-    public void setIsHidden(int isHidden) {
-        this.isHidden = isHidden;
+    public void setIsDelete(int isDelete) {
+        this.isDelete = isDelete;
     }
 }

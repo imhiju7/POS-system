@@ -15,15 +15,23 @@ import java.util.ArrayList;
  * @author Hieu PC
  */
 public class BUSChucNang {
+
     DAOChucNang DAO = new DAOChucNang();
-    public ArrayList<DTOChucNang> getlist() throws SQLException, ParseException{
+
+    public ArrayList<DTOChucNang> getlist() throws SQLException, ParseException {
         return DAO.getlist();
     }
-    public int addchucnang(DTOChucNang i) throws SQLException{
+
+    public boolean addchucnang(DTOChucNang i) throws SQLException {
         return DAO.addchucnang(i);
     }
-    public int updateChucNang(DTOChucNang i) throws SQLException{
-        return DAO.updatechucnang(i);
+
+    public boolean suaChucNang(int maChucNang, String tenChucNang) throws SQLException {
+        return DAO.suachucnang(maChucNang, tenChucNang);
+    }
+
+    public boolean xoaChucNang(int maChucNang) throws SQLException {
+        return DAO.xoachucnang(maChucNang);
     }
     public ArrayList<DTOChucNang> getlistgroup(int magr) throws SQLException, ParseException{
         return DAO.getlistgroup(magr);

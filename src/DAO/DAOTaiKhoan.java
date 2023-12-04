@@ -45,7 +45,11 @@ public class DAOTaiKhoan {
     }
     public DTOTaiKhoan kiemTraTaiKhoan(String tenDangNhap, String matKhau) {
         Connection con = Connect.connection();
+<<<<<<< HEAD
         String sql = "select * from taikhoan where tenDangNhap = ? and matKhau = ? and isBlock = 0 ";
+=======
+        String sql = "select * from taikhoan where tenDangNhap = ? and matKhau = ? and isBlock = 0";
+>>>>>>> 98cac09a5cbe84ff9403aca978fe6cb7d4f87030
         ArrayList<DTOTaiKhoan> dstk = new ArrayList<>();
         try {
             PreparedStatement pst = con.prepareStatement(sql);
@@ -108,7 +112,11 @@ public class DAOTaiKhoan {
         return false;
     }
 
+<<<<<<< HEAD
 
+=======
+    //Kiểm tra trạng thái
+>>>>>>> 98cac09a5cbe84ff9403aca978fe6cb7d4f87030
     public boolean checkKhoaTaiKhoan(String tenDangNhap) {
         Connection con = Connect.connection();
         String sql = "select * from taikhoan where tenDangNhap = ? and isBlock = 1 ";
@@ -123,6 +131,26 @@ public class DAOTaiKhoan {
             e.printStackTrace();
         }
         return false;
+    }
+
+    //Lấy mã nhân viên theo tên đăng nhập
+    public int layMaNhanVien(String tenDangNhap) {
+        int maNhanVien = -1;
+        Connection con = Connect.connection();
+        String sql = "SELECT maNhanvien "
+                + "FROM taikhoan "
+                + "WHERE taikhoan.tenDangNhap = ? ";
+        try {
+            PreparedStatement pst = con.prepareStatement(sql);
+            pst.setString(1, tenDangNhap);
+            ResultSet rs = pst.executeQuery();
+            if (rs.next()) {
+                maNhanVien = rs.getInt("maNhanVien");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return maNhanVien;
     }
 
     public ArrayList<DTOTaiKhoan> getList() throws SQLException, ParseException {
@@ -179,6 +207,31 @@ public class DAOTaiKhoan {
         return list;
     }
 
+<<<<<<< HEAD
+=======
+    // Lấy nhân viên đã có tài khoản
+    public void ListComboboxTenNhanVien1(JComboBox c, String tenDangNhap) {
+        Connection con = Connect.connection();
+
+        String sql = "SELECT n.tenNhanVien"
+                + " FROM taikhoan AS t "
+                + "INNER JOIN nhanvien AS n ON t.maNhanVien = n.maNhanVien "
+                + "WHERE t.tenDangNhap = ?";
+        try {
+            PreparedStatement pst = con.prepareStatement(sql);
+            pst.setString(1, tenDangNhap);
+
+            ResultSet rs = pst.executeQuery();
+            while (rs.next()) {
+                String pat = rs.getString("tenNhanVien");
+                c.addItem(pat.trim());
+            }
+            rs.close();
+        } catch (Exception e) {
+
+        }
+    }
+>>>>>>> 98cac09a5cbe84ff9403aca978fe6cb7d4f87030
 
     public int addtaikhoan(DTOTaiKhoan tk) throws SQLException {
         Connection con = Connect.connection();
@@ -194,7 +247,11 @@ public class DAOTaiKhoan {
         return rowaffect;
     }
 
+<<<<<<< HEAD
     public int updatetaikhoan(DTOTaiKhoan tk) throws SQLException {
+=======
+    public int uppdatetaikhoan(DTOTaiKhoan tk) throws SQLException {
+>>>>>>> 98cac09a5cbe84ff9403aca978fe6cb7d4f87030
         Connection con = Connect.connection();
         String sql = "UPDATE taikhoan set tenDangNhap = ?,matKhau= ?,isBlock= ? WHERE maNhanVien = ?";
         PreparedStatement pst = con.prepareStatement(sql);

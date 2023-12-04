@@ -17,48 +17,78 @@ import java.util.ArrayList;
  * @author Hieu PC
  */
 public class DAOChucNang {
-    public ArrayList<DTOChucNang> getlist() throws SQLException, ParseException{
+
+    public ArrayList<DTOChucNang> getlist() throws SQLException, ParseException {
         Connection con = Connect.connection();
         String sql = "SELECT * FROM chucnang";
-        PreparedStatement pst =  con.prepareStatement(sql);
+        PreparedStatement pst = con.prepareStatement(sql);
         ResultSet rs = pst.executeQuery();
         ArrayList<DTOChucNang> list = new ArrayList<>();
-        while(rs.next()){
+        while (rs.next()) {
             DTOChucNang cn = new DTOChucNang();
             cn.setMaChucNang(rs.getInt("maChucNang"));
             cn.setTenChucNang(rs.getString("tenChucNang"));
+<<<<<<< HEAD
             cn.setIsHidden(rs.getInt("isDelete"));
             cn.setMaGroup(rs.getInt("maGr"));
+=======
+            cn.setIsDelete(rs.getInt("isDelete"));
+>>>>>>> 98cac09a5cbe84ff9403aca978fe6cb7d4f87030
             list.add(cn);
         }
         con.close();
         return list;
     }
-    public int getrowcount() throws SQLException, ParseException{
+
+    public int getrowcount() throws SQLException, ParseException {
         return getlist().size();
     }
-    public int addchucnang(DTOChucNang cn) throws SQLException{
+
+    public boolean addchucnang(DTOChucNang cn) throws SQLException {
         Connection con = Connect.connection();
         String sql = "INSERT INTO ChucNang(tenChucNang,isDelete,maGr) VALUES(?,?,?)";
         PreparedStatement pst = con.prepareStatement(sql);
         pst.setString(1, cn.getTenChucNang());
+<<<<<<< HEAD
         pst.setInt(2, cn.getIsHidden());
         pst.setInt(3, cn.getMaGroup());
+=======
+        pst.setInt(2, cn.getIsDelete());
+>>>>>>> 98cac09a5cbe84ff9403aca978fe6cb7d4f87030
         int rowaffect = pst.executeUpdate();
         con.close();
-        return rowaffect;
+        return rowaffect > 0;
     }
-    public int updatechucnang(DTOChucNang cn) throws SQLException{
+
+    public boolean suachucnang(int maChucNang, String tenChucNang) throws SQLException {
         Connection con = Connect.connection();
+<<<<<<< HEAD
         String sql = "UPDATE chucnang set tenChucNang = ?,isDelete=?,maGr=? WHERE maChucNang= ?";
         PreparedStatement pst = con.prepareStatement(sql);
         pst.setString(1, cn.getTenChucNang());
         pst.setInt(2, cn.getIsHidden());
         pst.setInt(3, cn.getMaGroup());
         pst.setInt(4, cn.getMaChucNang());
+=======
+        String sql = "UPDATE chucnang set tenChucNang = ? WHERE maChucNang= ?";
+        PreparedStatement pst = con.prepareStatement(sql);
+        pst.setString(1, tenChucNang);
+        pst.setInt(2, maChucNang);
+>>>>>>> 98cac09a5cbe84ff9403aca978fe6cb7d4f87030
         int rowaffect = pst.executeUpdate();
         con.close();
-        return rowaffect;
+        return rowaffect > 0;
+
+    }
+
+    public boolean xoachucnang(int maChucNang) throws SQLException {
+        Connection con = Connect.connection();
+        String sql = "UPDATE chucnang set isDelete = 1 WHERE maChucNang= ?";
+        PreparedStatement pst = con.prepareStatement(sql);
+        pst.setInt(1, maChucNang);
+        int rowaffect = pst.executeUpdate();
+        con.close();
+        return rowaffect > 0;
     }
     public ArrayList<DTOChucNang> getlistgroup(int magroup) throws SQLException, ParseException{
         Connection con = Connect.connection();
