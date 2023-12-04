@@ -122,7 +122,7 @@ public class DAOCTPhieuNhap {
     }
     public int deletectphieunhap(DTOCTPhieuNhap ctpn) throws SQLException{
         Connection con = Connect.connection();
-        String sql = "DELETE * FROM chitietphieunhap WHERE maCTPhieuNhap= ?";
+        String sql = "DELETE FROM chitietphieunhap WHERE maCTPhieuNhap= ?";
         PreparedStatement pst = con.prepareStatement(sql);
         pst.setInt(1, ctpn.getMaCTPhieuNhap());
         int rowaffect = pst.executeUpdate();

@@ -8,6 +8,8 @@ import DTO.*;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 /**
@@ -41,5 +43,66 @@ public class BUSUuDai {
     }
     public DTOUuDai getud(DTOUuDai i) throws SQLException, ParseException{
         return DAO.getud(i);
+    }
+    public boolean checkdiem(int moc,int tile){
+        boolean key = false;
+        try {
+            ArrayList<DTOUuDai> list = getlist();
+            DTOUuDai max = new DTOUuDai();
+            DTOUuDai min = new DTOUuDai();
+            DTOUuDai truoc = new DTOUuDai();
+            DTOUuDai sau = new DTOUuDai();
+            int count = 0;
+            for(DTOUuDai i: list){
+                if(i.getMocUuDai() > moc){
+                    if(count != 0){
+                        sau.setTiLeGiam(i.getTiLeGiam());
+                    }
+                    else{
+                        min.setTiLeGiam(i.getTiLeGiam());
+                    }
+                    break;
+                }
+                else{
+                    if(count < list.size()-1){
+                        truoc.setTiLeGiam(i.getTiLeGiam());
+                        count++;
+                    }
+                    else{
+                        max.setTiLeGiam(i.getTiLeGiam());
+                        break;
+                    }
+                }
+            }
+            if(max.getTiLeGiam() > 0){
+                if(max.getTiLeGiam() < tile){
+                    key = true;
+                }
+                else{
+                    key = false;
+                }
+            }
+            else if(min.getTiLeGiam() > 0){
+                if(min.getTiLeGiam() > tile){
+                    key = true;
+                }
+                else{
+                    key = false;
+                }
+            }
+            else{
+                if(sau.getTiLeGiam() >= tile && truoc.getTiLeGiam() <= tile){
+                    key = true;
+                }
+                else{
+                    key = false;
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(BUSUuDai.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
+            Logger.getLogger(BUSUuDai.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return key;
     }
 }

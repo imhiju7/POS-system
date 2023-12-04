@@ -675,7 +675,7 @@ public class GUICTPhieuNhap extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(jPanel1, "Hãy chọn loại tìm kiếm!");
                 }
             } catch (SQLException ex) {
-                Logger.getLogger(GUIPhieuNhap.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(GUICTPhieuNhap.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         else{

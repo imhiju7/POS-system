@@ -127,13 +127,16 @@ public class BUSNhanVien {
         // Định dạng ngày tháng từ chuỗi
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         LocalDate birthDate = LocalDate.parse(birthday, formatter);
-
+        boolean key = false;
         // Tính tuổi hiện tại
         LocalDate currentDate = LocalDate.now();
         Period age = Period.between(birthDate, currentDate);
-
+        if(age.getYears() >= 18 && birthDate.isBefore(currentDate)){
+            key = true;
+        }
+        else key = false;
         // Kiểm tra xem tuổi có đủ 18 hay không
-        return age.getYears() >= 18;
+        return key;
     }
     public Date convertStringToDate(String dateString) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");

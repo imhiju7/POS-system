@@ -90,7 +90,7 @@ public class BUSTichDiem {
                 }
             }
             else{
-                if(sau.getDiemTichLuy() > diem && truoc.getDiemTichLuy() < diem){
+                if(sau.getDiemTichLuy() >= diem && truoc.getDiemTichLuy() <= diem){
                     key = true;
                 }
                 else{

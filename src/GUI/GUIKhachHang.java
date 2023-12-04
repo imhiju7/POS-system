@@ -21,7 +21,6 @@ public class GUIKhachHang extends javax.swing.JPanel {
      * Creates new form GUIKhachHang
      */
     BUSKhachHang khachhang = new BUSKhachHang();
-    BUSUuDai uudai = new BUSUuDai();
     public GUIKhachHang() {
         initComponents();
         resetall();
@@ -466,7 +465,7 @@ public class GUIKhachHang extends javax.swing.JPanel {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        if(!jTextField4.getText().isEmpty() && jTextField5.getText().isEmpty()){
+        if(!jTextField4.getText().isEmpty() && !jTextField5.getText().isEmpty()){
             try {
                 if(khachhang.isValidVietnamesePhoneNumber(jTextField5.getText().toString()) && khachhang.checkphone(jTextField5.getText().toString())){
                     DTOKhachHang kh= new DTOKhachHang();
@@ -497,7 +496,7 @@ public class GUIKhachHang extends javax.swing.JPanel {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         if(!jTextField3.getText().isEmpty()){
-            if(!jTextField4.getText().isEmpty() && jTextField5.getText().isEmpty()){
+            if(!jTextField4.getText().isEmpty() && !jTextField5.getText().isEmpty()){
             try {
                 if(khachhang.isValidVietnamesePhoneNumber(jTextField5.getText().toString()) && khachhang.checkphoneedit(jTextField5.getText().toString(),Integer.parseInt(jTextField3.getText().toString()))){
                     DTOKhachHang kh= new DTOKhachHang();

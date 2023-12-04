@@ -90,7 +90,7 @@ public class DAOKhachHang {
         Connection con = Connect.connection();
         int i = 0;
         boolean key = false;
-        String sql = "SELECT * FROM nhanvien where SDT = ? ";
+        String sql = "SELECT * FROM khachhang where SDT = ? ";
         PreparedStatement pst =  con.prepareStatement(sql);
         pst.setString(1, phone);
         ResultSet rs = pst.executeQuery();

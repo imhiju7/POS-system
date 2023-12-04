@@ -11,6 +11,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 /**
  *
@@ -36,7 +38,7 @@ public class DAOUuDai {
     }
     public ArrayList<DTOUuDai> getlist() throws SQLException, ParseException{
         Connection con = Connect.connection();
-        String sql = "SELECT * FROM uudai";
+        String sql = "SELECT * FROM uudai WHERE isDelete = 0";
         PreparedStatement pst =  con.prepareStatement(sql);
         ResultSet rs = pst.executeQuery();
         ArrayList<DTOUuDai> list = new ArrayList<>();
@@ -49,6 +51,12 @@ public class DAOUuDai {
             list.add(ud);
         }
         con.close();
+        Collections.sort(list, new Comparator<DTOUuDai>() {
+            @Override
+            public int compare(DTOUuDai person1, DTOUuDai person2) {
+                return Integer.compare(person1.getMocUuDai(), person2.getMocUuDai());
+            }
+        });
         return list;
     }
     public int adduudai(DTOUuDai ud) throws SQLException{
@@ -64,7 +72,7 @@ public class DAOUuDai {
     }
     public int updateuudai(DTOUuDai ud) throws SQLException{
         Connection con = Connect.connection();
-        String sql = "UPDATE uudai set mocUuDai = ?,tiLeGiam = ?,isDelete =? WHERE maUuDai= ?";
+        String sql = "UPDATE uudai set mocUuDai = ?,tiLeGiam = ?,isDelete = ? WHERE maUuDai= ?";
         PreparedStatement pst = con.prepareStatement(sql);
         pst.setInt(1, ud.getMocUuDai());
         pst.setInt(2, ud.getTiLeGiam());
