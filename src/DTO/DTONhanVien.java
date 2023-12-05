@@ -11,6 +11,7 @@ import java.util.Date;
  * @author Hieu PC
  */
 public class DTONhanVien {
+
     private int maNhanVien;
     private String tenNhanVien;
     private int maChucVu;
@@ -19,7 +20,6 @@ public class DTONhanVien {
     private String diaChi;
     private String Email;
     private String SDT;
-    private int isblock;
     private int isdelete;
     private Date ngayTao;
 
@@ -96,14 +96,6 @@ public class DTONhanVien {
         this.SDT = SDT;
     }
 
-    public int getIsblock() {
-        return isblock;
-    }
-
-    public void setIsblock(int isblock) {
-        this.isblock = isblock;
-    }
-
     public int getIsdelete() {
         return isdelete;
     }
@@ -119,8 +111,31 @@ public class DTONhanVien {
     public void setNgayTao(Date ngayTao) {
         this.ngayTao = ngayTao;
     }
-    public DTONhanVien(){}
-    public DTONhanVien(int maNhanVien, String tenNhanVien, int maChucVu, int gioiTinh, Date ngaySinh, String diaChi, String Email, String SDT, int isblock, int isdelete, Date ngayTao,String img) {
+
+    public String getStringGioiTinh() {
+        String gioitinh = "";
+        if (this.gioiTinh == 0) {
+            gioitinh = "Nữ";
+        } else {
+            gioitinh = "Nam";
+        }
+        return gioitinh;
+    }
+
+    public int getIntGioiTinh(String gioitinh) {
+        int i = 0;
+        if (gioitinh.equals("Nam")) {
+            i = 1;
+        } else {
+            i = 0;
+        }
+        return i;
+    }
+
+    public DTONhanVien() {
+    }
+
+    public DTONhanVien(int maNhanVien, String tenNhanVien, int maChucVu, int gioiTinh, Date ngaySinh, String diaChi, String Email, String SDT, int isdelete, Date ngayTao, String img) {
         this.maNhanVien = maNhanVien;
         this.tenNhanVien = tenNhanVien;
         this.maChucVu = maChucVu;
@@ -129,7 +144,6 @@ public class DTONhanVien {
         this.diaChi = diaChi;
         this.Email = Email;
         this.SDT = SDT;
-        this.isblock = isblock;
         this.isdelete = isdelete;
         this.ngayTao = ngayTao;
         this.img = img;

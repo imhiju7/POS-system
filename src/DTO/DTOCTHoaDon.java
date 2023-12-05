@@ -9,7 +9,10 @@ package DTO;
  * @author ADMIN
  */
 public class DTOCTHoaDon {
-    public DTOCTHoaDon(){}
+
+    public DTOCTHoaDon() {
+    }
+
     public DTOCTHoaDon(int maCTHoaDon, int maSanPham, int maHoaDon, int soLuong, double donGia, String ghiChu) {
         this.maCTHoaDon = maCTHoaDon;
         this.maSanPham = maSanPham;
@@ -66,16 +69,16 @@ public class DTOCTHoaDon {
     public void setGhiChu(String ghiChu) {
         this.ghiChu = ghiChu;
     }
-    public double getthanhtien(){
-        return (double)this.soLuong*this.donGia;
+
+    public double getthanhtien() {
+        return (double) this.soLuong * this.donGia;
     }
-    
+
     private int maCTHoaDon;
     private int maSanPham;
     private int maHoaDon;
     private int soLuong;
     private double donGia;
     private String ghiChu;
-    
-    
+
 }

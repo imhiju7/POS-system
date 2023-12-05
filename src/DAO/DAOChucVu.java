@@ -13,19 +13,52 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collections;
+
 /**
  *
  * @author buile
  */
 public class DAOChucVu {
 
-    public ArrayList<DTOChucVu> getlist() throws SQLException, ParseException{
+    public int getmachucvu(String tencv) throws SQLException {
+        Connection con = Connect.connection();
+        String sql = "SELECT * FROM chucvu WHERE tenChucVu = ?";
+        PreparedStatement pst = con.prepareStatement(sql);
+        pst.setString(1, tencv);
+        ResultSet rs = pst.executeQuery();
+        DTOChucVu cv = new DTOChucVu();
+        while (rs.next()) {
+            cv.setMaChucVu(rs.getInt("maChucVu"));
+            cv.setTenChucVu(rs.getString("tenChucVu"));
+            cv.setIsHidden(rs.getInt("isDelete"));
+        }
+        con.close();
+        return cv.getMaChucVu();
+    }
+
+    public DTOChucVu getcv(DTOChucVu i) throws SQLException {
+        Connection con = Connect.connection();
+        String sql = "SELECT * FROM chucvu WHERE maChucVu = ?";
+        PreparedStatement pst = con.prepareStatement(sql);
+        pst.setInt(1, i.getMaChucVu());
+        ResultSet rs = pst.executeQuery();
+        DTOChucVu cv = new DTOChucVu();
+        while (rs.next()) {
+            cv.setMaChucVu(rs.getInt("maChucVu"));
+            cv.setTenChucVu(rs.getString("tenChucVu"));
+            cv.setIsHidden(rs.getInt("isDelete"));
+        }
+        con.close();
+        return cv;
+    }
+
+    public ArrayList<DTOChucVu> getlist() throws SQLException, ParseException {
         Connection con = Connect.connection();
         String sql = "SELECT * FROM chucvu";
-        PreparedStatement pst =  con.prepareStatement(sql);
+        PreparedStatement pst = con.prepareStatement(sql);
         ResultSet rs = pst.executeQuery();
         ArrayList<DTOChucVu> list = new ArrayList<>();
-        while(rs.next()){
+        while (rs.next()) {
             DTOChucVu cv = new DTOChucVu();
             cv.setMaChucVu(rs.getInt("maChucVu"));
             cv.setTenChucVu(rs.getString("tenChucVu"));
@@ -35,10 +68,12 @@ public class DAOChucVu {
         con.close();
         return list;
     }
-    public int getrowcount() throws SQLException, ParseException{
+
+    public int getrowcount() throws SQLException, ParseException {
         return getlist().size();
     }
-    public int addchucvu(DTOChucVu cv) throws SQLException{
+
+    public int addchucvu(DTOChucVu cv) throws SQLException {
         Connection con = Connect.connection();
         String sql = "INSERT INTO chucvu(tenChucVu,isDelete) VALUES(?,?)";
         PreparedStatement pst = con.prepareStatement(sql);
@@ -48,7 +83,8 @@ public class DAOChucVu {
         con.close();
         return rowaffect;
     }
-    public int updatechucvu(DTOChucVu cv) throws SQLException{
+
+    public int updatechucvu(DTOChucVu cv) throws SQLException {
         Connection con = Connect.connection();
         String sql = "UPDATE chucvu set tenChucVu = ?,isDelete=? WHERE maChucVu= ?";
         PreparedStatement pst = con.prepareStatement(sql);
