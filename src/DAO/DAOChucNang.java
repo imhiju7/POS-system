@@ -50,6 +50,22 @@ public class DAOChucNang {
         con.close();
         return cn;
     }
+    public DTOChucNang getcnbyname(DTOChucNang i) throws SQLException, ParseException{
+        Connection con = Connect.connection();
+        String sql = "SELECT * FROM chucnang WHERE isDelete = 0 and tenChucNang = ?";
+        PreparedStatement pst =  con.prepareStatement(sql);
+        pst.setString(1,i.getTenChucNang());
+        ResultSet rs = pst.executeQuery();
+        DTOChucNang cn = new DTOChucNang();
+        while(rs.next()){
+            cn.setMaChucNang(rs.getInt("maChucNang"));
+            cn.setTenChucNang(rs.getString("tenChucNang"));
+            cn.setIsHidden(rs.getInt("isDelete"));
+            cn.setMaGroup(rs.getInt("maGr"));
+        }
+        con.close();
+        return cn;
+    }
     public boolean checktencn(String ten) throws SQLException, ParseException{
         Connection con = Connect.connection();
         String sql = "SELECT * FROM chucnang WHERE isDelete = 0 and tenChucNang = ?";

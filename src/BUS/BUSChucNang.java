@@ -91,4 +91,7 @@ public class BUSChucNang {
     public DTOChucNang getcn(DTOChucNang i) throws SQLException, ParseException{
         return DAO.getcn(i);
     }
+    public DTOChucNang getcnbyname(DTOChucNang i) throws SQLException, ParseException{
+        return DAO.getcnbyname(i);
+    }
 }
