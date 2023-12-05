@@ -75,8 +75,11 @@ public class DTOHoaDon {
     public void setMaTichDiem(int maTichDiem) {
         this.maTichDiem = maTichDiem;
     }
-    public DTOHoaDon(){}
-    public DTOHoaDon(int maHoaDon, int maNhanVien, double tongTien, int maKhachHang, int maKhuyenMai, Date ngayMua, String ghiChu, int maTichDiem,int isHidden) {
+
+    public DTOHoaDon() {
+    }
+
+    public DTOHoaDon(int maHoaDon, int maNhanVien, double tongTien, int maKhachHang, int maKhuyenMai, Date ngayMua, String ghiChu, int maTichDiem, int isHidden) {
         this.maHoaDon = maHoaDon;
         this.maNhanVien = maNhanVien;
         this.tongTien = tongTien;

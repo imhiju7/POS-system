@@ -17,13 +17,31 @@ import java.util.ArrayList;
  * @author Hieu PC
  */
 public class DAOUuDai {
-    public ArrayList<DTOUuDai> getlist() throws SQLException, ParseException{
+
+    public DTOUuDai getud(DTOUuDai i) throws SQLException, ParseException {
+        Connection con = Connect.connection();
+        String sql = "SELECT * FROM uudai WHERE maUuDai = ?";
+        PreparedStatement pst = con.prepareStatement(sql);
+        pst.setInt(1, i.getMaUuDai());
+        ResultSet rs = pst.executeQuery();
+        DTOUuDai ud = new DTOUuDai();
+        while (rs.next()) {
+            ud.setMaUuDai(rs.getInt("maUuDai"));
+            ud.setMocUuDai(rs.getInt("mocUuDai"));
+            ud.setTiLeGiam(rs.getInt("tiLeGiam"));
+            ud.setIsHidden(rs.getInt("isDelete"));
+        }
+        con.close();
+        return ud;
+    }
+
+    public ArrayList<DTOUuDai> getlist() throws SQLException, ParseException {
         Connection con = Connect.connection();
         String sql = "SELECT * FROM uudai";
-        PreparedStatement pst =  con.prepareStatement(sql);
+        PreparedStatement pst = con.prepareStatement(sql);
         ResultSet rs = pst.executeQuery();
         ArrayList<DTOUuDai> list = new ArrayList<>();
-        while(rs.next()){
+        while (rs.next()) {
             DTOUuDai ud = new DTOUuDai();
             ud.setMaUuDai(rs.getInt("maUuDai"));
             ud.setMocUuDai(rs.getInt("mocUuDai"));
@@ -34,21 +52,20 @@ public class DAOUuDai {
         con.close();
         return list;
     }
-    public int getrowcount() throws SQLException, ParseException{
-        return getlist().size();
-    }
-    public int adduudai(DTOUuDai ud) throws SQLException{
+
+    public int adduudai(DTOUuDai ud) throws SQLException {
         Connection con = Connect.connection();
         String sql = "INSERT INTO uudai(mocUuDai,tiLeGiam,isDelete) VALUES(?,?,?)";
         PreparedStatement pst = con.prepareStatement(sql);
-        pst.setInt(1,ud.getMocUuDai() );
+        pst.setInt(1, ud.getMocUuDai());
         pst.setInt(2, ud.getTiLeGiam());
         pst.setInt(3, ud.getIsHidden());
         int rowaffect = pst.executeUpdate();
         con.close();
         return rowaffect;
     }
-    public int updateuudai(DTOUuDai ud) throws SQLException{
+
+    public int updateuudai(DTOUuDai ud) throws SQLException {
         Connection con = Connect.connection();
         String sql = "UPDATE uudai set mocUuDai = ?,tiLeGiam = ?,isDelete =? WHERE maUuDai= ?";
         PreparedStatement pst = con.prepareStatement(sql);

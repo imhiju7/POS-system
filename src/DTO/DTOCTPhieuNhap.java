@@ -11,8 +11,10 @@ import java.util.Date;
  * @author Hieu PC
  */
 public class DTOCTPhieuNhap {
-    
-    public DTOCTPhieuNhap(){}
+
+    public DTOCTPhieuNhap() {
+    }
+
     public DTOCTPhieuNhap(int maCTPhieuNhap, int soLuong, float donGia, int maPhieuNhap, int maSanPham, Date ngayhethan, int soluongtonkho, int ishidden, String ghichu) {
         this.maCTPhieuNhap = maCTPhieuNhap;
         this.soLuong = soLuong;
@@ -85,9 +87,16 @@ public class DTOCTPhieuNhap {
         return ishidden;
     }
 
-    public void setIshidden() {
-        if(this.soluongtonkho == 0) this.ishidden = 1;
-        else this.ishidden = 0;
+    public void setIshidden(int hidden) {
+        if (hidden == 0) {
+            if (this.soluongtonkho == 0 || this.ngayhethan.before(new Date())) {
+                this.ishidden = 1;
+            } else {
+                this.ishidden = 0;
+            }
+        } else {
+            this.ishidden = hidden;
+        }
     }
 
     public String getGhichu() {
@@ -97,12 +106,11 @@ public class DTOCTPhieuNhap {
     public void setGhichu(String ghichu) {
         this.ghichu = ghichu;
     }
-    
-    public double getthanhtien(){
-        return (double)this.soLuong*this.donGia;
+
+    public double getthanhtien() {
+        return (double) this.soLuong * this.donGia;
     }
-    
-    
+
     private int maCTPhieuNhap;
     private int soLuong;
     private double donGia;
