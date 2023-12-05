@@ -30,8 +30,8 @@ public class DAOSanPham {
             sp.setSoLuong(rs.getInt("soLuong"));
             sp.setGiaBan(rs.getDouble("giaBan"));
             sp.setNgayThem(rs.getTimestamp("ngayThem"));
-            sp.setIshidden(rs.getInt("isHidden"));
-            sp.setIsdelete(rs.getInt("isDelete"));
+            sp.setMaPhanLoai(rs.getInt("maPhanLoai"));
+            sp.setautoishidden();
             sp.setImg(rs.getString("img"));
         }
         con.close();
@@ -50,8 +50,7 @@ public class DAOSanPham {
             sp.setSoLuong(rs.getInt("soLuong"));
             sp.setGiaBan(rs.getDouble("giaBan"));
             sp.setNgayThem(rs.getTimestamp("ngayThem"));
-            sp.setIshidden(rs.getInt("isHidden"));
-            sp.setIsdelete(rs.getInt("isDelete"));
+            sp.setMaPhanLoai(rs.getInt("maPhanLoai"));
             sp.setImg(rs.getString("img"));
         }
         con.close();
@@ -70,27 +69,23 @@ public class DAOSanPham {
             sp.setSoLuong(rs.getInt("soLuong"));
             sp.setGiaBan(rs.getDouble("giaBan"));
             sp.setNgayThem(rs.getTimestamp("ngayThem"));
-            sp.setIshidden(rs.getInt("isHidden"));
-            sp.setIsdelete(rs.getInt("isDelete"));
+            sp.setMaPhanLoai(rs.getInt("maPhanLoai"));
             sp.setImg(rs.getString("img"));
             list.add(sp);
         }
         con.close();
         return list;
     }
-    public int getrowcount() throws SQLException, ParseException{
-        return getlist().size();
-    }
     public int addsanpham(DTOSanPham sp) throws SQLException{
         Connection con = Connect.connection();
-        String sql = "INSERT INTO SanPham(tenSanPham,soLuong,giaBan,ngayThem,isHidden,isDelete,img) VALUES(?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO SanPham(tenSanPham,soLuong,giaBan,ngayThem,isHidden,maPhanLoai,img) VALUES(?,?,?,?,?,?,?)";
         PreparedStatement pst = con.prepareStatement(sql);
         pst.setString(1, sp.getTenSanPham());
         pst.setInt(2, sp.getSoLuong());
         pst.setDouble(3, sp.getGiaBan());
         pst.setTimestamp(4,new java.sql.Timestamp ( sp.getNgayThem().getTime()));
         pst.setInt(5, sp.getIshidden());
-        pst.setInt(6, sp.getIsdelete());
+        pst.setInt(6, sp.getMaPhanLoai());
         pst.setString(7, sp.getImg());
         int rowaffect = pst.executeUpdate();
         con.close();
@@ -98,18 +93,56 @@ public class DAOSanPham {
     }
     public int updatesanpham(DTOSanPham sp) throws SQLException{
         Connection con = Connect.connection();
-        String sql = "UPDATE SanPham set tenSanPham = ?,soLuong = ?,giaBan=?,ngayThem=?,isHidden=?,isDelete=?,img=? WHERE maSanPham= ?";
+        String sql = "UPDATE SanPham set tenSanPham = ?,giaBan=?,isHidden=?,maPhanLoai=?,img=? WHERE maSanPham= ?";
         PreparedStatement pst = con.prepareStatement(sql);
         pst.setString(1, sp.getTenSanPham());
-        pst.setInt(2, sp.getSoLuong());
-        pst.setDouble(3, sp.getGiaBan());
-        pst.setTimestamp(4,new java.sql.Timestamp ( sp.getNgayThem().getTime()));
-        pst.setInt(5, sp.getIshidden());
-        pst.setInt(6, sp.getIsdelete());
-        pst.setString(7, sp.getImg());
-        pst.setInt(8, sp.getMaSanPham());
+        pst.setDouble(2, sp.getGiaBan());
+        pst.setInt(3, sp.getIshidden());
+        pst.setInt(4, sp.getMaPhanLoai());
+        pst.setString(5, sp.getImg());
+        pst.setInt(6, sp.getMaSanPham());
         int rowaffect = pst.executeUpdate();
         con.close();
         return rowaffect;
+    }
+    public int updatesoluong(DTOSanPham sp) throws SQLException{
+        Connection con = Connect.connection();
+        String sql = "UPDATE SanPham set soLuong = ? WHERE maSanPham= ?";
+        PreparedStatement pst = con.prepareStatement(sql);
+        pst.setInt(1, sp.getSoLuong());
+        pst.setInt(2, sp.getMaSanPham());
+        int rowaffect = pst.executeUpdate();
+        con.close();
+        return rowaffect;
+        
+    }
+    public boolean checktensp(String name) throws SQLException{
+        Connection con = Connect.connection();
+        String sql = "SELECT * FROM sanpham WHERE tenSanPham = ? ";
+        PreparedStatement pst =  con.prepareStatement(sql);
+        pst.setString(1, name);
+        ResultSet rs = pst.executeQuery();
+        int count=0;
+        while(rs.next()){
+            count++;
+        }
+        con.close();
+        if(count > 0) return false;
+        return true;
+    }
+    public boolean checktenspedit(String name,int masp) throws SQLException{
+        Connection con = Connect.connection();
+        String sql = "SELECT * FROM sanpham WHERE maSanPham != ? and tenSanPham = ? ";
+        PreparedStatement pst =  con.prepareStatement(sql);
+        pst.setInt(1, masp);
+        pst.setString(2, name);
+        ResultSet rs = pst.executeQuery();
+        int count=0;
+        while(rs.next()){
+            count++;
+        }
+        con.close();
+        if(count > 0) return false;
+        return true;
     }
 }

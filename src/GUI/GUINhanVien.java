@@ -672,7 +672,7 @@ public class GUINhanVien extends javax.swing.JPanel {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         //check plank
-        if(jTextField4.getText().isEmpty() || jTextField7.getText().isEmpty() || jTextField2.getText().isEmpty() || jTextField5.getText().isEmpty() || jTextField8.getText().isEmpty() || jLabel2.getIcon() == null || jComboBox3.getSelectedItem().toString().equals("Giới tính") || jComboBox1.getSelectedItem().toString().equals("Chức vụ")){
+        if( image.isEmpty() || jTextField4.getText().isEmpty() || jTextField7.getText().isEmpty() || jTextField2.getText().isEmpty() || jTextField5.getText().isEmpty() || jTextField8.getText().isEmpty() || jComboBox3.getSelectedItem().toString().equals("Giới tính") || jComboBox1.getSelectedItem().toString().equals("Chức vụ")){
             JOptionPane.showMessageDialog(jPanel1, "Hãy nhập đầy đủ thông tin trước khi thêm!");
 
         }

@@ -10,6 +10,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 /**
@@ -111,5 +113,37 @@ public class BUSNhaCungCap {
     }
     public int deletenhacungcap(DTONhaCungCap i) throws SQLException{
         return DAO.deletenhacungcap(i);
+    }
+    public boolean checkphone(String phone) throws SQLException{
+        return DAO.checkphone(phone);
+    }
+    public boolean checkemail(String email) throws SQLException{
+        return DAO.checkgmail(email);
+    }
+    public boolean checkphoneedit(String phone, int mancc) throws SQLException{
+        return DAO.checkphoneedit(phone, mancc);
+    }
+    public boolean checkemailedit(String email,int mancc) throws SQLException{
+        return DAO.checkgmailedit(email, mancc);
+    }
+    public DTONhaCungCap getncc(DTONhaCungCap i) throws SQLException{
+        return DAO.getncc(i);
+    }
+    public boolean isValidVietnamesePhoneNumber(String phoneNumber) {
+        // Sử dụng biểu thức chính quy để kiểm tra số điện thoại Việt Nam
+        String regex = "^0[0-9]{9}$";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(phoneNumber);
+        // Kiểm tra xem số điện thoại có khớp với biểu thức chính quy hay không
+        return matcher.matches();
+    }
+    public boolean isValidGmailAddress(String email) {
+        // Sử dụng biểu thức chính quy để kiểm tra email
+        String regex = "^[a-zA-Z0-9_]+(\\.[a-zA-Z0-9_]+)*@gmail\\.com$";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(email);
+
+        // Kiểm tra xem email có khớp với biểu thức chính quy hay không
+        return matcher.matches();
     }
 }

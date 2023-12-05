@@ -22,6 +22,9 @@ public class BUSPhanLoai {
     public DTOPhanLoai getpl(DTOPhanLoai i) throws SQLException{
         return DAO.getpl(i);
     }
+    public DTOPhanLoai getplbyname(DTOPhanLoai i) throws SQLException{
+        return DAO.getplbyname(i);
+    }
     public int addphanloai(DTOPhanLoai i) throws SQLException{
         return DAO.addphanloai(i);
     }

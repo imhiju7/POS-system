@@ -32,7 +32,6 @@ public class DAONhaCungCap {
             ncc.setDiaChi(rs.getString("diaChi"));
             ncc.setNgayTao(rs.getTimestamp("ngayTao"));
             ncc.setTrangThai(rs.getInt("trangThai"));
-            ncc.setIsHidden(rs.getInt("isDelete"));
         }
         con.close();
         return ncc;
@@ -51,14 +50,13 @@ public class DAONhaCungCap {
             ncc.setEmail(rs.getString("Email"));
             ncc.setNgayTao(rs.getTimestamp("ngayTao"));
             ncc.setTrangThai(rs.getInt("trangThai"));
-            ncc.setIsHidden(rs.getInt("isDelete"));
         }
         con.close();
         return ncc;
     }
     public ArrayList<DTONhaCungCap> getlist() throws SQLException, ParseException{
         Connection con = Connect.connection();
-        String sql = "SELECT * FROM nhacungcap WHERE isDelete = 0";
+        String sql = "SELECT * FROM nhacungcap";
         PreparedStatement pst =  con.prepareStatement(sql);
         ResultSet rs = pst.executeQuery();
         ArrayList<DTONhaCungCap> list = new ArrayList<>();
@@ -71,7 +69,6 @@ public class DAONhaCungCap {
             ncc.setDiaChi(rs.getString("diaChi"));
             ncc.setNgayTao(rs.getTimestamp("ngayTao"));
             ncc.setTrangThai(rs.getInt("trangThai"));
-            ncc.setIsHidden(rs.getInt("isDelete"));
             list.add(ncc);
         }
         con.close();
@@ -79,7 +76,7 @@ public class DAONhaCungCap {
     }
     public ArrayList<DTONhaCungCap> getlistcb() throws SQLException, ParseException{
         Connection con = Connect.connection();
-        String sql = "SELECT * FROM nhacungcap WHERE isDelete = 0 and trangThai = 0";
+        String sql = "SELECT * FROM nhacungcap WHERE trangThai = 0";
         PreparedStatement pst =  con.prepareStatement(sql);
         ResultSet rs = pst.executeQuery();
         ArrayList<DTONhaCungCap> list = new ArrayList<>();
@@ -92,7 +89,6 @@ public class DAONhaCungCap {
             ncc.setDiaChi(rs.getString("diaChi"));
             ncc.setNgayTao(rs.getTimestamp("ngayTao"));
             ncc.setTrangThai(rs.getInt("trangThai"));
-            ncc.setIsHidden(rs.getInt("isDelete"));
             list.add(ncc);
         }
         con.close();
@@ -100,7 +96,7 @@ public class DAONhaCungCap {
     }
     public int addnhacungcap(DTONhaCungCap ncc) throws SQLException{
         Connection con = Connect.connection();
-        String sql = "INSERT INTO nhacungcap(tenNhaCungCap,SDT,Email,diaChi,ngayTao,trangThai,isDelete) VALUES(?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO nhacungcap(tenNhaCungCap,SDT,Email,diaChi,ngayTao,trangThai) VALUES(?,?,?,?,?,?)";
         PreparedStatement pst = con.prepareStatement(sql);
         pst.setString(1, ncc.getTenNhaCungCap());
         pst.setString(2, ncc.getSDT());
@@ -108,14 +104,13 @@ public class DAONhaCungCap {
         pst.setString(4, ncc.getDiaChi());
         pst.setTimestamp(5,  new java.sql.Timestamp (ncc.getNgayTao().getTime()));
         pst.setInt(6, ncc.getTrangThai());
-        pst.setInt(7, ncc.getIsHidden());
         int rowaffect = pst.executeUpdate();
         con.close();
         return rowaffect;
     }
     public int updatenhacungcap(DTONhaCungCap ncc) throws SQLException{
         Connection con = Connect.connection();
-        String sql = "UPDATE nhacungcap set tenNhaCungCap = ?,SDT = ?,Email= ?,diaChi = ?,ngayTao=?,trangThai=?,isDelete WHERE maNhaCungCap= ?";
+        String sql = "UPDATE nhacungcap set tenNhaCungCap = ?,SDT = ?,Email= ?,diaChi = ?,ngayTao=?,trangThai=? WHERE maNhaCungCap= ?";
         PreparedStatement pst = con.prepareStatement(sql);
         pst.setString(1, ncc.getTenNhaCungCap());
         pst.setString(2, ncc.getSDT());
@@ -123,15 +118,14 @@ public class DAONhaCungCap {
         pst.setString(4, ncc.getDiaChi());
         pst.setTimestamp(5,  new java.sql.Timestamp (ncc.getNgayTao().getTime()));
         pst.setInt(6, ncc.getTrangThai());
-        pst.setInt(7, ncc.getTrangThai());
-        pst.setInt(8, ncc.getMaNhaCungCap());
+        pst.setInt(7, ncc.getMaNhaCungCap());
         int rowaffect = pst.executeUpdate();
         con.close();
         return rowaffect;
     }
     public boolean checkncctodel(DTONhaCungCap i) throws SQLException{
         Connection con = Connect.connection();
-        String sql = "SELECT * FROM phieunhap WHERE isDelete = 0 and maNhaCungCap = ?";
+        String sql = "SELECT * FROM phieunhap WHERE maNhaCungCap = ?";
         PreparedStatement pst =  con.prepareStatement(sql);
         pst.setInt(1, i.getMaNhaCungCap());
         ResultSet rs = pst.executeQuery();
@@ -152,5 +146,78 @@ public class DAONhaCungCap {
         con.close();
         return rowaffect;
     }
-    
+    public boolean checkgmail(String gmail) throws SQLException{
+        Connection con = Connect.connection();
+        int i = 0;
+        boolean key = false;
+        String sql = "SELECT * FROM nhacungcap where email = ?";
+        PreparedStatement pst =  con.prepareStatement(sql);
+        pst.setString(1, gmail);
+        ResultSet rs = pst.executeQuery();
+        while(rs.next()){
+            i++;
+        }
+        con.close();
+        if(i > 0 ){
+            key = false;
+        }
+        else key = true;
+        return key;
+    }
+    public boolean checkgmailedit(String gmail,int manv) throws SQLException{
+        Connection con = Connect.connection();
+        int i = 0;
+        boolean key = false;
+        String sql = "SELECT * FROM nhacungcap where maNhaCungCap != ? and email = ?";
+        PreparedStatement pst =  con.prepareStatement(sql);
+        pst.setInt(1, manv);
+        pst.setString(2, gmail);
+        ResultSet rs = pst.executeQuery();
+        while(rs.next()){
+            i++;
+        }
+        con.close();
+        if(i > 0 ){
+            key = false;
+        }
+        else key = true;
+        return key;
+    }
+    public boolean checkphone(String phone) throws SQLException{
+        Connection con = Connect.connection();
+        int i = 0;
+        boolean key = false;
+        String sql = "SELECT * FROM nhacungcap where SDT = ? ";
+        PreparedStatement pst =  con.prepareStatement(sql);
+        pst.setString(1, phone);
+        ResultSet rs = pst.executeQuery();
+        while(rs.next()){
+            i++;
+        }
+        con.close();
+        if(i > 0 ){
+            key = false;
+        }
+        else key = true;
+        return key;
+    }
+    public boolean checkphoneedit(String phone,int manv) throws SQLException{
+        Connection con = Connect.connection();
+        int i = 0;
+        boolean key = false;
+        String sql = "SELECT * FROM nhacungcap where maNhaCungCap != ? and SDT = ? ";
+        PreparedStatement pst =  con.prepareStatement(sql);
+        pst.setInt(1, manv);
+        pst.setString(2, phone);
+        ResultSet rs = pst.executeQuery();
+        while(rs.next()){
+            i++;
+        }
+        con.close();
+        if(i > 0 ){
+            key = false;
+        }
+        else key = true;
+        return key;
+    }
 }

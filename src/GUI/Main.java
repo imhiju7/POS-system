@@ -54,7 +54,7 @@ public class Main extends javax.swing.JFrame {
             @Override
             public void menuSelected(int menuIndex, int subMenuIndex) {
                 
-                main.showForm(new GUINhaCungCap());
+                main.showForm(new GUISanPham());
             }
         });
         menu.addEventShowPopup(new EventShowPopupMenu() {

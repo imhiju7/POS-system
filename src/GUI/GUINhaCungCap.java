@@ -8,6 +8,7 @@ import DTO.*;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -519,11 +520,11 @@ public class GUINhaCungCap extends javax.swing.JPanel {
         DTONhaCungCap ncc = new DTONhaCungCap();
         ncc.settrangthaistr(jTable1.getValueAt(index, 5).toString());
         if(ncc.getTrangThai()== 1){
-             jCheckBox1.setSelected(false);
+             jCheckBox1.setSelected(true);
              jCheckBox1.setText("Dừng cung ứng");
         }
         else{
-            jCheckBox1.setSelected(true);
+            jCheckBox1.setSelected(false);
             jCheckBox1.setText("Đang cung ứng");
         }
     }//GEN-LAST:event_jTable1MouseClicked
@@ -586,8 +587,31 @@ public class GUINhaCungCap extends javax.swing.JPanel {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        if(!jTextField3.getText().isEmpty() && !jTextField3.getText().isEmpty() && !jTextField3.getText().isEmpty() && !jTextField3.getText().isEmpty()){
-            
+        if(!jTextField3.getText().isEmpty() && !jTextField4.getText().isEmpty() && !jTextField2.getText().isEmpty() && !jTextField5.getText().isEmpty()){
+            if(nhacungcap.isValidVietnamesePhoneNumber(jTextField4.getText().toString()) && nhacungcap.isValidGmailAddress(jTextField2.getText().toString())){
+                try {
+                    if(nhacungcap.checkphone(jTextField4.getText().toString()) && nhacungcap.checkemail(jTextField2.getText().toString())){
+                        DTONhaCungCap ncc = new DTONhaCungCap();
+                        ncc.setTenNhaCungCap(jTextField3.getText().toString());
+                        ncc.setSDT(jTextField4.getText().toString());
+                        ncc.setEmail(jTextField2.getText().toString());
+                        ncc.setNgayTao(new Date());
+                        ncc.setDiaChi(jTextField5.getText().toString());
+                        ncc.settrangthaistr(jCheckBox1.getText());
+                        nhacungcap.addnhacungcap(ncc);
+                        JOptionPane.showMessageDialog(jPanel1, "Thêm thành công!");
+                        resetall();
+                    }
+                    else{
+                        JOptionPane.showMessageDialog(jPanel1, "Lỗi, trùng thông tin với nhà cung cấp khác!");
+                    }
+                } catch (SQLException ex) {
+                    Logger.getLogger(GUINhaCungCap.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            else{
+                JOptionPane.showMessageDialog(jPanel1, "Thông tin chưa hợp lệ!");
+            }
         }
         else{
             JOptionPane.showMessageDialog(jPanel1, "Nhập đầy đủ thông tin trước khi thêm!");
@@ -596,13 +620,37 @@ public class GUINhaCungCap extends javax.swing.JPanel {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        if(!jTextField3.getText().isEmpty()){
-            if(!jTextField3.getText().isEmpty() && !jTextField3.getText().isEmpty() && !jTextField3.getText().isEmpty() && !jTextField3.getText().isEmpty()){
-            
+        if(!jTextField7.getText().isEmpty()){
+            if(!jTextField3.getText().isEmpty() && !jTextField4.getText().isEmpty() && !jTextField2.getText().isEmpty() && !jTextField5.getText().isEmpty()){
+            if(nhacungcap.isValidVietnamesePhoneNumber(jTextField4.getText().toString()) && nhacungcap.isValidGmailAddress(jTextField2.getText().toString())){
+                try {
+                    if(nhacungcap.checkphoneedit(jTextField4.getText().toString(),Integer.parseInt(jTextField7.getText().toString())) && nhacungcap.checkemailedit(jTextField2.getText().toString(),Integer.parseInt(jTextField7.getText().toString()))){
+                        DTONhaCungCap ncc = new DTONhaCungCap();
+                        ncc.setMaNhaCungCap(Integer.parseInt(jTextField7.getText().toString()));
+                        ncc = nhacungcap.getncc(ncc);
+                        ncc.setTenNhaCungCap(jTextField3.getText().toString());
+                        ncc.setSDT(jTextField4.getText().toString());
+                        ncc.setEmail(jTextField2.getText().toString());
+                        ncc.setDiaChi(jTextField5.getText().toString());
+                        ncc.settrangthaistr(jCheckBox1.getText());
+                        nhacungcap.updatenhacungcap(ncc);
+                        JOptionPane.showMessageDialog(jPanel1, "Sửa thành công!");
+                        resetall();
+                    }
+                    else{
+                        JOptionPane.showMessageDialog(jPanel1, "Lỗi, trùng thông tin với nhà cung cấp khác!");
+                    }
+                } catch (SQLException ex) {
+                    Logger.getLogger(GUINhaCungCap.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
             else{
-            
+                JOptionPane.showMessageDialog(jPanel1, "Thông tin chưa hợp lệ!");
             }
+        }
+        else{
+            JOptionPane.showMessageDialog(jPanel1, "Nhập đầy đủ thông tin trước khi sửa!");
+        }
         }
         else{
             JOptionPane.showMessageDialog(jPanel1, "Chưa chọn nhà cung cấp để sửa thông tin!");
