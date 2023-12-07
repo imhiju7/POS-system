@@ -23,9 +23,12 @@ public class GUIPhieuNhap extends javax.swing.JPanel {
      */
     BUSPhieuNhap phieunhap = new BUSPhieuNhap();
     BUSNhaCungCap nhacungcap = new BUSNhaCungCap();
-    public GUIPhieuNhap() {
+    static int manv;
+    int ma = 0;
+    public GUIPhieuNhap(int mnv) {
         initComponents();
         resetall();
+        ma = mnv;
     }
     public void resetall(){
         jTextField8.setText("");
@@ -172,15 +175,15 @@ public class GUIPhieuNhap extends javax.swing.JPanel {
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel5Layout.createSequentialGroup()
-                                .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
+                                .addComponent(jTextField8)
+                                .addGap(18, 18, 18)
                                 .addComponent(jLabel7)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jTextField5, javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel5Layout.createSequentialGroup()
                                 .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 82, Short.MAX_VALUE)
                                 .addComponent(jLabel6)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -546,7 +549,8 @@ public class GUIPhieuNhap extends javax.swing.JPanel {
                 pn.setGhiChu(jTextField5.getText().toString());
                 pn.setIsHidden(0);
                 pn.setNgayNhap(new Date());
-                pn.setMaNhanVien(2);
+                System.out.println(ma);
+                pn.setMaNhanVien(ma);
                 pn.setTongTien(0);
                 phieunhap.addphieunhap(pn);
                 try {

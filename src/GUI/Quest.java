@@ -3,7 +3,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package GUI;
-
+import DTO.*;
+import BUS.*;
+import java.awt.Dimension;
+import java.awt.Toolkit;
+import java.util.ArrayList;
+import javax.swing.JFrame;
 /**
  *
  * @author Hieu PC
@@ -13,8 +18,28 @@ public class Quest extends javax.swing.JFrame {
     /**
      * Creates new form Quest
      */
-    public Quest() {
+    static ArrayList<DTOSanPham> list = new ArrayList<>();
+    static int manv =0;
+    ArrayList<DTOSanPham> li;
+    int ma;
+    public Quest(ArrayList<DTOSanPham> listsp,int mnv) {
         initComponents();
+        manv = mnv;
+        list = listsp;
+        Toolkit toolkit = Toolkit.getDefaultToolkit();
+        Dimension screenSize = toolkit.getScreenSize();
+        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        // Lấy kích thước của form
+        Dimension frameSize = this.getSize();
+        // Tính toán vị trí trung tâm
+        int x = (screenSize.width - frameSize.width) / 2;
+        int y = (screenSize.height - frameSize.height) / 2;
+
+        // Đặt vị trí của form
+        this.setResizable(false);
+        this.setLocation(x, y);
+        li = listsp;
+        ma = mnv;
     }
 
     /**
@@ -95,11 +120,14 @@ public class Quest extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        new GUIThemKhachHang().setVisible(true);
+        this.dispose();
+        new GUIThemKhachHang(li,ma).setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
+        this.dispose();
+        new GUIThanhToan(li,ma).setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
@@ -132,7 +160,7 @@ public class Quest extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Quest().setVisible(true);
+                new Quest(list,manv).setVisible(true);
             }
         });
     }

@@ -12,7 +12,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.Comparator;
+import javax.swing.JOptionPane;
 import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 //import org.apache.logging.log4j.Logger;
 
@@ -41,10 +43,28 @@ public class DAOTaiKhoan {
         }
         return tk;
     }
+    public int layMaNhanVien(String tenDangNhap) {
+        int maNhanVien = -1;
+        Connection con = Connect.connection();
+        String sql = "SELECT maNhanvien "
+                + "FROM taikhoan "
+                + "WHERE taikhoan.tenDangNhap = ? ";
+        try {
+            PreparedStatement pst = con.prepareStatement(sql);
+            pst.setString(1, tenDangNhap);
+            ResultSet rs = pst.executeQuery();
+            if (rs.next()) {
+                maNhanVien = rs.getInt("maNhanVien");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return maNhanVien;
+    }
     public DTOTaiKhoan kiemTraTaiKhoan(String tenDangNhap, String matKhau) {
         Connection con = Connect.connection();
         String sql = "select * from taikhoan where tenDangNhap = ? and matKhau = ? and isBlock = 0 ";
-        ArrayList<DTOTaiKhoan> dstk = new ArrayList<>();
+        DTOTaiKhoan tk = new DTOTaiKhoan();
         try {
             PreparedStatement pst = con.prepareStatement(sql);
 
@@ -54,21 +74,17 @@ public class DAOTaiKhoan {
             ResultSet rs = pst.executeQuery();
 
             while (rs.next()) {
-                DTOTaiKhoan tk = new DTOTaiKhoan();
                 tk.setTenDangNhap(rs.getString("tenDangNhap"));
                 tk.setMatKhau(rs.getString("matKhau"));
                 tk.setNgayTao(rs.getTimestamp("ngayTao"));
                 tk.setIsblock(rs.getInt("isBlock"));
                 tk.setMaNhanVien(rs.getInt("maNhanVien"));
-                dstk.add(tk);
-                return dstk.get(0);
             }
             rs.close();
-
         } catch (SQLException e) {
             return null;
         }
-        return null;
+        return tk;
     }
 
     // kiểm tra tên tài khoản
@@ -246,46 +262,46 @@ public class DAOTaiKhoan {
         return key;
     }
 
-    /*
+    
     public void exportDSTaiKhoan() {
-        String sql = "SELECT tk.*, cv.tenChucVu "
-                + "FROM taikhoan tk "
-                + "INNER JOIN nhanvien nv ON tk.maNhanVien = nv.maNhanVien "
-                + "INNER JOIN chucvu cv ON nv.maChucVu = cv.maChucVu";
+         Connection con = Connect.connection();
+        String sql = "SELECT * FROM taikhoan ";
         try {
-            PreparedStatement ps = Connect.connection().prepareStatement(sql);
-            ResultSet rs = ps.executeQuery();
+            PreparedStatement pst = con.prepareStatement(sql);
+            ResultSet rs = pst.executeQuery();
 
-            Workbook workbook = new XSSFWorkbook();
-            Sheet sheet = workbook.createSheet("Danh sách tài khoản");
-
-            ResultSetMetaData metaData = (ResultSetMetaData) rs.getMetaData();
-            int columnCount = metaData.getColumnCount();
+            XSSFWorkbook workbook = new XSSFWorkbook();
+            XSSFSheet sheet = workbook.createSheet("Danh sách tài khoản");
 
             Row headerRow = sheet.createRow(0);
-            for (int col = 1; col <= columnCount; col++) {
-                headerRow.createCell(col - 1).setCellValue(metaData.getColumnName(col));
-            }
+            headerRow.createCell(0).setCellValue("Tên đăng nhập");
+            headerRow.createCell(1).setCellValue("Mật khẩu");
+            headerRow.createCell(2).setCellValue("Ngày tạo");
+            headerRow.createCell(3).setCellValue("isBlock");
+            headerRow.createCell(4).setCellValue("Mã nhân viên");
 
             int rowNum = 1;
             while (rs.next()) {
                 Row row = sheet.createRow(rowNum++);
-                for (int col = 1; col <= columnCount; col++) {
-                    Object value = rs.getObject(col);
-                    row.createCell(col - 1).setCellValue(value.toString());
-                }
+                row.createCell(0).setCellValue(rs.getInt("tenDangNhap"));
+                row.createCell(1).setCellValue(rs.getString("matKhau"));
+                row.createCell(2).setCellValue(rs.getDate("ngayTao").toString());
+                row.createCell(3).setCellValue(rs.getBoolean("isBlock"));
+                row.createCell(4).setCellValue(rs.getInt("maNhanVien"));
             }
 
-            FileOutputStream fileOut = new FileOutputStream("D:\\DSTaiKhoan.xlsx");
-            workbook.write(fileOut);
-            fileOut.close();
+            FileOutputStream outputStream = new FileOutputStream("DSTaiKhoan.xlsx");
+            workbook.write(outputStream);
+            workbook.close();
+
+            outputStream.close();
+            pst.close();
+            con.close();
             JOptionPane.showMessageDialog(null, "Xuất file thành công");
 
         } catch (SQLException | IOException e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Lỗi mở file");
-
         }
     }
-     */
 }

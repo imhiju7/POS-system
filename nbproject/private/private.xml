@@ -3,14 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/E:/code/Java/POS-system/src/BUS/BUSSanPham.java</file>
-            <file>file:/E:/code/Java/POS-system/src/DAO/DAONhanVien.java</file>
+            <file>file:/E:/code/Java/POS-system/src/GUI/GUIThongKe.java</file>
+            <file>file:/E:/code/Java/POS-system/src/New%20Text%20Document.txt</file>
             <file>file:/E:/code/Java/POS-system/src/GUI/GUINhanVien.java</file>
-            <file>file:/E:/code/Java/POS-system/src/GUI/GUIHoaDon.java</file>
-            <file>file:/E:/code/Java/POS-system/src/GUI/Main.java</file>
-            <file>file:/E:/code/Java/POS-system/src/DAO/DAOSanPham.java</file>
+            <file>file:/E:/code/Java/POS-system/src/BUS/BUSThongKe.java</file>
+            <file>file:/E:/code/Java/POS-system/src/com/raven/main/Main.java</file>
             <file>file:/E:/code/Java/POS-system/src/GUI/GUISanPham.java</file>
-            <file>file:/E:/code/Java/POS-system/src/BUS/BUSCTPhieuNhap.java</file>
         </group>
     </open-files>
 </project-private>

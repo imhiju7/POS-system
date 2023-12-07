@@ -35,6 +35,12 @@ public class BUSSanPham {
     public DTOSanPham getspbyname(DTOSanPham i) throws SQLException{
         return DAO.getspbyname(i);
     }
+    public int updateslsanpham(DTOSanPham i) throws SQLException{
+        return DAO.updatesoluong(i);
+    }
+    public ArrayList<DTOSanPham> getlistorder() throws SQLException, ParseException{
+        return DAO.getlistorder();
+    }
     public void jtimport(JTable jt,ArrayList<DTOSanPham> list) throws SQLException, ParseException{
         
         DefaultTableModel model = new DefaultTableModel();
@@ -43,6 +49,7 @@ public class BUSSanPham {
         model.addColumn("Tên sản phẩm");
         model.addColumn("Phân loại");
         model.addColumn("Giá bán");
+        model.addColumn("Giá nhập");
         model.addColumn("Số lượng");
         model.addColumn("Ngày thêm");
         
@@ -50,12 +57,15 @@ public class BUSSanPham {
             DTOPhanLoai pl = new DTOPhanLoai();
             pl.setMaPhanLoai(i.getMaPhanLoai());
             pl = DAOpl.getpl(pl);
-            model.addRow(new Object[]{i.getMaSanPham(),i.getTenSanPham(),pl.getTenPhanLoai(),i.getGiaBan(),i.getSoLuong(),i.getNgayThem()});
+            model.addRow(new Object[]{i.getMaSanPham(),i.getTenSanPham(),pl.getTenPhanLoai(),i.getGiaBan(),i.getGiaNhap(),i.getSoLuong(),i.getNgayThem()});
         }
         jt.setModel(model);
     }
     public String getimg(DTOSanPham i) throws SQLException{
         return DAO.getsp(i).getImg();
+    }
+    public DTOSanPham getsp(DTOSanPham i) throws SQLException{
+        return DAO.getsp(i);
     }
     public ArrayList<DTOSanPham> jtexport(JTable jt) throws SQLException{
         ArrayList<DTOSanPham> list = new ArrayList<>();
@@ -83,6 +93,21 @@ public class BUSSanPham {
             e.printStackTrace();
             return null; // Trả về null nếu có lỗi chuyển đổi
         }
+    }
+    public void jtnofiimport(JTable jt,ArrayList<DTOSanPham> list){
+         DefaultTableModel model = new DefaultTableModel();
+
+        model.addColumn("Mã sản phẩm");
+        model.addColumn("Tên sản phẩm");
+        model.addColumn("Số lượng hiện tại");
+        
+        for(DTOSanPham i: list){
+            model.addRow(new Object[]{i.getMaSanPham(),i.getTenSanPham(),i.getSoLuong()});
+        }
+        jt.setModel(model);
+    }
+    public ArrayList<DTOSanPham> listcanhap() throws SQLException{
+        return DAO.spcannhap();
     }
     public ArrayList<DTOSanPham> searchten(ArrayList<DTOSanPham> list,String tennv) throws SQLException{
         ArrayList<DTOSanPham> result = new ArrayList<>();
@@ -122,6 +147,15 @@ public class BUSSanPham {
         }
         return result;
     }
+    public ArrayList<DTOSanPham> searchgianhap(ArrayList<DTOSanPham> list,double var1,double var2){
+        ArrayList<DTOSanPham> result = new ArrayList<>();
+        for(DTOSanPham i: list){
+            if(i.getGiaNhap()>= var1 && i.getGiaNhap() <= var2){
+                result.add(i);
+            }
+        }
+        return result;
+    }
     public ArrayList<DTOSanPham> searchsl(ArrayList<DTOSanPham> list,int var1,int var2){
         ArrayList<DTOSanPham> result = new ArrayList<>();
         for(DTOSanPham i: list){
@@ -136,5 +170,8 @@ public class BUSSanPham {
     }
     public boolean checktenspedit(String name,int masp) throws SQLException{
         return DAO.checktenspedit(name, masp);
+    }
+    public int updategianhap(DTOSanPham i) throws SQLException{
+        return DAO.updatesanpham(i);
     }
 }

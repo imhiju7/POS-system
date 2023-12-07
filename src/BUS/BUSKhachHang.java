@@ -34,6 +34,9 @@ public class BUSKhachHang {
     public DTOKhachHang getkh(DTOKhachHang i) throws SQLException{
         return DAO.getkh(i);
     }
+     public DTOKhachHang getkhbysdt(DTOKhachHang i) throws SQLException{
+        return DAO.getkhbyphone(i);
+    }
     public void jtimport(JTable jt,ArrayList<DTOKhachHang> list) throws SQLException, ParseException{
         
         DefaultTableModel model = new DefaultTableModel();

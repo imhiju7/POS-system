@@ -12,7 +12,7 @@ import javax.swing.ImageIcon;
 import net.miginfocom.swing.MigLayout;
 
 public class Menu extends PanelTransparent {
-
+    static int macv;
     public boolean isShowMenu() {
         return showMenu;
     }
@@ -32,14 +32,14 @@ public class Menu extends PanelTransparent {
     public void addEventShowPopup(EventShowPopupMenu eventShowPopup) {
         this.eventShowPopup = eventShowPopup;
     }
-
+    int ma=0;
     private final MigLayout layout;
     private EventMenuSelected event;
     private EventShowPopupMenu eventShowPopup;
     private boolean enableMenu = true;
     private boolean showMenu = true;
 
-    public Menu() {
+    public Menu(int mcv) {
         initComponents();
         setOpaque(false);
         sp.getViewport().setOpaque(false);
@@ -47,19 +47,26 @@ public class Menu extends PanelTransparent {
         layout = new MigLayout("wrap, fillx, insets 0", "[fill]", "[]0[]");
         panel.setLayout(layout);
         setTransparent(1f);
+        ma =mcv;
     }
     public void initsubmenu(){
         BUSGroup group = new BUSGroup();
         BUSChucNang chucnang = new BUSChucNang();
+        BUSPhanQuyen phanquyen = new BUSPhanQuyen();
         try {
             ArrayList<DTOGroup> listgroup = group.getlist();
             for(DTOGroup i: listgroup){
                 ArrayList<String> submenu = new ArrayList<>();
                 ArrayList<DTOChucNang> listcn = chucnang.getlistgroup(i.getMaGroup());
                 for(DTOChucNang a: listcn){
-                    submenu.add(a.getTenChucNang());
+                    if(!phanquyen.checkpq(ma, a.getMaChucNang())){
+                        submenu.add(a.getTenChucNang());
+                    }
                 }
-                addMenu(new ModelMenu(new ImageIcon(getClass().getResource(i.getIcon())), i.getTenGroup(), submenu.toArray(new String[0])));
+                if(!submenu.isEmpty()){
+                    addMenu(new ModelMenu(new ImageIcon(i.getIcon()), i.getTenGroup(), submenu.toArray(new String[0])));
+                }
+                listcn = new ArrayList<>();
             }
         } catch (SQLException ex) {
             Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);

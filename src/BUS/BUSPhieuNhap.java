@@ -35,6 +35,25 @@ public class BUSPhieuNhap {
     public DTOPhieuNhap getpn(int mapn) throws SQLException, ParseException{
         return DAO.getpn(mapn);
     }
+    public double updatetongtienpn(DTOPhieuNhap i) throws SQLException{
+        return DAO.updatephieunhaptongtien(i);
+    }
+    public double gettong(ArrayList<DTOCTPhieuNhap> i){
+        double tong = 0;
+        for(DTOCTPhieuNhap a: i){
+            tong += a.getDonGia();
+        }
+        return tong;
+    }
+    public double gettonghd(ArrayList<DTOCTPhieuNhap> i,int mapn){
+        double tong = 0;
+        for(DTOCTPhieuNhap a: i){
+            if(a.getMaPhieuNhap() == mapn){
+                tong += a.getDonGia();
+            }
+        }
+        return tong;
+    }
     public void jtimport(JTable jt,ArrayList<DTOPhieuNhap> list) throws SQLException{
         
         DefaultTableModel model = new DefaultTableModel();

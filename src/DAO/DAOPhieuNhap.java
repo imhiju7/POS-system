@@ -104,6 +104,16 @@ public class DAOPhieuNhap {
         con.close();
         return rowaffect;
     }
+    public int updatephieunhaptongtien(DTOPhieuNhap pn) throws SQLException{
+        Connection con = Connect.connection();
+        String sql = "UPDATE phieunhap set tongTien= ? WHERE maPhieuNhap= ?";
+        PreparedStatement pst = con.prepareStatement(sql);
+        pst.setDouble(1, pn.getTongTien());
+        pst.setInt(2, pn.getMaPhieuNhap());
+        int rowaffect = pst.executeUpdate();
+        con.close();
+        return rowaffect;
+    }
     public int rowcount() throws SQLException, ParseException{
         ArrayList<DTOPhieuNhap> list = getlist();
         int row = list.size();

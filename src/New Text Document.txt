@@ -1,0 +1,22 @@
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.ZoneId;
+import java.util.Date;
+
+public class Main {
+    public static void main(String[] args) {
+        // Đối tượng Date cho hai ngày
+        Date ngay1 = new Date();
+        Date ngay2 = new Date(System.currentTimeMillis() + (30L * 24L * 60L * 60L * 1000L)); // Ngày hiện tại + 30 ngày
+
+        // Chuyển đổi từ Date sang LocalDate
+        LocalDate localDate1 = ngay1.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        LocalDate localDate2 = ngay2.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+
+        // Tính số tháng giữa hai ngày
+        Period period = Period.between(localDate1, localDate2);
+        int soThang = period.getMonths();
+
+        System.out.println("Số tháng giữa hai ngày là: " + soThang + " tháng.");
+    }
+}

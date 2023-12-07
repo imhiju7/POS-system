@@ -80,11 +80,26 @@ public class DAOCTPhieuNhap {
         con.close();
         return list;
     }
-    public int getlistcount(int maPhieuNhap) throws SQLException{
-        int count;
-        ArrayList<DTOCTPhieuNhap> ctpn = getlist(maPhieuNhap);
-        count = ctpn.size();
-        return count;
+    public ArrayList<DTOCTPhieuNhap> getalllist() throws SQLException{
+        Connection con = Connect.connection();
+        String sql = "SELECT * FROM chitietphieunhap WHERE ngayHetHan > NOW() ";
+        PreparedStatement pst =  con.prepareStatement(sql);
+        ResultSet rs = pst.executeQuery();
+        ArrayList<DTOCTPhieuNhap> list = new ArrayList<>();
+        while(rs.next()){
+            DTOCTPhieuNhap ctpn = new DTOCTPhieuNhap();
+            ctpn.setMaCTPhieuNhap(rs.getInt("maCTPhieuNhap"));
+            ctpn.setMaSanPham(rs.getInt("maSanPham"));
+            ctpn.setMaPhieuNhap(rs.getInt("maPhieuNhap"));
+            ctpn.setDonGia(rs.getFloat("donGia"));
+            ctpn.setSoLuong(rs.getInt("soLuong"));
+            ctpn.setGhichu(rs.getString("ghiChu"));
+            ctpn.setNgayhethan(rs.getDate("ngayHetHan"));
+            ctpn.setSoluongtonkho(rs.getInt("soLuongTonKho"));
+            list.add(ctpn);
+        }
+        con.close();
+        return list;
     }
     
     public int addctphieunhap(DTOCTPhieuNhap ctpn) throws SQLException{
@@ -129,4 +144,5 @@ public class DAOCTPhieuNhap {
         con.close();
         return rowaffect;
     }
+
 }

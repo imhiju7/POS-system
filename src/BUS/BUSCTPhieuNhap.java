@@ -9,6 +9,9 @@ import DTO.*;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.JComboBox;
@@ -39,6 +42,30 @@ public class BUSCTPhieuNhap {
     }
     public boolean checksp(int masp,int mactpn,int mapn) throws SQLException{
         return DAO.checksp(masp, mactpn,mapn);
+    }
+    public DTOCTPhieuNhap getspganhh(int masp) throws SQLException{
+        ArrayList<DTOCTPhieuNhap> list = DAO.getalllist();
+        DTOCTPhieuNhap sp= new DTOCTPhieuNhap();
+        int day = 100000;
+        for(DTOCTPhieuNhap i : list){
+            if(i.getMaSanPham() == masp){
+                int han = isganhh(i.getNgayhethan().toString());
+                if(han < day){
+                    day = han;
+                    sp = i;
+                }
+            }
+        }
+        return sp;
+    }
+    public int isganhh(String birthday) {
+        // Định dạng ngày tháng từ chuỗi
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate birthDate = LocalDate.parse(birthday, formatter);
+        // Tính tuổi hiện tại
+        LocalDate currentDate = LocalDate.now();
+        Period age = Period.between(currentDate,birthDate);
+        return age.getDays();
     }
     public void jtimport(JTable jt,ArrayList<DTOCTPhieuNhap> list) throws SQLException{
         
@@ -145,4 +172,15 @@ public class BUSCTPhieuNhap {
         }
         return result;
     }
+    public int gettongsl(int masp) throws SQLException{
+        int tong = 0;
+        ArrayList<DTOCTPhieuNhap> i = DAO.getalllist();
+        for(DTOCTPhieuNhap a: i){
+            if(a.getMaSanPham() == masp){
+                tong = tong + a.getSoluongtonkho();
+            }
+        }
+        return tong;
+    }
+    
 }

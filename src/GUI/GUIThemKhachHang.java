@@ -10,6 +10,7 @@ import javax.swing.JFrame;
 import DTO.*;
 import BUS.*;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -22,8 +23,12 @@ public class GUIThemKhachHang extends javax.swing.JFrame {
     /**
      * Creates new form GUIThemKhachHang
      */
+    static ArrayList<DTOSanPham> list = new ArrayList<>();
+    static int manv =0;
+    ArrayList<DTOSanPham> li;
+    int ma;
     BUSKhachHang khachhang = new BUSKhachHang();
-    public GUIThemKhachHang() {
+    public GUIThemKhachHang(ArrayList<DTOSanPham> listsp,int mnv) {
         initComponents();
         Toolkit toolkit = Toolkit.getDefaultToolkit();
         Dimension screenSize = toolkit.getScreenSize();
@@ -37,7 +42,10 @@ public class GUIThemKhachHang extends javax.swing.JFrame {
         // Đặt vị trí của form
         this.setResizable(false);
         this.setLocation(x, y);
+        
         resetall();
+        li = listsp;
+        ma = mnv;
     }
     public void resetall(){
         jTextField1.setText("");
@@ -155,12 +163,15 @@ public class GUIThemKhachHang extends javax.swing.JFrame {
                         khachhang.addkhachhang(kh);
                         JOptionPane.showMessageDialog(jPanel1, "Thêm thành công!");
                         resetall();
+                        new GUIThanhToan(li,ma).setVisible(true);
+                        this.dispose();
                     } catch (SQLException ex) {
                         Logger.getLogger(GUIKhachHang.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
                 else{
                     JOptionPane.showMessageDialog(jPanel1, "Số điện thoại không hợp lệ hoặc đã có người sử dụng!");
+                    this.dispose();
                 }
             } catch (SQLException ex) {
                 Logger.getLogger(GUIKhachHang.class.getName()).log(Level.SEVERE, null, ex);
@@ -202,7 +213,7 @@ public class GUIThemKhachHang extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new GUIThemKhachHang().setVisible(true);
+                new GUIThemKhachHang(list,manv).setVisible(true);
             }
         });
     }

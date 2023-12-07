@@ -27,6 +27,7 @@ public class GUICTPhieuNhap extends javax.swing.JFrame {
     static int mapn;
     BUSCTPhieuNhap ctphieunhap = new BUSCTPhieuNhap();
     BUSSanPham sanpham = new BUSSanPham();
+    BUSPhieuNhap phieunhap = new BUSPhieuNhap();
     public GUICTPhieuNhap(int ma) {
         initComponents();
         Toolkit toolkit = Toolkit.getDefaultToolkit();
@@ -524,6 +525,17 @@ public class GUICTPhieuNhap extends javax.swing.JFrame {
                     ctpn.setIshidden(0);
                     ctpn.setGhichu(jTextField5.getText().toString());
                     ctphieunhap.addctphieunhap(ctpn);
+                    DTOPhieuNhap pn = new DTOPhieuNhap();
+                    pn.setMaPhieuNhap(mapn);
+                    pn = phieunhap.getpn(mapn);
+                    double tongtien = pn.getTongTien()+ctpn.getthanhtien();
+                    pn.setTongTien(tongtien);
+                    phieunhap.updatetongtienpn(pn);
+                    int tongsp = sp.getSoLuong()+ctpn.getSoluongtonkho();
+                    sp.setSoLuong(tongsp);
+                    sp.setGiaNhap(ctpn.getDonGia());
+                    sanpham.updateslsanpham(sp);
+                    sanpham.updategianhap(sp);
                     JOptionPane.showMessageDialog(jPanel1, "Thêm thành công!");
                     resetall();
                 }
@@ -531,6 +543,8 @@ public class GUICTPhieuNhap extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(jPanel1, "Sản phẩm hiện đã có trong phiếu nhập!");
                 }
             } catch (SQLException ex) {
+                Logger.getLogger(GUICTPhieuNhap.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ParseException ex) {
                 Logger.getLogger(GUICTPhieuNhap.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
@@ -552,13 +566,28 @@ public class GUICTPhieuNhap extends javax.swing.JFrame {
                 ctpn.setMaCTPhieuNhap(Integer.parseInt(jTextField8.getText().toString()));
                 if(ctphieunhap.checksp(sp.getMaSanPham(), ctpn.getMaCTPhieuNhap(),mapn)){
                     ctpn.setMaPhieuNhap(mapn);
+                    double tien = ctpn.getthanhtien();
                     ctpn.setDonGia(Double.parseDouble(jTextField4.getText().toString()));
+                    int sl = ctpn.getSoLuong();
                     ctpn.setSoLuong(Integer.parseInt(jTextField11.getText().toString()));
-                    ctpn.setSoluongtonkho(Integer.parseInt(jTextField3.getText().toString()));
+                    int sltk = ctpn.getSoluongtonkho();
+                    int sltknew = sltk - sl+ctpn.getSoLuong();
+                    ctpn.setSoluongtonkho(sltknew);
                     ctpn.setNgayhethan(ctphieunhap.convertStringToDate(jTextField2.getText().toString()));
                     ctpn.setIshidden(0);
                     ctpn.setGhichu(jTextField5.getText().toString());
                     ctphieunhap.updatectphieunhap(ctpn);
+                    DTOPhieuNhap pn = new DTOPhieuNhap();
+                    pn.setMaPhieuNhap(mapn);
+                    pn = phieunhap.getpn(mapn);
+                    double tongtien = phieunhap.gettonghd(ctphieunhap.getlist(mapn), mapn);
+                    pn.setTongTien(tongtien);
+                    phieunhap.updatetongtienpn(pn);
+                    int tongsp = ctphieunhap.gettongsl(ctpn.getMaSanPham());
+                    sp.setSoLuong(tongsp);
+                    sp.setGiaNhap(ctpn.getDonGia());
+                    sanpham.updateslsanpham(sp);
+                    sanpham.updategianhap(sp);
                     JOptionPane.showMessageDialog(jPanel1, "Sửa thành công!");
                     resetall();
                 }
@@ -566,6 +595,8 @@ public class GUICTPhieuNhap extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(jPanel1, "Trùng sản phẩm, vui lòng chọn lại!");
                 }
             } catch (SQLException ex) {
+                Logger.getLogger(GUICTPhieuNhap.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ParseException ex) {
                 Logger.getLogger(GUICTPhieuNhap.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
@@ -579,14 +610,33 @@ public class GUICTPhieuNhap extends javax.swing.JFrame {
 
         if(!jTextField8.getText().isEmpty()){
             DTOCTPhieuNhap ctpn = new DTOCTPhieuNhap();
+            DTOSanPham sp = new DTOSanPham();
+            sp.setTenSanPham(jComboBox1.getSelectedItem().toString());
+            try {
+                sp = sanpham.getspbyname(sp);
+            } catch (SQLException ex) {
+                Logger.getLogger(GUICTPhieuNhap.class.getName()).log(Level.SEVERE, null, ex);
+            }
             try {
                 ctpn.setMaCTPhieuNhap(Integer.parseInt(jTextField8.getText().toString()));
                 ctpn = ctphieunhap.getctpn(ctpn);
+                ctpn.setMaSanPham(sp.getMaSanPham());
                 ctphieunhap.deletephieunhap(ctpn);
                 JOptionPane.showMessageDialog(jPanel1, "Xóa thành công!");
+                DTOPhieuNhap pn = new DTOPhieuNhap();
+                pn.setMaPhieuNhap(mapn);
+                pn = phieunhap.getpn(mapn);
+                double tongtien = phieunhap.gettonghd(ctphieunhap.getlist(mapn), mapn);
+                pn.setTongTien(tongtien);
+                phieunhap.updatetongtienpn(pn);
+                int tongsp = ctphieunhap.gettongsl(ctpn.getMaSanPham());
+                sp.setSoLuong(tongsp);
+                sanpham.updateslsanpham(sp);
                 resetall();
             } catch (SQLException ex) {
                 Logger.getLogger(GUIPhieuNhap.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ParseException ex) {
+                Logger.getLogger(GUICTPhieuNhap.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         else{

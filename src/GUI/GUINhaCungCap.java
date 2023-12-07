@@ -174,6 +174,11 @@ public class GUINhaCungCap extends javax.swing.JPanel {
                 jCheckBox1MouseClicked(evt);
             }
         });
+        jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBox1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -678,6 +683,16 @@ public class GUINhaCungCap extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(jPanel1, "Chưa chọn nhà cung cấp để xóa!");
         }
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
+        // TODO add your handling code here:
+        if(jCheckBox1.isSelected()){
+            jCheckBox1.setText("Dừng cung ứng");
+        }
+        else{
+            jCheckBox1.setText("Đang cung ứng");
+        }
+    }//GEN-LAST:event_jCheckBox1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

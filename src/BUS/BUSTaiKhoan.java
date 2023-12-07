@@ -164,4 +164,24 @@ public class BUSTaiKhoan {
         }
         return result;
     }
+    public DTOTaiKhoan kiemTraTaiKhoan(String tenDangNhap, String matKhau) {
+        return DAO.kiemTraTaiKhoan(tenDangNhap, matKhau);
+    }
+
+    public boolean checkTenDangNhap(String tenDangNhap) {
+        return DAO.checkTenDangNhap(tenDangNhap);
+    }
+
+    public boolean checkMatKhau(String tenDangNhap, String matKhau) {
+        return DAO.checkMatKhau(tenDangNhap, matKhau);
+    }
+
+    public boolean checkKhoaTaiKhoan(String tenDangNhap) {
+        return DAO.checkKhoaTaiKhoan(tenDangNhap);
+    }
+
+    public int layMaNhanVien(String tenDangNhap) {
+        return DAO.layMaNhanVien(tenDangNhap);
+    }
+
 }

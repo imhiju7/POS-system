@@ -104,4 +104,17 @@ public class BUSTichDiem {
         }
         return key;
     }
+    public DTOTichDiem gettdbytien(double tien) throws SQLException, ParseException{
+        ArrayList<DTOTichDiem> list = DAO.getlist();
+        DTOTichDiem td = new DTOTichDiem();
+        for(DTOTichDiem i : list){
+            if(tien > i.getTien()){
+                td = i;
+            }
+            else{
+                break;
+            }
+        }
+        return td;
+    }
 }

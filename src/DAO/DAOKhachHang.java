@@ -35,6 +35,23 @@ public class DAOKhachHang {
         con.close();
         return kh;
     }
+    public DTOKhachHang getkhbyphone(DTOKhachHang i) throws SQLException{
+        Connection con = Connect.connection();
+        String sql = "SELECT * FROM khachhang WHERE SDT = ?";
+        PreparedStatement pst =  con.prepareStatement(sql);
+        pst.setString(1, i.getSDT());
+        ResultSet rs = pst.executeQuery();
+        DTOKhachHang kh = new DTOKhachHang();
+        while(rs.next()){
+            kh.setMaKhachHang(rs.getInt("maKhachHang"));
+            kh.setTenKhachHang(rs.getString("tenKhachHang"));
+            kh.setSDT(rs.getString("SDT"));
+            kh.setDiemTichLuy(rs.getInt("diemTichLuy"));
+            kh.setMaUuDai(rs.getInt("maUuDai"));
+        }
+        con.close();
+        return kh;
+    }
     public ArrayList<DTOKhachHang> getlist() throws SQLException{
         Connection con = Connect.connection();
         String sql = "SELECT * FROM khachhang";
@@ -67,10 +84,10 @@ public class DAOKhachHang {
     }
     public int updatekhachhang(DTOKhachHang kh) throws SQLException{
         Connection con = Connect.connection();
-        String sql = "UPDATE khachhang set SDT= ?, tenKhachHang= ?WHERE maKhachHang= ?";
+        String sql = "UPDATE khachhang set SDT= ?, tenKhachHang= ? WHERE maKhachHang= ?";
         PreparedStatement pst = con.prepareStatement(sql);
-        pst.setInt(1, kh.getDiemTichLuy());
-        pst.setInt(2, kh.getMaUuDai());
+        pst.setString(1, kh.getSDT());
+        pst.setString(2, kh.getTenKhachHang());
         pst.setInt(3, kh.getMaKhachHang());
         int rowaffect = pst.executeUpdate();
         con.close();
@@ -82,6 +99,7 @@ public class DAOKhachHang {
         PreparedStatement pst = con.prepareStatement(sql);
         pst.setInt(1, kh.getDiemTichLuy());
         pst.setInt(2, kh.getMaUuDai());
+        pst.setInt(3, kh.getMaKhachHang());
         int rowaffect = pst.executeUpdate();
         con.close();
         return rowaffect;

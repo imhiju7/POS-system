@@ -28,8 +28,28 @@ public class BUSKhuyenMai {
     public int updatekhuyenmai(DTOKhuyenMai i) throws SQLException{
         return DAO.updateKhuyenMai(i);
     }
+    public int deletekhuyenmai(DTOKhuyenMai i) throws SQLException{
+        return DAO.deletekhuyenmai(i);
+    }
+    public boolean checkkm(DTOKhuyenMai i) throws SQLException{
+        return DAO.checkdel(i);
+    }
     public DTOKhuyenMai getkm(DTOKhuyenMai i) throws SQLException{
         return DAO.getkm(i);
+    }
+    public DTOKhuyenMai getkmbyname(DTOKhuyenMai i) throws SQLException{
+        return DAO.getkmbyname(i);
+    }
+    public ArrayList<DTOKhuyenMai> getkhuyenmaitoday() throws SQLException, ParseException{
+        ArrayList<DTOKhuyenMai> list = getlist();
+        ArrayList<DTOKhuyenMai> result = new ArrayList<>();
+        Date day = new Date();
+        for(DTOKhuyenMai i: list){
+            if(i.getNgayBatDau().before(day) && i.getNgayHetHan().after(day)){
+                result.add(i);
+            }
+        }
+        return result;
     }
     public void jtimport(JTable jt,ArrayList<DTOKhuyenMai> list) throws SQLException, ParseException{
         

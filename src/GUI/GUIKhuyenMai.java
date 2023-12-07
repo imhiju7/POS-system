@@ -587,7 +587,6 @@ public class GUIKhuyenMai extends javax.swing.JPanel {
                 km.setNgayHetHan(khuyenmai.convertStringToDate(jTextField8.getText().toString()));
                 km.setSoLuongDaDung(km.getSoLuong());
                 km.setIshidden(0);
-                km.setIsdelete(0);
                 try {
                     khuyenmai.addkhuyenmai(km);
                     JOptionPane.showMessageDialog(jPanel1, "Thêm thành công!");
@@ -649,19 +648,16 @@ public class GUIKhuyenMai extends javax.swing.JPanel {
         if(!jTextField4.getText().isEmpty()){
             DTOKhuyenMai km = new DTOKhuyenMai();
             km.setMaKhuyenMai(Integer.parseInt(jTextField4.getText().toString()));
-                try {
-                    km = khuyenmai.getkm(km);
-                } catch (SQLException ex) {
-                    Logger.getLogger(GUIKhuyenMai.class.getName()).log(Level.SEVERE, null, ex);
+            try {
+                if(khuyenmai.checkkm(km)){
+                    khuyenmai.deletekhuyenmai(km);
                 }
-                km.setIsdelete(1);
-                try {
-                    khuyenmai.updatekhuyenmai(km);
-                    JOptionPane.showMessageDialog(jPanel1, "Xóa thành công!");
-                    resetall();
-                } catch (SQLException ex) {
-                    Logger.getLogger(GUIKhuyenMai.class.getName()).log(Level.SEVERE, null, ex);
+                else{
+                    JOptionPane.showMessageDialog(jPanel1, "Khuyến mãi đã được sử dụng!");
                 }
+            } catch (SQLException ex) {
+                Logger.getLogger(GUIKhuyenMai.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         else{
             JOptionPane.showMessageDialog(jPanel1, "Hãy chọn khuyến mãi cần xóa thông tin!");

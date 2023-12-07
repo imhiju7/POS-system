@@ -10,13 +10,12 @@ package DTO;
  */
 public class DTOCTHoaDon {
     public DTOCTHoaDon(){}
-    public DTOCTHoaDon(int maCTHoaDon, int maSanPham, int maHoaDon, int soLuong, double donGia, String ghiChu) {
+    public DTOCTHoaDon(int maCTHoaDon, int maSanPham, int maHoaDon, int soLuong, double donGia) {
         this.maCTHoaDon = maCTHoaDon;
         this.maSanPham = maSanPham;
         this.maHoaDon = maHoaDon;
         this.soLuong = soLuong;
         this.donGia = donGia;
-        this.ghiChu = ghiChu;
     }
 
     public int getMaCTHoaDon() {
@@ -59,13 +58,6 @@ public class DTOCTHoaDon {
         this.donGia = donGia;
     }
 
-    public String getGhiChu() {
-        return ghiChu;
-    }
-
-    public void setGhiChu(String ghiChu) {
-        this.ghiChu = ghiChu;
-    }
     public double getthanhtien(){
         return (double)this.soLuong*this.donGia;
     }
@@ -75,7 +67,6 @@ public class DTOCTHoaDon {
     private int maHoaDon;
     private int soLuong;
     private double donGia;
-    private String ghiChu;
     
     
 }

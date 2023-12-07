@@ -37,6 +37,27 @@ public class DAOSanPham {
         con.close();
         return sp;
     }
+    public ArrayList<DTOSanPham> spcannhap() throws SQLException{
+        Connection con = Connect.connection();
+        String sql = "SELECT * FROM sanpham WHERE soLuong < 15";
+        PreparedStatement pst =  con.prepareStatement(sql);
+        ResultSet rs = pst.executeQuery();
+        ArrayList<DTOSanPham> list = new ArrayList<>();
+        while(rs.next()){
+            DTOSanPham sp = new DTOSanPham();
+            sp.setMaSanPham(rs.getInt("maSanPham"));
+            sp.setTenSanPham(rs.getString("tenSanPham"));
+            sp.setSoLuong(rs.getInt("soLuong"));
+            sp.setGiaBan(rs.getDouble("giaBan"));
+            sp.setGiaNhap(rs.getDouble("giaNhap"));
+            sp.setNgayThem(rs.getTimestamp("ngayThem"));
+            sp.setMaPhanLoai(rs.getInt("maPhanLoai"));
+            sp.setImg(rs.getString("img"));
+            list.add(sp);
+        }
+        con.close();
+        return list;
+    }
     public DTOSanPham getspbyname(DTOSanPham i ) throws SQLException{
         Connection con = Connect.connection();
         String sql = "SELECT * FROM sanpham WHERE tenSanPham = ? ";
@@ -68,7 +89,48 @@ public class DAOSanPham {
             sp.setTenSanPham(rs.getString("tenSanPham"));
             sp.setSoLuong(rs.getInt("soLuong"));
             sp.setGiaBan(rs.getDouble("giaBan"));
+            sp.setGiaNhap(rs.getDouble("giaNhap"));
             sp.setNgayThem(rs.getTimestamp("ngayThem"));
+            sp.setMaPhanLoai(rs.getInt("maPhanLoai"));
+            sp.setImg(rs.getString("img"));
+            list.add(sp);
+        }
+        con.close();
+        return list;
+    }
+    public ArrayList<DTOSanPham> getlistorder() throws SQLException, ParseException{
+        Connection con = Connect.connection();
+        String sql = "SELECT * FROM sanpham WHERE isHidden = 0 and soLuong > 0";
+        PreparedStatement pst =  con.prepareStatement(sql);
+        ResultSet rs = pst.executeQuery();
+        ArrayList<DTOSanPham> list = new ArrayList<>();
+        while(rs.next()){
+            DTOSanPham sp = new DTOSanPham();
+            sp.setMaSanPham(rs.getInt("maSanPham"));
+            sp.setTenSanPham(rs.getString("tenSanPham"));
+            sp.setSoLuong(0);
+            sp.setGiaBan(rs.getDouble("giaBan"));
+            sp.setMaPhanLoai(rs.getInt("maPhanLoai"));
+            sp.setImg(rs.getString("img"));
+            list.add(sp);
+        }
+        con.close();
+        return list;
+    }
+    public ArrayList<DTOSanPham> getlistorderpl(int mapl) throws SQLException, ParseException{
+        Connection con = Connect.connection();
+        String sql = "SELECT * FROM sanpham WHERE isHidden = 0 and maPhanLoai=?";
+        PreparedStatement pst =  con.prepareStatement(sql);
+        pst.setInt(1,mapl);
+        ResultSet rs = pst.executeQuery();
+        ArrayList<DTOSanPham> list = new ArrayList<>();
+        while(rs.next()){
+            DTOSanPham sp = new DTOSanPham();
+            sp.setMaSanPham(rs.getInt("maSanPham"));
+            sp.setTenSanPham(rs.getString("tenSanPham"));
+            sp.setSoLuong(0);
+            sp.setGiaBan(rs.getDouble("giaBan"));
+            sp.setGiaNhap(rs.getDouble("giaNhap"));
             sp.setMaPhanLoai(rs.getInt("maPhanLoai"));
             sp.setImg(rs.getString("img"));
             list.add(sp);
@@ -93,28 +155,38 @@ public class DAOSanPham {
     }
     public int updatesanpham(DTOSanPham sp) throws SQLException{
         Connection con = Connect.connection();
-        String sql = "UPDATE SanPham set tenSanPham = ?,giaBan=?,isHidden=?,maPhanLoai=?,img=? WHERE maSanPham= ?";
+        String sql = "UPDATE SanPham set tenSanPham = ?,giaBan=?,maPhanLoai=?,img=? WHERE maSanPham= ?";
         PreparedStatement pst = con.prepareStatement(sql);
         pst.setString(1, sp.getTenSanPham());
         pst.setDouble(2, sp.getGiaBan());
-        pst.setInt(3, sp.getIshidden());
-        pst.setInt(4, sp.getMaPhanLoai());
-        pst.setString(5, sp.getImg());
-        pst.setInt(6, sp.getMaSanPham());
+        pst.setInt(3, sp.getMaPhanLoai());
+        pst.setString(4, sp.getImg());
+        pst.setInt(5, sp.getMaSanPham());
         int rowaffect = pst.executeUpdate();
         con.close();
         return rowaffect;
     }
     public int updatesoluong(DTOSanPham sp) throws SQLException{
         Connection con = Connect.connection();
-        String sql = "UPDATE SanPham set soLuong = ? WHERE maSanPham= ?";
+        String sql = "UPDATE SanPham set soLuong = ?,isHidden = ? WHERE maSanPham= ?";
+        PreparedStatement pst = con.prepareStatement(sql);
+        pst.setInt(1, sp.getSoLuong());
+        pst.setInt(2, sp.getIshidden());
+        pst.setInt(3, sp.getMaSanPham());
+        int rowaffect = pst.executeUpdate();
+        con.close();
+        return rowaffect;
+        
+    }
+    public int updategianhap(DTOSanPham sp) throws SQLException{
+        Connection con = Connect.connection();
+        String sql = "UPDATE SanPham set giaNhap = ? WHERE maSanPham= ?";
         PreparedStatement pst = con.prepareStatement(sql);
         pst.setInt(1, sp.getSoLuong());
         pst.setInt(2, sp.getMaSanPham());
         int rowaffect = pst.executeUpdate();
         con.close();
         return rowaffect;
-        
     }
     public boolean checktensp(String name) throws SQLException{
         Connection con = Connect.connection();

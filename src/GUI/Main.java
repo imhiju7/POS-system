@@ -1,12 +1,15 @@
 package GUI;
 
 import GUI.comp.*;
-
+import DTO.*;
+import BUS.*;
 import java.awt.Component;
+import java.awt.Frame;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFrame;
 import net.miginfocom.swing.MigLayout;
 import org.jdesktop.animation.timing.Animator;
 import org.jdesktop.animation.timing.TimingTarget;
@@ -19,42 +22,181 @@ public class Main extends javax.swing.JFrame {
     private Menu menu;
     private MainForm main;
     private Animator animator;
-    private static int manv = 0;
-    private static int mapq = 0;
-
-    public static int getMapq() {
-        return mapq;
-    }
-
-    public static void setMapq(int mapq) {
-        Main.mapq = mapq;
-    }
-    public int getManv() {
-        return manv;
-    }
-
-    public void setManv(int manv) {
-        this.manv = manv;
-    }
+    static int manv;
+    BUSNhanVien nhanvien = new BUSNhanVien();
     public Main(int mnv) {
         initComponents();
-        init();
-        manv = mnv;
+        init(mnv);
     }
 
-    private void init() {
+    private void init(int mnv) {
         layout = new MigLayout("fill", "[][100%, fill]", "[fill, top]");
         bg.setLayout(layout); 
-        menu = new Menu();
+        DTONhanVien nv = new DTONhanVien();
+        nv.setMaNhanVien(mnv);
+        try {
+            int macv = nhanvien.maChucVu(nv);
+            menu = new Menu(macv);
+        } catch (SQLException ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
         main = new MainForm();
-        mapq = 0;
+        main.showForm(new GUITrangChu(mnv));
         //  Init google icon font
         IconFontSwing.register(GoogleMaterialDesignIcons.getIconFont());
         menu.addEvent(new EventMenuSelected() {
             @Override
             public void menuSelected(int menuIndex, int subMenuIndex) {
-                
-                main.showForm(new GUIPhanQuyen());
+                DTONhanVien nv = new DTONhanVien();
+                nv.setMaNhanVien(mnv);
+                int macv;
+                try {
+                    macv = nhanvien.maChucVu(nv);
+                    if(macv == 1){
+                        if(menuIndex == 0){
+                            if(subMenuIndex == 0){
+                                main.showForm(new GUIOrder(mnv));
+                            }
+                            else if(subMenuIndex == 1){
+                                 main.showForm(new GUIHoaDon());
+                            }
+                        }
+                        else if(menuIndex == 1){
+                            if(subMenuIndex == 0){
+                                main.showForm(new GUISanPham());
+                            }
+                            else if(subMenuIndex == 1){
+                                 main.showForm(new GUINhaCungCap());
+                            }
+                            else if(subMenuIndex == 2){
+                                 main.showForm(new GUIPhieuNhap(mnv));
+                            }
+                        }
+                        else if(menuIndex == 2){
+                            if(subMenuIndex == 0){
+                                main.showForm(new GUINhanVien());
+                            }
+                            else if(subMenuIndex == 1){
+                                 main.showForm(new GUITaiKhoan());
+                            }
+                            else if(subMenuIndex == 2){
+                                 main.showForm(new GUIPhanQuyen());
+                            }
+                        }
+                        else if(menuIndex == 3){
+                            if(subMenuIndex == 0){
+                                main.showForm(new GUIKhachHang());
+                            }
+                            else if(subMenuIndex == 1){
+                                 main.showForm(new GUIKhuyenMai());
+                            }
+                        }
+                        else if(menuIndex == 4){
+                            if(subMenuIndex == 0){
+                                main.showForm(new GUIThongKe());
+                            }
+                        }
+                        else if(menuIndex == 5){
+                            if(subMenuIndex == 0){
+                                main.showForm(new GUIDangXuat(mnv));
+                            }
+                        }
+                    }
+                    else if(macv == 2){
+                        if(menuIndex == 0){
+                            if(subMenuIndex == 0){
+                                 main.showForm(new GUIPhieuNhap(mnv));
+                            }
+                        }
+                        else if(menuIndex == 1){
+                            if(subMenuIndex == 0){
+                                main.showForm(new GUIDangXuat(mnv));
+                            }
+                        }
+                    }
+                    else if(macv == 3){
+                        if(menuIndex == 0){
+                            if(subMenuIndex == 0){
+                                main.showForm(new GUIOrder(mnv));
+                            }
+                            else if(subMenuIndex == 1){
+                                main.showForm(new GUIHoaDon());
+                            }
+                        }
+                        else if(menuIndex == 1){
+                            if(subMenuIndex == 0){
+                                main.showForm(new GUIDangXuat(mnv));
+                            }
+                            
+                        }
+                    }
+                    else if(macv == 4){
+                        if(menuIndex == 0){
+                            if(subMenuIndex == 0){
+                                 main.showForm(new GUIHoaDon());
+                            }
+                        }
+                        else if(menuIndex == 1){
+                            if(subMenuIndex == 0){
+                                 main.showForm(new GUISanPham());
+                            }
+                            else if(subMenuIndex == 1){
+                                 main.showForm(new GUINhaCungCap());
+                            }
+                        }
+                        else if(menuIndex == 2){
+                            if(subMenuIndex == 0){
+                                 main.showForm(new GUINhanVien());
+                            }
+                        }
+                        else if(menuIndex == 3){
+                            if(subMenuIndex == 0){
+                                 main.showForm(new GUIKhachHang());
+                            }
+                            else if(subMenuIndex == 1){
+                                 main.showForm(new GUIKhuyenMai());
+                            }
+                        }
+                        else if(menuIndex == 4){
+                            if(subMenuIndex == 0){
+                                main.showForm(new GUIThongKe());
+                            }
+                        }
+                        else if(menuIndex == 5){
+                            if(subMenuIndex == 0){
+                                main.showForm(new GUIDangXuat(mnv));
+                            }
+                        }
+                    }
+                    else if(macv ==5){
+                        if(menuIndex == 0){
+                            if(subMenuIndex == 0){
+                                 main.showForm(new GUIHoaDon());
+                            }
+                        }
+                        else if(menuIndex == 1){
+                            if(subMenuIndex == 0){
+                                 main.showForm(new GUIPhieuNhap(mnv));
+                            }
+                        }
+                        else if(menuIndex == 2){
+                            if(subMenuIndex == 0){
+                                 main.showForm(new GUIThongKe());
+                            }
+                        }
+                        else if(menuIndex == 3){
+                            if(subMenuIndex == 0){
+                                 main.setVisible(false);
+                            }
+                        }
+                    }
+                } catch (SQLException ex) {
+                    Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (ParseException ex) {
+                    Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
         menu.addEventShowPopup(new EventShowPopupMenu() {

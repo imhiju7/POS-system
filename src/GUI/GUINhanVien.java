@@ -11,12 +11,18 @@ import java.sql.SQLException;
 import java.text.ParseException;
 
 import com.raven.datechooser.SelectedDate;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Image;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
+import jnafilechooser.api.JnaFileChooser;
 /**
  *
  * @author Hieu PC
@@ -242,7 +248,7 @@ public class GUINhanVien extends javax.swing.JPanel {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
                             .addGroup(jPanel5Layout.createSequentialGroup()
                                 .addGap(18, 18, 18)
-                                .addComponent(jButton6)
+                                .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
@@ -328,7 +334,7 @@ public class GUINhanVien extends javax.swing.JPanel {
         jButton4.setBackground(new java.awt.Color(161, 204, 209));
         jButton4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jButton4.setForeground(new java.awt.Color(0, 0, 0));
-        jButton4.setText("Export");
+        jButton4.setText("Chức vụ");
         jButton4.setToolTipText("");
         jButton4.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jButton4.addActionListener(new java.awt.event.ActionListener() {
@@ -359,7 +365,7 @@ public class GUINhanVien extends javax.swing.JPanel {
                 .addGap(18, 18, 18)
                 .addComponent(jButton3)
                 .addGap(119, 119, 119)
-                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel7Layout.createSequentialGroup()
@@ -598,7 +604,11 @@ public class GUINhanVien extends javax.swing.JPanel {
         try {
             String img = nhanvien.getimg(nv);
             image  = img;
-            jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource(img)));
+            jLabel2.setPreferredSize(new Dimension(150,170));
+            jLabel2.setBackground(Color.BLACK);
+            ImageIcon icon = new javax.swing.ImageIcon(image);
+            Image ima= icon.getImage().getScaledInstance(150, 170,Image.SCALE_SMOOTH);
+            jLabel2.setIcon(new javax.swing.ImageIcon(ima));
         } catch (SQLException ex) {
             Logger.getLogger(GUINhanVien.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -615,7 +625,7 @@ public class GUINhanVien extends javax.swing.JPanel {
     
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
-        resetall();
+        new GUIChucVu().setVisible(true);
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
@@ -635,38 +645,39 @@ public class GUINhanVien extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(jPanel1, "Chọn khoảng thời gian!");
         }
     }//GEN-LAST:event_jButton7ActionPerformed
+    private void chooseimage() {
+        // Lấy frame chứa panel hiện tại
+        JFrame currentFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
 
+        // Kiểm tra nếu là frame
+        if (currentFrame != null && currentFrame instanceof JFrame) {
+            // Đóng frame
+            JnaFileChooser chooser = new JnaFileChooser();
+            boolean action = chooser.showOpenDialog(currentFrame);
+             if (action) {
+                    // Lấy đường dẫn của tập tin đã chọn
+                java.io.File selectedFile = chooser.getSelectedFile();
+                String imagePath = selectedFile.getAbsolutePath();
+                    
+                String path = imagePath.substring(23);
+                path = path.replace('\\', '/');
+                    // In đường dẫn tập tin ảnh
+                image="."+path;
+                jLabel2.setPreferredSize(new Dimension(150,170));
+                jLabel2.setBackground(Color.BLACK);
+                ImageIcon icon = new javax.swing.ImageIcon(image);
+                Image img= icon.getImage().getScaledInstance(150, 170,Image.SCALE_SMOOTH);
+                jLabel2.setIcon(new javax.swing.ImageIcon(img));
+            }
+        } else {
+            System.out.println("Không tìm thấy frame chứa panel.");
+        }
+    }
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         // TODO add your handling code here:
         //add img;
-        JFileChooser fileChooser = new JFileChooser();
-                // Thiết lập để chỉ chọn file hình ảnh
-                fileChooser.setFileFilter(new javax.swing.filechooser.FileFilter() {
-                    public boolean accept(java.io.File f) {
-                        return f.getName().toLowerCase().endsWith(".jpg")
-                                || f.getName().toLowerCase().endsWith(".jpeg")
-                                || f.getName().toLowerCase().endsWith(".png")
-                                || f.isDirectory();
-                    }
-
-                    public String getDescription() {
-                        return "Images (*.jpg, *.jpeg, *.png)";
-                    }
-                });
-
-                int result = fileChooser.showOpenDialog(jPanel1);
-                if (result == JFileChooser.APPROVE_OPTION) {
-                    // Lấy đường dẫn của tập tin đã chọn
-                    java.io.File selectedFile = fileChooser.getSelectedFile();
-                    String imagePath = selectedFile.getAbsolutePath();
-                    
-                String path = imagePath.substring(27);
-                path = path.replace('\\', '/');
-                    // In đường dẫn tập tin ảnh
-                image=path;
-                jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource(path)));
-
-                }
+        chooseimage();
+        
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -766,7 +777,6 @@ public class GUINhanVien extends javax.swing.JPanel {
                         jLabel2.setIcon(new ImageIcon());
                     }
                     else{
-                        System.out.println("er");
                         DTONhanVien nv = new DTONhanVien();
                         nv.setMaNhanVien(manv);
                         nv.setTenNhanVien(jTextField4.getText().toString());

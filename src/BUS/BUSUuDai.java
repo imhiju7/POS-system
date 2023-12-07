@@ -105,4 +105,17 @@ public class BUSUuDai {
         }
         return key;
     }
+    public DTOUuDai setudbydiem(int diem) throws SQLException, ParseException{
+        ArrayList<DTOUuDai> list = getlist();
+        DTOUuDai ud = new DTOUuDai();
+        for(DTOUuDai i : list){
+            if(diem > i.getMocUuDai()){
+                ud = i;
+            }
+            else{
+                break;
+            }
+        }
+        return ud;
+    }
 }
