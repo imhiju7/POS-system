@@ -7,13 +7,19 @@ package GUI;
 import java.util.ArrayList;
 import DTO.*;
 import BUS.*;
-import java.awt.Dimension;
-import java.awt.Toolkit;
+import com.sun.jna.platform.win32.SetupApi;
+import java.awt.*;
+import java.awt.print.PageFormat;
+import java.awt.print.Paper;
+import java.awt.print.Printable;
+import java.awt.print.PrinterException;
+import java.awt.print.PrinterJob;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 /**
@@ -349,7 +355,20 @@ public class GUIThanhToan extends javax.swing.JFrame {
                 sp.setSoLuong(ctphieunhap.gettongsl(pn.getMaSanPham()));
                 sanpham.updateslsanpham(sp);
             }
+            
+            JOptionPane.showMessageDialog(this, "Thanh toán thành công! In hóa đơn");
             this.dispose();
+            
+            bHeight = Double.valueOf(lia.size());
+            
+            PrinterJob pj = PrinterJob.getPrinterJob();
+            pj.setPrintable(new BillPrintable(), getPageFormat(pj));
+            try {
+                pj.print();
+            } catch (PrinterException ex) {
+                ex.printStackTrace();
+            }
+            
         } catch (SQLException ex) {
             Logger.getLogger(GUIThanhToan.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ParseException ex) {
@@ -413,9 +432,92 @@ public class GUIThanhToan extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jComboBox1ItemStateChanged
 
-    /**
-     * @param args the command line arguments
-     */
+    double bHeight = 0.0;
+    
+    public PageFormat getPageFormat(PrinterJob pj) {
+        PageFormat pf = pj.defaultPage();
+        Paper paper = pf.getPaper();
+        
+        double bodyHeight = bHeight;
+        double headerHeight = 5.0;
+        double footerHeight = 5.0;
+        double width = cm_to_pp(10.5);
+        double height = cm_to_pp(14.8);
+        paper.setSize(width, height);
+        paper.setImageableArea(0, 10, width, height);
+        
+        pf.setOrientation(PageFormat.PORTRAIT);
+        pf.setPaper(paper);
+        return pf;
+    }
+    
+    protected static double cm_to_pp(double cm) {
+        return toPPI(cm * 0.393600787);
+    }
+    
+    protected static double toPPI(double inch) {
+        return inch* 72d;
+    }
+    
+    public class BillPrintable implements Printable {
+           
+        @Override
+        public int print(Graphics graphics, PageFormat pageFormat, int pageIndex) throws PrinterException {
+            int r = 20;
+            int result = NO_SUCH_PAGE;
+            if(pageIndex == 0) {
+                Graphics2D g2d = (Graphics2D) graphics;
+                double width = pageFormat.getImageableWidth();
+                g2d.translate((int) pageFormat.getImageableX(),(int) pageFormat.getImageableY());
+                
+                try{
+                    int y = 20;
+                    int yShift = 10;
+                    int headerRectHeight = 15;
+                    
+                    g2d.setFont(new Font("Times New Roman",Font.PLAIN,9));
+//                    g2d.drawImage(s);
+                    g2d.drawString("--------------------------------------------", 152, y);y+=yShift;
+                    g2d.drawString("            CỬA HÀNG TIỆN LỢI ABC           ", 152, y);y+=yShift;
+                    g2d.drawString("        DỊA CHỈ: xxxxxxxxxxxxxxxxxx           ", 152, y);y+=yShift;
+                    g2d.drawString("        SĐT: xxxxxxxxxxxxxxxxxx           ", 152, y);y+=yShift;
+                    g2d.drawString("        Nhân viên:"+manv+"           ", 152, y);y+=yShift;
+                    g2d.drawString("        Mã hóa đơn:"+hd.getMaHoaDon()+"           ", 152, y);y+=yShift;
+                    g2d.drawString("        Mã khách hàng:"+kh.getMaKhachHang()+"           ", 152, y);y+=yShift;
+                    g2d.drawString("--------------------------------------------", 152, y);y+=headerRectHeight;
+                    
+                    g2d.drawString("    Tên sản phẩm                 Tổng tiền(VND)   ", 150, y);y+=yShift;
+                    g2d.drawString("--------------------------------------------", 152, y);y+=headerRectHeight;
+
+                    for (DTOSanPham i : lia) {
+                        g2d.drawString("    "+i.getTenSanPham()+"                   ", 150, y);y+=headerRectHeight;
+                        g2d.drawString("        "+i.getSoLuong()+"*"+i.getGiaBan()/i.getSoLuong(), 150, y);
+                        g2d.drawString(i.getGiaBan()+"", 250 , y);y+=yShift;
+                    }
+                    g2d.drawString("--------------------------------------------", 152, y);y+=yShift;
+                    g2d.drawString("    tong tien:                      "+tongtien, 150, y);y+=yShift;
+                    g2d.drawString("--------------------------------------------", 152, y);y+=yShift;
+                    g2d.drawString("    khuyen mai:                      "+tongtienkm, 150, y);y+=yShift;
+                    g2d.drawString("--------------------------------------------", 152, y);y+=yShift;
+                    g2d.drawString("    uu dai:                         "+tongtienud, 150, y);y+=yShift;
+                    g2d.drawString("--------------------------------------------", 152, y);y+=yShift;
+                    g2d.drawString("    thanh tien:                     "+tongtienfi, 150, y);y+=yShift;
+                    
+                    g2d.drawString("********************************************", 152, y);y+=yShift;
+                    g2d.drawString("           CẢM ƠN QUÝ KHÁCH            ", 145, y);y+=yShift;
+                    g2d.drawString("********************************************", 152, y);y+=yShift;
+                    
+                }
+                catch(Exception e){
+                    e.printStackTrace();
+                }
+                result = PAGE_EXISTS;
+            }
+            return result;
+        }
+        
+    }
+    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
