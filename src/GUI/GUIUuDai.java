@@ -81,20 +81,29 @@ public class GUIUuDai extends javax.swing.JFrame {
         jPanel3.setBackground(new java.awt.Color(245, 232, 183));
         jPanel3.setPreferredSize(new java.awt.Dimension(600, 700));
 
+        jPanel4.setBackground(new java.awt.Color(245, 232, 183));
+
         jTextField1.setEditable(false);
         jTextField1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jTextField1.setText("ID");
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("ID");
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(0, 0, 0));
         jLabel3.setText("Mốc điểm");
 
         jTextField2.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 
+<<<<<<< Updated upstream
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+=======
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(0, 0, 0));
+>>>>>>> Stashed changes
         jLabel4.setText("%");
 
         jTextField3.setHorizontalAlignment(javax.swing.JTextField.CENTER);
@@ -132,6 +141,12 @@ public class GUIUuDai extends javax.swing.JFrame {
                 .addContainerGap(18, Short.MAX_VALUE))
         );
 
+<<<<<<< Updated upstream
+=======
+        jPanel5.setBackground(new java.awt.Color(245, 232, 183));
+
+        jButton1.setBackground(new java.awt.Color(161, 204, 209));
+>>>>>>> Stashed changes
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/SOURCE/Icon/add.png"))); // NOI18N
         jButton1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 

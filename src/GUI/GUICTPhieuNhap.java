@@ -4,6 +4,34 @@
  */
 package GUI;
 
+<<<<<<< Updated upstream
+=======
+import java.awt.Dimension;
+import java.awt.Toolkit;
+import javax.swing.JFrame;
+import BUS.*;
+import DTO.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.sql.SQLException;
+import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.CellType;
+import org.apache.poi.ss.usermodel.Font;
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
+import org.apache.poi.ss.usermodel.IndexedColors;
+import org.apache.poi.ss.util.CellRangeAddress;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+>>>>>>> Stashed changes
 /**
  *
  * @author Hieu PC
@@ -13,7 +41,17 @@ public class GUICTPhieuNhap extends javax.swing.JFrame {
     /**
      * Creates new form GUICTPhieuNhap
      */
+<<<<<<< Updated upstream
     public GUICTPhieuNhap() {
+=======
+    static int mapn;
+    BUSCTPhieuNhap ctphieunhap = new BUSCTPhieuNhap();
+    BUSSanPham sanpham = new BUSSanPham();
+    BUSPhieuNhap phieunhap = new BUSPhieuNhap();
+    BUSNhanVien nhanvien = new BUSNhanVien();
+    BUSNhaCungCap nhacungcap = new BUSNhaCungCap();
+    public GUICTPhieuNhap(int ma) {
+>>>>>>> Stashed changes
         initComponents();
     }
 
@@ -39,9 +77,688 @@ public class GUICTPhieuNhap extends javax.swing.JFrame {
             .addGap(0, 300, Short.MAX_VALUE)
         );
 
+<<<<<<< Updated upstream
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+=======
+        jPanel4.add(jPanel5, java.awt.BorderLayout.WEST);
+
+        jPanel6.setBackground(new java.awt.Color(245, 232, 183));
+        jPanel6.setPreferredSize(new java.awt.Dimension(500, 200));
+
+        jPanel7.setBackground(new java.awt.Color(245, 232, 183));
+
+        jButton1.setBackground(new java.awt.Color(161, 204, 209));
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/SOURCE/Icon/add.png"))); // NOI18N
+        jButton1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jButton2.setBackground(new java.awt.Color(161, 204, 209));
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/SOURCE/Icon/edit.png"))); // NOI18N
+        jButton2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        jButton3.setBackground(new java.awt.Color(161, 204, 209));
+        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/SOURCE/Icon/trash.png"))); // NOI18N
+        jButton3.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
+        jButton4.setBackground(new java.awt.Color(161, 204, 209));
+        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/SOURCE/Icon/reset.png"))); // NOI18N
+        jButton4.setToolTipText("");
+        jButton4.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
+        jButton6.setBackground(new java.awt.Color(161, 204, 209));
+        jButton6.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jButton6.setForeground(new java.awt.Color(0, 0, 0));
+        jButton6.setText("Export");
+        jButton6.setToolTipText("");
+        jButton6.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
+        jPanel7.setLayout(jPanel7Layout);
+        jPanel7Layout.setHorizontalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addGap(41, 41, 41)
+                .addComponent(jButton1)
+                .addGap(18, 18, 18)
+                .addComponent(jButton2)
+                .addGap(18, 18, 18)
+                .addComponent(jButton3)
+                .addGap(18, 18, 18)
+                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(61, 61, 61)
+                .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel7Layout.setVerticalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+
+        jPanel8.setBackground(new java.awt.Color(245, 232, 183));
+
+        jButton5.setBackground(new java.awt.Color(161, 204, 209));
+        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/SOURCE/Icon/search.png"))); // NOI18N
+        jButton5.setToolTipText("");
+        jButton5.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Loại tìm kiếm", "Tên sản phẩm", "Ghi chú" }));
+
+        javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
+        jPanel8.setLayout(jPanel8Layout);
+        jPanel8Layout.setHorizontalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addGap(42, 42, 42)
+                .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jComboBox2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(21, 21, 21))
+        );
+        jPanel8Layout.setVerticalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jComboBox2)
+                    .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, 46, Short.MAX_VALUE)
+                    .addComponent(jTextField6))
+                .addGap(8, 8, 8))
+        );
+
+        jPanel9.setLayout(new java.awt.BorderLayout());
+
+        jPanel10.setBackground(new java.awt.Color(245, 232, 183));
+        jPanel10.setPreferredSize(new java.awt.Dimension(160, 39));
+
+        javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
+        jPanel10.setLayout(jPanel10Layout);
+        jPanel10Layout.setHorizontalGroup(
+            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel10Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jTextField10, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel10Layout.setVerticalGroup(
+            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel10Layout.createSequentialGroup()
+                .addGap(14, 14, 14)
+                .addComponent(jTextField10)
+                .addGap(14, 14, 14))
+        );
+
+        jPanel9.add(jPanel10, java.awt.BorderLayout.WEST);
+
+        jPanel11.setBackground(new java.awt.Color(245, 232, 183));
+        jPanel11.setPreferredSize(new java.awt.Dimension(160, 39));
+
+        javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
+        jPanel11.setLayout(jPanel11Layout);
+        jPanel11Layout.setHorizontalGroup(
+            jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel11Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(54, Short.MAX_VALUE))
+        );
+        jPanel11Layout.setVerticalGroup(
+            jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel11Layout.createSequentialGroup()
+                .addGap(14, 14, 14)
+                .addComponent(jTextField9)
+                .addGap(14, 14, 14))
+        );
+
+        jPanel9.add(jPanel11, java.awt.BorderLayout.CENTER);
+
+        jPanel12.setBackground(new java.awt.Color(245, 232, 183));
+        jPanel12.setPreferredSize(new java.awt.Dimension(180, 39));
+
+        jButton7.setBackground(new java.awt.Color(161, 204, 209));
+        jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/SOURCE/Icon/search.png"))); // NOI18N
+        jButton7.setToolTipText("");
+        jButton7.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
+            }
+        });
+
+        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Loại", "Ngày hết hạn", "Số lượng", "SL Tồn kho", "Tiền" }));
+
+        javax.swing.GroupLayout jPanel12Layout = new javax.swing.GroupLayout(jPanel12);
+        jPanel12.setLayout(jPanel12Layout);
+        jPanel12Layout.setHorizontalGroup(
+            jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel12Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jComboBox3, 0, 104, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel12Layout.setVerticalGroup(
+            jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel12Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jComboBox3)
+                    .addComponent(jButton7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+
+        jPanel9.add(jPanel12, java.awt.BorderLayout.EAST);
+
+        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
+        jPanel6.setLayout(jPanel6Layout);
+        jPanel6Layout.setHorizontalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        jPanel6Layout.setVerticalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(19, Short.MAX_VALUE))
+        );
+
+        jPanel4.add(jPanel6, java.awt.BorderLayout.EAST);
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(jTable1);
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1099, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(29, 29, 29))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(26, 26, 26)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(27, Short.MAX_VALUE))
+        );
+
+        jPanel1.add(jPanel3, java.awt.BorderLayout.PAGE_END);
+
+        getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
+
+        pack();
+    }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        
+        if(!jComboBox1.getSelectedItem().equals("Sản phẩm") && !jTextField2.getText().isEmpty() && !jTextField4.getText().isEmpty() && !jTextField11.getText().isEmpty()){
+            DTOCTPhieuNhap ctpn = new DTOCTPhieuNhap();
+            DTOSanPham sp = new DTOSanPham();
+            try {
+                sp.setTenSanPham(jComboBox1.getSelectedItem().toString());
+                sp = sanpham.getspbyname(sp);
+                ctpn.setMaSanPham(sp.getMaSanPham());
+                if(ctphieunhap.checksp(sp.getMaSanPham(), ctpn.getMaCTPhieuNhap(),mapn)){
+                    ctpn.setMaPhieuNhap(mapn);
+                    ctpn.setDonGia(Double.parseDouble(jTextField4.getText().toString()));
+                    ctpn.setSoLuong(Integer.parseInt(jTextField11.getText().toString()));
+                    ctpn.setSoluongtonkho(ctpn.getSoLuong());
+                    ctpn.setNgayhethan(ctphieunhap.convertStringToDate(jTextField2.getText().toString()));
+                    ctpn.setIshidden(0);
+                    ctpn.setGhichu(jTextField5.getText().toString());
+                    
+                    ctphieunhap.addctphieunhap(ctpn);
+                    DTOPhieuNhap pn = new DTOPhieuNhap();
+                    pn.setMaPhieuNhap(mapn);
+                    pn = phieunhap.getpn(mapn);
+                    double tongtien = pn.getTongTien()+ctpn.getthanhtien();
+                    pn.setTongTien(tongtien);
+                    phieunhap.updatetongtienpn(pn);
+                    
+                    int tongsp = sp.getSoLuong()+ctpn.getSoluongtonkho();
+                    sp.setSoLuong(tongsp);
+                    sp.setGiaNhap(ctpn.getDonGia());
+                    sanpham.updateslsanpham(sp);
+                    sanpham.updategianhap(sp);
+                    JOptionPane.showMessageDialog(jPanel1, "Thêm thành công!");
+                    resetall();
+                }
+                else{
+                    JOptionPane.showMessageDialog(jPanel1, "Sản phẩm hiện đã có trong phiếu nhập!");
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(GUICTPhieuNhap.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ParseException ex) {
+                Logger.getLogger(GUICTPhieuNhap.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        else{
+            JOptionPane.showMessageDialog(jPanel1, "Vui lòng chọn đầy đủ thông tin trước khi thêm!");
+        }
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        if(!jComboBox1.getSelectedItem().equals("Sản phẩm") && !jTextField8.getText().isEmpty() && !jTextField2.getText().isEmpty() && !jTextField4.getText().isEmpty() && !jTextField11.getText().isEmpty()){
+            DTOCTPhieuNhap ctpn = new DTOCTPhieuNhap();
+            DTOSanPham sp = new DTOSanPham();
+            try {
+                sp.setTenSanPham(jComboBox1.getSelectedItem().toString());
+                sp = sanpham.getspbyname(sp);
+                ctpn.setMaSanPham(sp.getMaSanPham());
+                ctpn.setMaCTPhieuNhap(Integer.parseInt(jTextField8.getText().toString()));
+                if(ctphieunhap.checksp(sp.getMaSanPham(), ctpn.getMaCTPhieuNhap(),mapn)){
+                    ctpn.setMaPhieuNhap(mapn);
+                    ctpn.setDonGia(Double.parseDouble(jTextField4.getText().toString()));
+                    int sl = ctpn.getSoLuong();
+                    ctpn.setSoLuong(Integer.parseInt(jTextField11.getText().toString()));
+                    int sltk = ctpn.getSoluongtonkho();
+                    int sltknew = sltk - sl+ctpn.getSoLuong();
+                    ctpn.setSoluongtonkho(sltknew);
+                    ctpn.setNgayhethan(ctphieunhap.convertStringToDate(jTextField2.getText().toString()));
+                    ctpn.setIshidden(0);
+                    ctpn.setGhichu(jTextField5.getText().toString());
+                    ctphieunhap.updatectphieunhap(ctpn);
+                    DTOPhieuNhap pn = new DTOPhieuNhap();
+                    pn.setMaPhieuNhap(mapn);
+                    pn = phieunhap.getpn(mapn);
+                    double tongtien = phieunhap.gettonghd(ctphieunhap.getlist(mapn), mapn);
+                    pn.setTongTien(tongtien);
+                    phieunhap.updatetongtienpn(pn);
+                    int tongsp = ctphieunhap.gettongsl(ctpn.getMaSanPham());
+                    sp.setSoLuong(tongsp);
+                    sp.setGiaNhap(ctpn.getDonGia());
+                    sanpham.updateslsanpham(sp);
+                    sanpham.updategianhap(sp);
+                    JOptionPane.showMessageDialog(jPanel1, "Sửa thành công!");
+                    resetall();
+                }
+                else{
+                    JOptionPane.showMessageDialog(jPanel1, "Trùng sản phẩm, vui lòng chọn lại!");
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(GUICTPhieuNhap.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ParseException ex) {
+                Logger.getLogger(GUICTPhieuNhap.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        else{
+            JOptionPane.showMessageDialog(jPanel1, "Vui lòng chọn sản phẩm trước khi sửa!");
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+
+        if(!jTextField8.getText().isEmpty()){
+            DTOCTPhieuNhap ctpn = new DTOCTPhieuNhap();
+            DTOSanPham sp = new DTOSanPham();
+            sp.setTenSanPham(jComboBox1.getSelectedItem().toString());
+            try {
+                sp = sanpham.getspbyname(sp);
+            } catch (SQLException ex) {
+                Logger.getLogger(GUICTPhieuNhap.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            try {
+                ctpn.setMaCTPhieuNhap(Integer.parseInt(jTextField8.getText().toString()));
+                ctpn = ctphieunhap.getctpn(ctpn);
+                ctpn.setMaSanPham(sp.getMaSanPham());
+                ctphieunhap.deletephieunhap(ctpn);
+                JOptionPane.showMessageDialog(jPanel1, "Xóa thành công!");
+                DTOPhieuNhap pn = new DTOPhieuNhap();
+                pn.setMaPhieuNhap(mapn);
+                pn = phieunhap.getpn(mapn);
+                double tongtien = phieunhap.gettonghd(ctphieunhap.getlist(mapn), mapn);
+                pn.setTongTien(tongtien);
+                phieunhap.updatetongtienpn(pn);
+                int tongsp = ctphieunhap.gettongsl(ctpn.getMaSanPham());
+                sp.setSoLuong(tongsp);
+                sanpham.updateslsanpham(sp);
+                resetall();
+            } catch (SQLException ex) {
+                Logger.getLogger(GUIPhieuNhap.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ParseException ex) {
+                Logger.getLogger(GUICTPhieuNhap.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        else{
+            JOptionPane.showMessageDialog(jPanel1, "Vui lòng chọn phiếu nhập trước khi xóa!");
+        }
+    }//GEN-LAST:event_jButton3ActionPerformed
+    public void resetall(){
+        jTextField8.setText("");
+       jTextField2.setText("");
+       jTextField4.setText("");
+       jTextField11.setText("");
+       jTextField3.setText("");
+       jTextField5.setText("");
+       jTextField6.setText("");
+       jTextField10.setText("");
+       jTextField9.setText("");
+       jComboBox2.setSelectedItem("Loại tìm kiếm");
+       jComboBox3.setSelectedItem("Loại");
+        try {
+            ctphieunhap.cbimport(jComboBox1, sanpham.getlist());
+            ctphieunhap.jtimport(jTable1, ctphieunhap.getlist(mapn));
+        } catch (SQLException ex) {
+            Logger.getLogger(GUICTPhieuNhap.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
+            Logger.getLogger(GUICTPhieuNhap.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+       resetall();
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        // TODO add your handling code here:
+        DTOPhieuNhap pn = new DTOPhieuNhap();
+        pn.setMaPhieuNhap(mapn);
+        try {
+            pn = phieunhap.getpn(mapn);
+            export(ctphieunhap.jtexport(jTable1),pn);
+        } catch (SQLException ex) {
+            Logger.getLogger(GUICTPhieuNhap.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
+            Logger.getLogger(GUICTPhieuNhap.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(GUICTPhieuNhap.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton6ActionPerformed
+    public void export(ArrayList<DTOCTPhieuNhap> list,DTOPhieuNhap pn) throws FileNotFoundException, IOException, IOException, SQLException{
+        XSSFWorkbook workbook = new XSSFWorkbook();
+        XSSFSheet sheet= workbook.createSheet("Phiếu nhập "+pn.getMaPhieuNhap());
+        XSSFRow row =null;
+        Cell cell=null;
+        
+        Font font = workbook.createFont();
+        font.setFontName("Times New Roman");
+        font.setFontHeightInPoints((short) 18);
+        font.setBold(true);
+
+        CellStyle style = workbook.createCellStyle();
+        style.setFont(font);
+        style.setAlignment(HorizontalAlignment.CENTER);
+        style.setFillBackgroundColor(IndexedColors.LIGHT_GREEN.getIndex());
+            // Apply style to the cell
+        
+        sheet.addMergedRegion(new CellRangeAddress(1,2,0,9));
+        row=sheet.createRow(1);
+        cell=row.createCell(0,CellType.STRING);
+        cell.setCellValue("Phiếu nhập "+pn.getMaPhieuNhap());
+        
+        cell.setCellStyle(style);
+        
+        CellStyle newcel =  workbook.createCellStyle();
+        newcel.setAlignment(HorizontalAlignment.CENTER);
+        
+        sheet.addMergedRegion(new CellRangeAddress(4,4,0,1));
+        row=sheet.createRow(4);
+        cell=row.createCell(0,CellType.STRING);
+        cell.setCellValue("Ngày nhập");
+        cell.setCellStyle(newcel);
+        sheet.addMergedRegion(new CellRangeAddress(4,4,2,5));
+        cell=row.createCell(2,CellType.STRING);
+        cell.setCellValue(pn.getNgayNhap().toString());
+        cell.setCellStyle(newcel);
+        
+        DTONhanVien nv = new DTONhanVien();
+        nv.setMaNhanVien(pn.getMaNhanVien());
+        nv = nhanvien.getnv(nv);
+        sheet.addMergedRegion(new CellRangeAddress(5,5,0,1));
+        row=sheet.createRow(5);
+        cell=row.createCell(0,CellType.STRING);
+        cell.setCellValue("Tên nhân viên");
+        cell.setCellStyle(newcel);
+        sheet.addMergedRegion(new CellRangeAddress(5,5,2,5));
+        cell=row.createCell(2,CellType.STRING);
+        cell.setCellValue(nv.getTenNhanVien());
+        cell.setCellStyle(newcel);
+        
+        DTONhaCungCap ncc = new DTONhaCungCap();
+        ncc.setMaNhaCungCap(pn.getMaNhaCungCap());
+        ncc = nhacungcap.getncc(ncc);
+        cell.setCellStyle(newcel);
+        
+        row=sheet.createRow(6);
+        sheet.addMergedRegion(new CellRangeAddress(6,6,0,1));
+        cell=row.createCell(0,CellType.STRING);
+        cell.setCellValue("Tên nhà cung cấp");
+        sheet.addMergedRegion(new CellRangeAddress(6,6,2,5));
+        cell=row.createCell(2,CellType.STRING);
+        cell.setCellValue(ncc.getTenNhaCungCap());
+        cell.setCellStyle(newcel);
+        
+        row=sheet.createRow(8);
+        sheet.addMergedRegion(new CellRangeAddress(8,8,0,1));
+        cell=row.createCell(0,CellType.STRING);
+        cell.setCellValue("STT");
+        cell.setCellStyle(newcel);
+        
+        sheet.addMergedRegion(new CellRangeAddress(8,8,2,5));
+        cell=row.createCell(2,CellType.STRING);
+        cell.setCellValue("Sản phẩm");
+        cell.setCellStyle(newcel);
+        
+        cell=row.createCell(6,CellType.STRING);
+        cell.setCellValue("Số lượng");
+        cell.setCellStyle(newcel);
+        
+        cell=row.createCell(7,CellType.STRING);
+        cell.setCellValue("Giá nhập");
+        cell.setCellStyle(newcel);
+        
+        sheet.addMergedRegion(new CellRangeAddress(8,8,8,9));
+        cell=row.createCell(8,CellType.STRING);
+        cell.setCellValue("Tổng tiền");
+        cell.setCellStyle(newcel);
+        double tongtien = 0;
+        for(int i=0; i<list.size(); i++)
+        {
+            //Modelbook book =arr.get(i);
+            row=sheet.createRow(9+i);
+            sheet.addMergedRegion(new CellRangeAddress(9+i,9+i,0,1));
+            cell=row.createCell(0,CellType.NUMERIC);
+            cell.setCellValue(i+1);
+            cell.setCellStyle(newcel);
+            
+            sheet.addMergedRegion(new CellRangeAddress(9+i,9+i,2,5));
+            cell=row.createCell(2,CellType.STRING);
+            DTOSanPham sp = new DTOSanPham();
+            sp.setMaSanPham(list.get(i).getMaSanPham());
+            sp = sanpham.getsp(sp);
+            cell.setCellValue(sp.getTenSanPham());
+            cell.setCellStyle(newcel);
+            
+            cell=row.createCell(6,CellType.STRING);
+            cell.setCellValue(list.get(i).getSoLuong());
+            cell.setCellStyle(newcel);
+            
+            cell=row.createCell(7,CellType.STRING);
+            cell.setCellValue(list.get(i).getDonGia());
+            cell.setCellStyle(newcel);
+            
+            sheet.addMergedRegion(new CellRangeAddress(9+i,9+i,8,9));
+            cell=row.createCell(8,CellType.STRING);
+            cell.setCellValue(list.get(i).getDonGia()*list.get(i).getSoLuong());       
+            tongtien += list.get(i).getDonGia()*list.get(i).getSoLuong();
+            cell.setCellStyle(newcel);
+        }
+        row=sheet.createRow(list.size()+10);
+        cell=row.createCell(7,CellType.STRING);
+        cell.setCellValue("Tổng tiền");
+        cell.setCellStyle(newcel);
+        sheet.addMergedRegion(new CellRangeAddress(list.size()+10,list.size()+10,8,9));
+        cell=row.createCell(8,CellType.STRING);
+        cell.setCellValue(tongtien);
+        cell.setCellStyle(newcel);
+        
+        File f = new File("D://phieunhap"+pn.getMaPhieuNhap()+".xlsx");
+        try 
+        {
+            FileOutputStream fis = new FileOutputStream(f);
+            workbook.write(fis);
+            fis.close();
+        }
+        catch (FileNotFoundException ex) {
+            ex.printStackTrace();
+       
+        }
+        catch (IOException ex)
+        {
+          ex.printStackTrace();
+        }
+        
+        
+        JOptionPane.showMessageDialog(this, "in thanh cong D:\\phieunhap"+pn.getMaPhieuNhap());
+        
+    }
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        // TODO add your handling code here:
+        
+        int select = jComboBox2.getSelectedIndex();
+        String item = jTextField6.getText().toString();
+        if(!item.isEmpty()){
+            try {
+                ArrayList<DTOCTPhieuNhap> list = ctphieunhap.jtexport(jTable1);
+                if(select == 1){
+                    ctphieunhap.jtimport(jTable1, ctphieunhap.searchtensp(list, item));
+                }
+                else if(select == 2){
+                    ctphieunhap.jtimport(jTable1, ctphieunhap.searchghichu(list, item));
+                }
+                else{
+                    JOptionPane.showMessageDialog(jPanel1, "Hãy chọn loại tìm kiếm!");
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(GUIPhieuNhap.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        else{
+            JOptionPane.showMessageDialog(jPanel1, "Nhập thông tin tìm kiếm!");
+        }
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        // TODO add your handling code here:
+        
+        int select = jComboBox3.getSelectedIndex();
+        String day2 = jTextField9.getText().toString();
+        String day1 = jTextField10.getText().toString();
+        if(!day1.isEmpty() && !day2.isEmpty()){
+            ArrayList<DTOCTPhieuNhap> list;
+            try {
+                list = ctphieunhap.jtexport(jTable1);
+                if(select == 1){
+                    ctphieunhap.jtimport(jTable1, ctphieunhap.searchdate(list,ctphieunhap.convertStringToDate(day1),ctphieunhap.convertStringToDate(day2)));
+                }
+                else if(select == 2){
+                    ctphieunhap.jtimport(jTable1, ctphieunhap.searchsl(list, Integer.parseInt(day1),Integer.parseInt(day2)));
+                }
+                else if(select == 3){
+                    ctphieunhap.jtimport(jTable1, ctphieunhap.searchsltk(list, Integer.parseInt(day1),Integer.parseInt(day2)));
+                }
+                else if(select == 4){
+                    ctphieunhap.jtimport(jTable1, ctphieunhap.searchmoney(list, Double.parseDouble(day1),Double.parseDouble(day2)));
+                }
+                else{
+                    JOptionPane.showMessageDialog(jPanel1, "Hãy chọn loại tìm kiếm!");
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(GUICTPhieuNhap.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        else{
+            JOptionPane.showMessageDialog(jPanel1, "Hãy nhập đầy đủ thông tin tìm kiếm!");
+        }
+    }//GEN-LAST:event_jButton7ActionPerformed
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        // TODO add your handling code here:
+        
+        int index = jTable1.getSelectedRow();
+        jTextField8.setText(jTable1.getValueAt(index, 0).toString());
+        jTextField2.setText(jTable1.getValueAt(index, 5).toString());
+        jTextField4.setText(jTable1.getValueAt(index, 2).toString());
+        jTextField11.setText(jTable1.getValueAt(index, 3).toString());
+        jTextField3.setText(jTable1.getValueAt(index, 4).toString());
+        if(jTable1.getValueAt(index, 6)!=null){
+            jTextField5.setText(jTable1.getValueAt(index, 6).toString());
+        }
+        jComboBox1.setSelectedItem(jTable1.getValueAt(index, 1).toString());
+    }//GEN-LAST:event_jTable1MouseClicked
+
+>>>>>>> Stashed changes
     /**
      * @param args the command line arguments
      */

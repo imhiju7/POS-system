@@ -94,6 +94,7 @@ public class DAOPhieuNhap {
         int row = list.size();
         return row;
     }
+<<<<<<< Updated upstream
     public Date getaDate(int mpn){
         ArrayList<DTOPhieuNhap> pnlist  = new ArrayList<>();
         Date adate = null;
@@ -104,4 +105,23 @@ public class DAOPhieuNhap {
         }
         return adate;
     }
+=======
+    
+    public boolean checkpn(DTOPhieuNhap i) throws SQLException, ParseException{
+        Connection con = Connect.connection();
+        String sql = "SELECT * FROM chitietphieunhap WHERE maPhieuNhap = ?";
+        PreparedStatement pst =  con.prepareStatement(sql);
+        pst.setInt(1, i.getMaPhieuNhap());
+        ResultSet rs = pst.executeQuery();
+        int count = 0;
+        while(rs.next()){
+           count++;
+        }
+        con.close();
+        if(count > 0) return false;
+        else return true;
+    }
+    
+    
+>>>>>>> Stashed changes
 }

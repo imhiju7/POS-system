@@ -75,9 +75,13 @@ public class DAOHoaDon {
         con.close();
         return rowaffect;
     }
+<<<<<<< Updated upstream
     public int rowcount() throws SQLException, ParseException{
         ArrayList<DTOHoaDon> list = getlist();
         int row = list.size();
         return row;
     }
+=======
+
+>>>>>>> Stashed changes
 }

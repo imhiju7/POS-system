@@ -34,7 +34,18 @@ public class GUITichDiem extends javax.swing.JFrame {
         this.setLocation(x, y);
         
     }
-
+    public void resetall(){
+        jTextField1.setText("");
+        jTextField2.setText("");
+        jTextField3.setText("");
+        try {
+            tichdiem.jtimport(jTable1, tichdiem.getlist());
+        } catch (SQLException ex) {
+            Logger.getLogger(GUITichDiem.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
+            Logger.getLogger(GUITichDiem.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -84,21 +95,30 @@ public class GUITichDiem extends javax.swing.JFrame {
         jPanel3.setBackground(new java.awt.Color(245, 232, 183));
         jPanel3.setPreferredSize(new java.awt.Dimension(600, 700));
 
+        jPanel4.setBackground(new java.awt.Color(245, 232, 183));
+
         jTextField1.setEditable(false);
         jTextField1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jTextField1.setText("ID");
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("ID");
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(0, 0, 0));
         jLabel3.setText("Mốc mua");
 
         jTextField2.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+<<<<<<< Updated upstream
         jLabel4.setText("Tiền");
+=======
+        jLabel4.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel4.setText("Điểm");
+>>>>>>> Stashed changes
 
         jTextField3.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 
@@ -135,6 +155,12 @@ public class GUITichDiem extends javax.swing.JFrame {
                 .addContainerGap(18, Short.MAX_VALUE))
         );
 
+<<<<<<< Updated upstream
+=======
+        jPanel5.setBackground(new java.awt.Color(245, 232, 183));
+
+        jButton1.setBackground(new java.awt.Color(161, 204, 209));
+>>>>>>> Stashed changes
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/SOURCE/Icon/add.png"))); // NOI18N
         jButton1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
@@ -217,6 +243,96 @@ public class GUITichDiem extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+<<<<<<< Updated upstream
+=======
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        // TODO add your handling code here:
+        int index = jTable1.getSelectedRow();
+        jTextField1.setText(jTable1.getValueAt(index, 0).toString());
+        jTextField2.setText(jTable1.getValueAt(index, 1).toString());
+        jTextField3.setText(jTable1.getValueAt(index, 2).toString());
+    }//GEN-LAST:event_jTable1MouseClicked
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+        resetall();
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        if(!jTextField2.getText().toString().isEmpty() && !jTextField3.getText().toString().isEmpty()){
+            DTOTichDiem td = new DTOTichDiem();
+            td.setTien(Double.parseDouble(jTextField2.getText().toString()));
+            td.setDiemTichLuy(Integer.parseInt(jTextField3.getText().toString()));
+            td.setIsHidden(0);
+            if(tichdiem.checkdiem(td.getDiemTichLuy(), td.getTien())){
+                try {
+                
+                    tichdiem.addtichdiem(td);
+                    JOptionPane.showMessageDialog(jPanel1, "Thêm thành công!");
+                    resetall();
+                } catch (SQLException ex) {
+                    Logger.getLogger(GUITichDiem.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            else{
+                JOptionPane.showMessageDialog(jPanel1, "Điểm tích lũy chưa phù hợp");
+            }
+        }
+        else{
+            JOptionPane.showMessageDialog(jPanel1, "Hãy nhập thông tin trước khi thêm!");
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        if(!jTextField2.getText().toString().isEmpty() && !jTextField3.getText().toString().isEmpty()){
+            DTOTichDiem td = new DTOTichDiem();
+            td.setMaTichDiem(Integer.parseInt(jTextField1.getText().toString()));
+            td.setTien(Double.parseDouble(jTextField2.getText().toString()));
+            td.setDiemTichLuy(Integer.parseInt(jTextField3.getText().toString()));
+            td.setIsHidden(0);
+            if(tichdiem.checkdiem(td.getDiemTichLuy(), td.getTien())){
+                try {
+                
+                    tichdiem.updatetichdiem(td);
+                    JOptionPane.showMessageDialog(jPanel1, "Sửa thành công!");
+                    resetall();
+                } catch (SQLException ex) {
+                    Logger.getLogger(GUITichDiem.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            else{
+                JOptionPane.showMessageDialog(jPanel1, "Điểm tích lũy chưa phù hợp");
+            }
+        }
+        else{
+            JOptionPane.showMessageDialog(jPanel1, "Hãy nhập thông tin trước khi thêm!");
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        if(!jTextField1.getText().toString().isEmpty()){
+             DTOTichDiem td = new DTOTichDiem();
+             td.setMaTichDiem(Integer.parseInt(jTextField1.getText().toString()));
+            try {
+                td = tichdiem.gettd(td);
+                td.setIsHidden(1);
+                JOptionPane.showMessageDialog(jPanel1, "Xóa thành công!");
+                tichdiem.updatetichdiem(td);
+                resetall();
+            } catch (SQLException ex) {
+                Logger.getLogger(GUITichDiem.class.getName()).log(Level.SEVERE, null, ex);
+            }
+             
+        }
+        else{
+            JOptionPane.showMessageDialog(jPanel1, "Chưa chọn mốc tích điểm để xóa!");
+        }
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+>>>>>>> Stashed changes
     /**
      * @param args the command line arguments
      */

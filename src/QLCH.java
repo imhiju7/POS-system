@@ -11,7 +11,11 @@ import java.text.ParseException;
  */
 public class QLCH {
     public static void main(String[] args) throws SQLException, ParseException{
+<<<<<<< Updated upstream
         //new GUIChucVu().setVisible(true);
         new Main(0).setVisible(true);
+=======
+       new GUIDangNhap().setVisible(true);
+>>>>>>> Stashed changes
     }
 }

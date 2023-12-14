@@ -83,15 +83,19 @@ public class GUIChucVu extends javax.swing.JFrame {
         jPanel3.setBackground(new java.awt.Color(245, 232, 183));
         jPanel3.setPreferredSize(new java.awt.Dimension(600, 700));
 
+        jPanel4.setBackground(new java.awt.Color(245, 232, 183));
+
         jTextField1.setEditable(false);
         jTextField1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jTextField1.setText("ID");
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("ID");
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(0, 0, 0));
         jLabel3.setText("Tên chức vụ");
 
         jTextField2.setHorizontalAlignment(javax.swing.JTextField.CENTER);
@@ -122,6 +126,8 @@ public class GUIChucVu extends javax.swing.JFrame {
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(16, Short.MAX_VALUE))
         );
+
+        jPanel5.setBackground(new java.awt.Color(245, 232, 183));
 
         jButton1.setBackground(new java.awt.Color(161, 204, 209));
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/SOURCE/Icon/add.png"))); // NOI18N

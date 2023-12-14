@@ -25,7 +25,11 @@ public class Menu extends PanelTransparent {
     public void addEventShowPopup(EventShowPopupMenu eventShowPopup) {
         this.eventShowPopup = eventShowPopup;
     }
+<<<<<<< Updated upstream
 
+=======
+    int ma;
+>>>>>>> Stashed changes
     private final MigLayout layout;
     private EventMenuSelected event;
     private EventShowPopupMenu eventShowPopup;
@@ -40,6 +44,40 @@ public class Menu extends PanelTransparent {
         layout = new MigLayout("wrap, fillx, insets 0", "[fill]", "[]0[]");
         panel.setLayout(layout);
         setTransparent(1f);
+<<<<<<< Updated upstream
+=======
+        ma = mcv;
+    }
+    public void initsubmenu(){
+        BUSGroup group = new BUSGroup();
+        BUSChucNang chucnang = new BUSChucNang();
+        BUSPhanQuyen phanquyen = new BUSPhanQuyen();
+        try {
+            ArrayList<DTOGroup> listgroup = group.getlist();
+            for(DTOGroup i: listgroup){
+                ArrayList<String> submenu = new ArrayList<>();
+                ArrayList<DTOChucNang> listcn = chucnang.getlistgroup(i.getMaGroup());
+                for(DTOChucNang a: listcn){
+                    if(!phanquyen.checkpq(ma, a.getMaChucNang())){
+                        submenu.add(a.getTenChucNang());
+                       
+                    }
+                }
+                if(!submenu.isEmpty()){
+                    addMenu(new ModelMenu(new ImageIcon(i.getIcon()), i.getTenGroup(), submenu.toArray(new String[0])));
+                }
+                else{}
+                listcn = new ArrayList<>();
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
+            Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+        
+>>>>>>> Stashed changes
     }
 
     public void initMenuItem(int menu) {
@@ -107,7 +145,7 @@ public class Menu extends PanelTransparent {
         panel = new javax.swing.JPanel();
         profile1 = new GUI.comp.Profile();
 
-        setBackground(new java.awt.Color(153, 0, 0));
+        setBackground(new java.awt.Color(255, 153, 0));
 
         sp.setBackground(new java.awt.Color(255, 153, 0));
         sp.setBorder(null);
@@ -128,7 +166,7 @@ public class Menu extends PanelTransparent {
 
         sp.setViewportView(panel);
 
-        profile1.setBackground(new java.awt.Color(204, 51, 0));
+        profile1.setBackground(new java.awt.Color(161, 204, 209));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);

@@ -83,15 +83,19 @@ public class GUIChucNang extends javax.swing.JFrame {
         jPanel3.setBackground(new java.awt.Color(245, 232, 183));
         jPanel3.setPreferredSize(new java.awt.Dimension(600, 700));
 
+        jPanel4.setBackground(new java.awt.Color(245, 232, 183));
+
         jTextField1.setEditable(false);
         jTextField1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jTextField1.setText("ID");
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("ID");
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(0, 0, 0));
         jLabel3.setText("Tên chức năng");
 
         jTextField2.setHorizontalAlignment(javax.swing.JTextField.CENTER);
@@ -123,6 +127,8 @@ public class GUIChucNang extends javax.swing.JFrame {
                 .addContainerGap(16, Short.MAX_VALUE))
         );
 
+        jPanel5.setBackground(new java.awt.Color(245, 232, 183));
+
         jButton1.setBackground(new java.awt.Color(161, 204, 209));
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/SOURCE/Icon/add.png"))); // NOI18N
         jButton1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -140,10 +146,23 @@ public class GUIChucNang extends javax.swing.JFrame {
         jButton4.setToolTipText("");
         jButton4.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
+<<<<<<< Updated upstream
         jButton5.setBackground(new java.awt.Color(161, 204, 209));
         jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/SOURCE/Icon/search.png"))); // NOI18N
         jButton5.setToolTipText("");
         jButton5.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+=======
+        jButton6.setBackground(new java.awt.Color(161, 204, 209));
+        jButton6.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jButton6.setForeground(new java.awt.Color(0, 0, 0));
+        jButton6.setText("Nhóm chức năng");
+        jButton6.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
+>>>>>>> Stashed changes
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -161,6 +180,11 @@ public class GUIChucNang extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+<<<<<<< Updated upstream
+=======
+                .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+>>>>>>> Stashed changes
                 .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(36, 36, 36))
         );
@@ -169,6 +193,7 @@ public class GUIChucNang extends javax.swing.JFrame {
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addGap(17, 17, 17)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+<<<<<<< Updated upstream
                     .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, 46, Short.MAX_VALUE)
                     .addComponent(jTextField3, javax.swing.GroupLayout.Alignment.TRAILING)
@@ -176,6 +201,14 @@ public class GUIChucNang extends javax.swing.JFrame {
                     .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(14, Short.MAX_VALUE))
+=======
+                    .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, 46, Short.MAX_VALUE)
+                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, 46, Short.MAX_VALUE)
+                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(12, Short.MAX_VALUE))
+>>>>>>> Stashed changes
         );
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
@@ -239,6 +272,106 @@ public class GUIChucNang extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+<<<<<<< Updated upstream
+=======
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        // TODO add your handling code here:
+        int index = jTable1.getSelectedRow();
+        jComboBox1.setSelectedItem(jTable1.getValueAt(index, 2).toString());
+        jTextField2.setText(jTable1.getValueAt(index, 1).toString());
+        jTextField1.setText(jTable1.getValueAt(index, 0).toString());
+    }//GEN-LAST:event_jTable1MouseClicked
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        if(!jTextField2.getText().isEmpty() && !jComboBox1.getSelectedItem().equals("Nhóm chức năng")){
+            try {
+                if(chucnang.checktencn(jTextField2.getText().toString())){
+                    DTOChucNang cv = new DTOChucNang();
+                    cv.setTenChucNang(jTextField2.getText().toString());
+                    DTOGroup gr = new DTOGroup();
+                    gr.setTenGroup(jComboBox1.getSelectedItem().toString());
+                    gr = group.getgrbyten(gr);
+                    cv.setMaGroup(gr.getMaGroup());
+                    cv.setIsHidden(0);
+                    chucnang.addchucnang(cv);
+                    JOptionPane.showMessageDialog(jPanel1, "Thêm thành công!");
+                    resetall();
+                }
+                else{
+                    JOptionPane.showMessageDialog(jPanel1, "Chức vụ hiện đã có!");
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(GUIChucNang.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ParseException ex) {
+                Logger.getLogger(GUIChucNang.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        else{
+            JOptionPane.showMessageDialog(jPanel1, "Chưa nhập thông tin để thêm!");
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        if(!jTextField1.getText().isEmpty()){
+            if(!jTextField2.getText().isEmpty()){
+            try {
+                if(chucnang.checktencnedit(jTextField2.getText().toString(),Integer.parseInt(jTextField1.getText().toString()))){
+                    DTOChucNang cv = new DTOChucNang();
+                    cv.setMaChucNang(Integer.parseInt(jTextField1.getText().toString()));
+                    cv = chucnang.getcn(cv);
+                    cv.setTenChucNang(jTextField2.getText().toString());
+                    chucnang.updatechucnang(cv);  
+                    JOptionPane.showMessageDialog(jPanel1, "Sửa thành công!");
+                    resetall();
+                }
+                else{
+                    JOptionPane.showMessageDialog(jPanel1, "Chức năng hiện đã có!");
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(GUIChucNang.class.getName()).log(Level.SEVERE, null, ex);
+            }   catch (ParseException ex) {
+                    Logger.getLogger(GUIChucNang.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            else{
+                JOptionPane.showMessageDialog(jPanel1, "Chưa nhập thông tin để sửa!");
+            }
+        }
+        else{
+            JOptionPane.showMessageDialog(jPanel1, "Chưa chọn chức năng để sửa!");
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        if(!jTextField1.getText().isEmpty()){
+                DTOChucNang cv = new DTOChucNang();
+                cv.setMaChucNang(Integer.parseInt(jTextField1.getText().toString()));
+                try {
+                    cv = chucnang.getcn(cv);
+                    cv.setTenChucNang(jTextField2.getText().toString());
+                    cv.setIsHidden(1);
+                    chucnang.updatechucnang(cv);
+                    JOptionPane.showMessageDialog(jPanel1, "Xóa thành công!");
+                    resetall();
+                } catch (SQLException ex) {
+                    Logger.getLogger(GUIChucVu.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (ParseException ex) {
+                Logger.getLogger(GUIChucNang.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }else{
+            JOptionPane.showMessageDialog(jPanel1, "Chưa chọn chức vụ để xóa!");
+        }
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        // TODO add your handling code here:
+        new GUIGroup().setVisible(true);
+    }//GEN-LAST:event_jButton6ActionPerformed
+
+>>>>>>> Stashed changes
     /**
      * @param args the command line arguments
      */

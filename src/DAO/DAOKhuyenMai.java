@@ -18,9 +18,55 @@ import java.util.ArrayList;
  * @author Hieu PC
  */
 public class DAOKhuyenMai {
+<<<<<<< Updated upstream
     public ArrayList<DTOKhuyenMai> getlist() throws SQLException, ParseException{
         Connection con = Connect.connection();
         String sql = "SELECT * FROM khuyenmai";
+=======
+    public DTOKhuyenMai getkm(DTOKhuyenMai i) throws SQLException{
+        Connection con = Connect.connection();
+        String sql = "SELECT * FROM khuyenmai WHERE maKhuyenMai = ?";
+        PreparedStatement pst =  con.prepareStatement(sql);
+        pst.setInt(1, i.getMaKhuyenMai());
+        ResultSet rs = pst.executeQuery();
+        DTOKhuyenMai km = new DTOKhuyenMai();
+        while(rs.next()){
+            km.setMaKhuyenMai(rs.getInt("maKhuyenMai"));
+            km.setTenKhuyenMai(rs.getString("tenKhuyenMai"));
+            km.setNgayBatDau(rs.getDate("ngayBatDau"));
+            km.setNgayHetHan(rs.getDate("ngayHetHan"));
+            km.setPhanTram(rs.getInt("phanTram"));
+            km.setSoLuong(rs.getInt("soLuong"));
+            km.setSoLuongDaDung(rs.getInt("soLuongDaDung"));
+            km.setIshidden(rs.getInt("ishidden"));
+        }
+        con.close();
+        return km;
+    }
+    public DTOKhuyenMai getkmbyname(DTOKhuyenMai i) throws SQLException{
+        Connection con = Connect.connection();
+        String sql = "SELECT * FROM khuyenmai WHERE tenKhuyenMai = ? and ngayHetHan > NOW()";
+        PreparedStatement pst =  con.prepareStatement(sql);
+        pst.setString(1, i.getTenKhuyenMai());
+        ResultSet rs = pst.executeQuery();
+        DTOKhuyenMai km = new DTOKhuyenMai();
+        while(rs.next()){
+            km.setMaKhuyenMai(rs.getInt("maKhuyenMai"));
+            km.setTenKhuyenMai(rs.getString("tenKhuyenMai"));
+            km.setNgayBatDau(rs.getDate("ngayBatDau"));
+            km.setNgayHetHan(rs.getDate("ngayHetHan"));
+            km.setPhanTram(rs.getInt("phanTram"));
+            km.setSoLuong(rs.getInt("soLuong"));
+            km.setSoLuongDaDung(rs.getInt("soLuongDaDung"));
+            km.setIshidden(rs.getInt("ishidden"));
+        }
+        con.close();
+        return km;
+    }
+    public ArrayList<DTOKhuyenMai> getlist() throws SQLException, ParseException{
+        Connection con = Connect.connection();
+        String sql = "SELECT * FROM khuyenmai WHERE ishidden = 0 and soLuong > soLuongDaDung";
+>>>>>>> Stashed changes
         PreparedStatement pst =  con.prepareStatement(sql);
         ResultSet rs = pst.executeQuery();
         ArrayList<DTOKhuyenMai> list = new ArrayList<>();
@@ -32,6 +78,7 @@ public class DAOKhuyenMai {
             km.setNgayHetHan(rs.getDate("ngayHetHan"));
             km.setPhanTram(rs.getInt("phanTram"));
             km.setSoLuong(rs.getInt("soLuong"));
+            km.setSoLuongDaDung(rs.getInt("soLuongDaDung"));
             km.setIshidden(rs.getInt("ishidden"));
             km.setIsdelete(rs.getInt("isdelete"));
             list.add(km);

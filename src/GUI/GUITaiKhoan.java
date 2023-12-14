@@ -169,8 +169,10 @@ public class GUITaiKhoan extends javax.swing.JPanel {
 
         jPanel4.add(jPanel5, java.awt.BorderLayout.WEST);
 
-        jPanel6.setBackground(new java.awt.Color(255, 255, 153));
+        jPanel6.setBackground(new java.awt.Color(245, 232, 183));
         jPanel6.setPreferredSize(new java.awt.Dimension(500, 200));
+
+        jPanel7.setBackground(new java.awt.Color(245, 232, 183));
 
         jButton1.setBackground(new java.awt.Color(161, 204, 209));
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/SOURCE/Icon/add.png"))); // NOI18N
@@ -188,6 +190,14 @@ public class GUITaiKhoan extends javax.swing.JPanel {
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/SOURCE/Icon/reset.png"))); // NOI18N
         jButton4.setToolTipText("");
         jButton4.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+<<<<<<< Updated upstream
+=======
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+>>>>>>> Stashed changes
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
@@ -215,6 +225,8 @@ public class GUITaiKhoan extends javax.swing.JPanel {
                     .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
+
+        jPanel8.setBackground(new java.awt.Color(245, 232, 183));
 
         jButton5.setBackground(new java.awt.Color(161, 204, 209));
         jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/SOURCE/Icon/search.png"))); // NOI18N
@@ -249,6 +261,7 @@ public class GUITaiKhoan extends javax.swing.JPanel {
 
         jPanel9.setLayout(new java.awt.BorderLayout());
 
+        jPanel10.setBackground(new java.awt.Color(245, 232, 183));
         jPanel10.setPreferredSize(new java.awt.Dimension(190, 39));
 
         javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
@@ -270,6 +283,8 @@ public class GUITaiKhoan extends javax.swing.JPanel {
 
         jPanel9.add(jPanel10, java.awt.BorderLayout.WEST);
 
+        jPanel11.setBackground(new java.awt.Color(245, 232, 183));
+        jPanel11.setForeground(new java.awt.Color(60, 63, 65));
         jPanel11.setPreferredSize(new java.awt.Dimension(190, 39));
 
         javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
@@ -291,6 +306,7 @@ public class GUITaiKhoan extends javax.swing.JPanel {
 
         jPanel9.add(jPanel11, java.awt.BorderLayout.CENTER);
 
+        jPanel12.setBackground(new java.awt.Color(245, 232, 183));
         jPanel12.setPreferredSize(new java.awt.Dimension(120, 39));
 
         jButton7.setBackground(new java.awt.Color(161, 204, 209));
@@ -375,7 +391,7 @@ public class GUITaiKhoan extends javax.swing.JPanel {
                 .addContainerGap(27, Short.MAX_VALUE))
         );
 
-        jPanel1.add(jPanel3, java.awt.BorderLayout.PAGE_END);
+        jPanel1.add(jPanel3, java.awt.BorderLayout.LINE_END);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -399,6 +415,250 @@ public class GUITaiKhoan extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+<<<<<<< Updated upstream
+=======
+    private void jCheckBox1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jCheckBox1MouseClicked
+        // TODO add your handling code here:
+        cbcheck();
+    }//GEN-LAST:event_jCheckBox1MouseClicked
+
+    private void jComboBox1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox1ItemStateChanged
+        // TODO add your handling code here:
+        DTONhanVien nv = new DTONhanVien();
+        if(!jCheckBox1.isSelected()){
+            if(jComboBox1.getSelectedItem() != null){
+                nv.setSDT(jComboBox1.getSelectedItem().toString());
+                try {
+                    nv = nhanvien.getnvbysdt(nv);
+                    DTOTaiKhoan tk = new DTOTaiKhoan();
+                    tk.setMaNhanVien(nv.getMaNhanVien());
+                    tk = taikhoan.gettk(tk);
+                    jTextField5.setText(nv.getEmail());
+                    jTextField7.setText(nv.getTenNhanVien());
+                    jTextField3.setText(tk.getTenDangNhap());
+                    jTextField4.setText(tk.getMatKhau());
+                    if(tk.getNgayTao() !=null){
+                        jTextField2.setText(tk.getNgayTao().toString());
+                    }
+                   // jTextField2.setText(tk.getNgayTao().toString());
+                    if(tk.getIsblock()==1){
+                        jCheckBox2.setSelected(true);
+                    }
+                    else{
+                        jCheckBox2.setSelected(false);
+                    }
+                } catch (SQLException ex) {
+                    Logger.getLogger(GUITaiKhoan.class.getName()).log(Level.SEVERE, null, ex);
+                }     
+            }
+        }
+        else{
+            if(jComboBox1.getSelectedItem() != null){
+                nv.setSDT(jComboBox1.getSelectedItem().toString());
+                try {
+                    nv = nhanvien.getnvbysdt(nv);
+                    jTextField7.setText(nv.getEmail());
+                    jTextField5.setText(nv.getTenNhanVien());
+                    jTextField3.setText("");
+                    jTextField4.setText("");
+                    jTextField2.setText("");
+                    
+                } catch (SQLException ex) {
+                    Logger.getLogger(GUITaiKhoan.class.getName()).log(Level.SEVERE, null, ex);
+                }     
+            }
+        }
+    }//GEN-LAST:event_jComboBox1ItemStateChanged
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        // TODO add your handling code here:
+        int index = jTable1.getSelectedRow();
+        jTextField3.setText(jTable1.getValueAt(index, 3).toString());
+        tendn=jTable1.getValueAt(index, 3).toString();
+        jCheckBox1.setSelected(false);
+        cbcheck();
+        jComboBox1.setSelectedItem(jTable1.getValueAt(index, 1).toString());
+        jTextField4.setText(jTable1.getValueAt(index, 4).toString());
+        jTextField2.setText(jTable1.getValueAt(index, 5).toString());
+        jTextField7.setText(jTable1.getValueAt(index, 2).toString());
+        jTextField5.setText(jTable1.getValueAt(index, 0).toString());
+        if(Integer.parseInt(jTable1.getValueAt(index, 6).toString()) == 1){
+            jCheckBox2.setSelected(true);
+        }
+        else{
+            jCheckBox2.setSelected(false);
+        }
+    }//GEN-LAST:event_jTable1MouseClicked
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+        resetall();
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        // TODO add your handling code here:
+        int select = jComboBox2.getSelectedIndex();
+        String item = jTextField6.getText().toString();
+        if(!item.isEmpty()){
+            try {
+                ArrayList<DTOTaiKhoan> list = taikhoan.jtexport(jTable1);
+                if(select == 1){
+                    taikhoan.jtimport(jTable1, taikhoan.searchten(list, item));
+                }
+                else if(select == 2){
+                    taikhoan.jtimport(jTable1, taikhoan.searchsdt(list, item));
+                }
+                else if(select == 3){
+                    taikhoan.jtimport(jTable1, taikhoan.searchemail(list, item));
+                }
+                else if(select == 4){
+                    taikhoan.jtimport(jTable1, taikhoan.searchblock(list, Integer.parseInt(item)));
+                }
+                else{
+                    JOptionPane.showMessageDialog(jPanel1, "Hãy chọn loại tìm kiếm!");
+                }
+            } catch (SQLException ex) {
+            Logger.getLogger(GUITaiKhoan.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        else{
+            JOptionPane.showMessageDialog(jPanel1, "Nhập thông tin tìm kiếm!");
+        }
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        // TODO add your handling code here:
+        String day1 = jTextField10.getText().toString();
+        String day2 = jTextField9.getText().toString();
+        if(!day1.isEmpty() && !day2.isEmpty()){
+            ArrayList<DTOTaiKhoan> list;
+            try {
+                list  = taikhoan.jtexport(jTable1);
+                taikhoan.jtimport(jTable1, taikhoan.searchdate(list,taikhoan.convertStringToDate(day1),taikhoan.convertStringToDate(day2)));
+            } catch (SQLException ex) {
+                Logger.getLogger(GUITaiKhoan.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        else{
+            JOptionPane.showMessageDialog(jPanel1, "Bạn chưa nhập khoảng điếm!");
+        }
+    }//GEN-LAST:event_jButton7ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+            try {
+                if(taikhoan.checktendn(jTextField3.getText().toString()) && jCheckBox1.isSelected()){
+                    DTOTaiKhoan tk = new DTOTaiKhoan();
+                    tk.setTenDangNhap(jTextField3.getText().toString());
+                    if(jCheckBox2.isSelected()){
+                        tk.setIsblock(1);
+                    }
+                    else{
+                        tk.setIsblock(0);
+                    }
+                    tk.setMatKhau(jTextField4.getText().toString());
+                    tk.setNgayTao(new Date());
+                    DTONhanVien a = new DTONhanVien();
+                    a.setSDT(jComboBox1.getSelectedItem().toString());
+                    a = nhanvien.getnvbysdt(a);
+                    tk.setMaNhanVien(a.getMaNhanVien());
+                    taikhoan.addtaikhoan(tk);
+                    JOptionPane.showMessageDialog(jPanel1, "Thêm thành công!");
+                    resetall();
+                }
+                else{
+                     JOptionPane.showMessageDialog(jPanel1, "Tên đăng nhập hiện đã có người sử dụng!");
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(GUITaiKhoan.class.getName()).log(Level.SEVERE, null, ex);
+            }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        if(!jTextField5.getText().isEmpty()){
+            if(!jCheckBox1.isSelected()){
+                try {
+                    if(taikhoan.checktendnedit(jTextField3.getText().toString())&& tendn.equals(jTextField3.getText().toString())){
+                        DTOTaiKhoan tk = new DTOTaiKhoan();
+                        DTONhanVien a = new DTONhanVien();
+                        a.setSDT(jComboBox1.getSelectedItem().toString());
+                        a = nhanvien.getnvbysdt(a);
+                        tk.setMaNhanVien(a.getMaNhanVien());
+                        tk = taikhoan.gettk(tk);
+                        if(jCheckBox2.isSelected()){
+                            tk.setIsblock(1);
+                        }
+                        else{
+                            tk.setIsblock(0);
+                        }
+                        tk.setTenDangNhap(jTextField3.getText().toString());
+                        tk.setMatKhau(jTextField4.getText().toString());
+                        taikhoan.updatetaikhoan(tk);
+                        JOptionPane.showMessageDialog(jPanel1, "Sửa thành công!");
+                        resetall();
+                    }
+                    else{
+                        JOptionPane.showMessageDialog(jPanel1, "Nhân viên này hiện đã có tài khoản");
+                    }
+                } catch (SQLException ex) {
+                    Logger.getLogger(GUITaiKhoan.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            else{
+                JOptionPane.showMessageDialog(jPanel1, "Nhân viên hiện chưa có tài khoản nên không thể sửa!");
+            }
+        }
+        else{
+            JOptionPane.showMessageDialog(jPanel1, "Bạn chưa chọn tài khoản cần sửa!");
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        if(!jTextField5.getText().isEmpty()){
+            DTOTaiKhoan tk = new DTOTaiKhoan();
+            tk.setTenDangNhap(jTextField3.getText().toString());
+            tk = taikhoan.gettk(tk);
+            DTONhanVien nv = new DTONhanVien();
+            nv.setMaNhanVien(tk.getMaNhanVien());
+            try {
+                nv = nhanvien.getnv(nv);
+                if(nv.getMaChucVu()!=1){
+                    taikhoan.deletetaikhoan(tk);
+                    JOptionPane.showMessageDialog(jPanel1, "Xóa thành công!");
+                    resetall();
+                }
+                else{
+                    JOptionPane.showMessageDialog(jPanel1, "Không thể xóa tài khoản này!");
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(GUITaiKhoan.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        else{
+            JOptionPane.showMessageDialog(jPanel1, "Bạn chưa chọn tài khoản cần xóa!");
+        }
+    }//GEN-LAST:event_jButton3ActionPerformed
+    public void cbcheck(){
+        if(jCheckBox1.isSelected()){
+            try {
+                taikhoan.cbimchtkport(jComboBox1, taikhoan.getlistsdtnvchcotk());
+            } catch (SQLException ex) {
+                Logger.getLogger(GUITaiKhoan.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        else{
+            try {
+                taikhoan.cbimport(jComboBox1, taikhoan.getlist());
+            } catch (SQLException ex) {
+                Logger.getLogger(GUITaiKhoan.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ParseException ex) {
+                Logger.getLogger(GUITaiKhoan.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+>>>>>>> Stashed changes
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
