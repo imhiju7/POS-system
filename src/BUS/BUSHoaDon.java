@@ -3,30 +3,44 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package BUS;
+
 import DAO.*;
 import DTO.*;
 import java.sql.SQLException;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.Period;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Date;
+
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JComboBox;
 
 /**
  *
  * @author Hieu PC
  */
 public class BUSHoaDon {
+
     DAOHoaDon DAO = new DAOHoaDon();
-    public ArrayList<DTOHoaDon> getlist() throws SQLException, ParseException{
+    DAOKhachHang DAOkh = new DAOKhachHang();
+    DAONhanVien DAOnv = new DAONhanVien();
+    DAOKhuyenMai DAOkm = new DAOKhuyenMai();
+    DAOTichDiem DAOtd = new DAOTichDiem();
+    public ArrayList<DTOHoaDon> getlist() throws SQLException, ParseException {
         return DAO.getlist();
     }
-    public int addhoadon(DTOHoaDon i) throws SQLException{
+
+    public int addhoadon(DTOHoaDon i) throws SQLException {
         return DAO.addhoadon(i);
     }
-<<<<<<< Updated upstream
-    public int updateHoaDon(DTOHoaDon i) throws SQLException{
-        return DAO.updatehoadon(i);
-    }
-    
-=======
     public int addhdnokmkh(DTOHoaDon i) throws SQLException{
         return DAO.addhdnokhkm(i);
     }
@@ -163,5 +177,4 @@ public class BUSHoaDon {
         return result;
     }
 
->>>>>>> Stashed changes
 }

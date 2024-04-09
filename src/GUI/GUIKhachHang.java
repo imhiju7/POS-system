@@ -3,7 +3,14 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
 package GUI;
-
+import BUS.*;
+import DTO.*;
+import java.sql.SQLException;
+import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 /**
  *
  * @author Hieu PC
@@ -13,10 +20,32 @@ public class GUIKhachHang extends javax.swing.JPanel {
     /**
      * Creates new form GUIKhachHang
      */
+    BUSKhachHang khachhang = new BUSKhachHang();
     public GUIKhachHang() {
         initComponents();
+        resetall();
     }
-
+    public void resetall(){
+        
+        
+        jTextField3.setText("");
+        jTextField4.setText("");
+        jTextField5.setText("");
+        jTextField7.setText("");
+        jTextField2.setText("");
+        jTextField6.setText("");
+        jTextField11.setText("");
+        jTextField12.setText("");
+        jComboBox2.setSelectedItem("Loại tìm kiếm");
+        try {
+            khachhang.jtimport(jTable1, khachhang.getlist());
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(GUIKhachHang.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
+            Logger.getLogger(GUIKhachHang.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -26,8 +55,6 @@ public class GUIKhachHang extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-<<<<<<< Updated upstream
-=======
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -427,20 +454,195 @@ public class GUIKhachHang extends javax.swing.JPanel {
 
         jPanel1.add(jPanel3, java.awt.BorderLayout.PAGE_END);
 
->>>>>>> Stashed changes
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 1152, Short.MAX_VALUE)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 786, Short.MAX_VALUE)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        // TODO add your handling code here:
+        int index = jTable1.getSelectedRow();
+        jTextField3.setText(jTable1.getValueAt(index, 0).toString());
+        jTextField4.setText(jTable1.getValueAt(index, 1).toString());
+        jTextField5.setText(jTable1.getValueAt(index, 2).toString());
+        jTextField7.setText(jTable1.getValueAt(index, 3).toString());
+        jTextField2.setText(jTable1.getValueAt(index, 4).toString());
+    }//GEN-LAST:event_jTable1MouseClicked
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        if(!jTextField4.getText().isEmpty() && !jTextField5.getText().isEmpty()){
+            try {
+                if(khachhang.isValidVietnamesePhoneNumber(jTextField5.getText().toString()) && khachhang.checkphone(jTextField5.getText().toString())){
+                    DTOKhachHang kh= new DTOKhachHang();
+                    kh.setTenKhachHang(jTextField4.getText().toString());
+                    kh.setSDT(jTextField5.getText().toString());
+                    kh.setDiemTichLuy(0);
+                    kh.setMaUuDai(1);
+                    try {
+                        khachhang.addkhachhang(kh);
+                        JOptionPane.showMessageDialog(jPanel1, "Thêm thành công!");
+                        resetall();
+                    } catch (SQLException ex) {
+                        Logger.getLogger(GUIKhachHang.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+                else{
+                    JOptionPane.showMessageDialog(jPanel1, "Số điện thoại không hợp lệ hoặc đã có người sử dụng!");
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(GUIKhachHang.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        else{
+            JOptionPane.showMessageDialog(jPanel1, "Chưa nhập đầy đủ thông tin để thêm!");
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        if(!jTextField3.getText().isEmpty()){
+            if(!jTextField4.getText().isEmpty() && !jTextField5.getText().isEmpty()){
+            try {
+                if(khachhang.isValidVietnamesePhoneNumber(jTextField5.getText().toString()) && khachhang.checkphoneedit(jTextField5.getText().toString(),Integer.parseInt(jTextField3.getText().toString()))){
+                    DTOKhachHang kh= new DTOKhachHang();
+                    kh.setMaKhachHang(Integer.parseInt(jTextField3.getText().toString()));
+                    kh.setTenKhachHang(jTextField4.getText().toString());
+                    kh.setSDT(jTextField5.getText().toString());
+                    try {
+                        khachhang.updatekhachhang(kh);
+                        JOptionPane.showMessageDialog(jPanel1, "sửa thành công!");
+                        resetall();
+                    } catch (SQLException ex) {
+                        Logger.getLogger(GUIKhachHang.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+                else{
+                    JOptionPane.showMessageDialog(jPanel1, "Số điện thoại không hợp lệ hoặc đã có người sử dụng!");
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(GUIKhachHang.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            }
+            else{
+            JOptionPane.showMessageDialog(jPanel1, "Chưa nhập đầy đủ thông tin để thêm!");
+            }
+        }
+        else{
+            JOptionPane.showMessageDialog(jPanel1, "Chưa chọn khách hàng để sửa!");
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+        resetall();
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        // TODO add your handling code here:
+        int select = jComboBox2.getSelectedIndex();
+        String item = jTextField6.getText().toString();
+        if(!item.isEmpty()){
+            try {
+                ArrayList<DTOKhachHang> list = khachhang.jtexport(jTable1);
+                if(select == 1){
+                    khachhang.jtimport(jTable1, khachhang.searchten(list, item));
+                }
+                else if(select == 2){
+                    khachhang.jtimport(jTable1, khachhang.searchsdt(list, item));
+                }
+                else{
+                    JOptionPane.showMessageDialog(jPanel1, "Hãy chọn loại tìm kiếm!");
+                }
+            } catch (SQLException ex) {
+            Logger.getLogger(GUIKhachHang.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ParseException ex) {
+                Logger.getLogger(GUIKhachHang.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        else{
+            JOptionPane.showMessageDialog(jPanel1, "Nhập thông tin tìm kiếm!");
+        }
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+        // TODO add your handling code here:
+        String day1 = jTextField11.getText().toString();
+        String day2 = jTextField12.getText().toString();
+        if(!day1.isEmpty() && !day2.isEmpty()){
+            ArrayList<DTOKhachHang> list;
+            try {
+                list  = khachhang.jtexport(jTable1);
+                khachhang.jtimport(jTable1, khachhang.searchdiem(list,Integer.parseInt(day1),Integer.parseInt(day2)));
+            } catch (SQLException ex) {
+                Logger.getLogger(GUIKhachHang.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ParseException ex) {
+                Logger.getLogger(GUIKhachHang.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        else{
+            JOptionPane.showMessageDialog(jPanel1, "Bạn chưa nhập khoảng điếm!");
+        }
+    }//GEN-LAST:event_jButton8ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        // TODO add your handling code here:
+        new GUIUuDai().setVisible(true);
+    }//GEN-LAST:event_jButton6ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
+    private javax.swing.JButton jButton8;
+    private javax.swing.JComboBox<String> jComboBox2;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel13;
+    private javax.swing.JPanel jPanel14;
+    private javax.swing.JPanel jPanel15;
+    private javax.swing.JPanel jPanel16;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
+    private javax.swing.JPanel jPanel8;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTable1;
+    private javax.swing.JTextField jTextField11;
+    private javax.swing.JTextField jTextField12;
+    private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextField jTextField3;
+    private javax.swing.JTextField jTextField4;
+    private javax.swing.JTextField jTextField5;
+    private javax.swing.JTextField jTextField6;
+    private javax.swing.JTextField jTextField7;
     // End of variables declaration//GEN-END:variables
 }

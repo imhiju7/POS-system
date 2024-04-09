@@ -1,8 +1,26 @@
-/*
+   /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
 package GUI;
+import BUS.*;
+import DTO.DTONhanVien;
+import com.raven.chart.Chart;
+import com.raven.chart.ModelChart;
+import java.awt.Color;
+import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.ZoneId;
+import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Calendar;
+import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -13,10 +31,10 @@ public class GUIThongKe extends javax.swing.JPanel {
     /**
      * Creates new form GUIThongKe
      */
+    BUSThongKe thongke = new BUSThongKe();
+    Date day = thongke.convertStringToDate("01-01-2020");
     public GUIThongKe() {
         initComponents();
-<<<<<<< Updated upstream
-=======
         chart1.addLegend("Tiền bán", new Color(245, 189, 135));
         chart1.addLegend("Tiền nhập hàng", new Color(135, 189, 245));
         chart1.addLegend("Lợi nhuận", new Color(139, 229, 222));
@@ -25,11 +43,96 @@ public class GUIThongKe extends javax.swing.JPanel {
         Date day2 = calht.getTime();
         
         resetall();
-        jTextField6.setText(Double.toString(thongke.gettongdt(day,day2)-thongke.gettongtn(day,day2)+6540000));
+        jTextField6.setText(Double.toString(thongke.gettongdt(day,day2)-thongke.gettongtn(day,day2)));
         
->>>>>>> Stashed changes
     }
+    public void resetall(){
+        Calendar calht = Calendar.getInstance();
+        Date day2 = calht.getTime();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String d2 = sdf.format(day2);
+        Calendar calqk = Calendar.getInstance();
+        calqk.add(Calendar.MONTH, -6);
+        Date day1 = calqk.getTime();
+        String d1 = sdf.format(day1);
+        d1 = d1.substring(0, 7)+"-01";
+        d2 = d2.substring(0, 7)+"-01";
+        day2 = thongke.convertStringToDate(d2);
+        day1 = thongke.convertStringToDate(d1);
+        chart1.clear();
+        chart1.start();
+        monthsplit(chart1,day1,day2);
+    }
+    public void yearsplit(Chart chart,Date day1, Date day2){
+        LocalDate localDate1 = day1.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        LocalDate localDate2 = day2.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 
+        // Tính số tháng giữa hai ngày
+        Period period = Period.between(localDate1, localDate2);
+        int year = period.getYears();
+        for(int i = 0; i < year;i++){
+            Calendar calday  = Calendar.getInstance();
+            calday.setTime(day1);
+            calday.add(Calendar.YEAR, 1);
+            Date labelday = calday.getTime();
+            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+            String label = sdf.format(day1);
+            label = label.substring(6 );
+            importchart(chart,day1,labelday,label);
+            day1 = calday.getTime();
+        }
+    }
+    public void monthsplit(Chart chart,Date day1, Date day2){
+        LocalDate localDate1 = day1.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        LocalDate localDate2 = day2.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+
+        // Tính số tháng giữa hai ngày
+        Period period = Period.between(localDate1, localDate2);
+        int month = period.getMonths();
+        for(int i = 0; i < month+1;i++){
+            Calendar calday  = Calendar.getInstance();
+            calday.setTime(day1);
+            calday.add(Calendar.MONTH, 1);
+            Date labelday = calday.getTime();
+            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+            String label = sdf.format(day1);
+            label = label.substring(3,5 );
+            importchart(chart,day1,labelday,label);
+            day1 = calday.getTime();
+        }
+    }
+    public void daysplit(Chart chart,Date day1, Date day2){
+        long mili = day2.getTime() - day1.getTime();
+        long day = TimeUnit.DAYS.convert(mili, TimeUnit.MILLISECONDS);
+
+        Calendar calday1  = Calendar.getInstance();
+        calday1.setTime(day1);
+        calday1.add(Calendar.DAY_OF_MONTH,-1);
+        day1 = calday1.getTime();
+        
+        for(long i = 0; i < day+1;i++ ){
+            Calendar calday  = Calendar.getInstance();
+            calday.setTime(day1);
+            calday.add(Calendar.DAY_OF_MONTH, 1);
+            Date labelday = calday.getTime();
+            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+            String label = sdf.format(day1);
+            label = label.substring(0,5 );
+            importchart(chart,day1,labelday,label);
+            day1 = calday.getTime();
+        }
+    }
+    public void importchart(Chart chart,Date day1,Date day2,String label){
+        double a = thongke.gettongdt(day1, day2);
+        double b = thongke.gettongtn(day1, day2);
+        double c = a  - b;
+        if(c > 0){
+            chart.addData(new ModelChart(label, new double[]{a, b, c,0}));
+        }
+        else{
+            chart.addData(new ModelChart(label, new double[]{a, b, 0,-1*c}));
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -39,8 +142,6 @@ public class GUIThongKe extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-<<<<<<< Updated upstream
-=======
         dateChooser1 = new com.raven.datechooser.DateChooser();
         dateChooser2 = new com.raven.datechooser.DateChooser();
         jPanel1 = new javax.swing.JPanel();
@@ -207,20 +308,109 @@ public class GUIThongKe extends javax.swing.JPanel {
 
         jPanel1.add(jPanel3, java.awt.BorderLayout.PAGE_END);
 
->>>>>>> Stashed changes
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGap(0, 1152, Short.MAX_VALUE)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGap(0, 786, Short.MAX_VALUE)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        int item = jComboBox1.getSelectedIndex();
+        String day2 = jTextField4.getText().toString();
+        String day1 = jTextField5.getText().toString();
+        if(!day1.isEmpty() && !day2.isEmpty()){
+            if(item == 1){
+                Date d1 = thongke.convertStringToDate(day1);
+                Date d2 = thongke.convertStringToDate(day2);
+                chart1.clear();
+                chart1.start();
+                jTextField1.setText(Double.toString(thongke.gettongdt(d1,d2)));
+                jTextField2.setText(Double.toString(thongke.gettongtn(d1,d2)));
+                jTextField3.setText(Double.toString(thongke.gettongdt(d1,d2)-thongke.gettongtn(d1,d2)));
+                daysplit(chart1,d1,d2);
+            }
+            else if(item == 2){
+                day1 = day1.substring(0,7)+"-01";
+                day2 = day2.substring(0,7)+"-01";
+                Date d1 = thongke.convertStringToDate(day1);
+                Date d2 = thongke.convertStringToDate(day2);
+                chart1.clear();
+                chart1.start();
+                jTextField1.setText(Double.toString(thongke.gettongdt(d1,d2)));
+                jTextField2.setText(Double.toString(thongke.gettongtn(d1,d2)));
+                jTextField3.setText(Double.toString(thongke.gettongdt(d1,d2)-thongke.gettongtn(d1,d2)));
+                monthsplit(chart1,d1,d2);
+            }
+            else if(item == 3){
+                day1 = day1.substring(0,5)+"01-01";
+                day2 = day2.substring(0,5)+"01-01";
+                Date d1 = thongke.convertStringToDate(day1);
+                Date d2 = thongke.convertStringToDate(day2);
+                chart1.clear();
+                chart1.start();
+                jTextField1.setText(Double.toString(thongke.gettongdt(d1,d2)));
+                jTextField2.setText(Double.toString(thongke.gettongtn(d1,d2)));
+                jTextField3.setText(Double.toString(thongke.gettongdt(d1,d2)-thongke.gettongtn(d1,d2)));
+                yearsplit(chart1,d1,d2);
+            }
+            else{
+                JOptionPane.showMessageDialog(jPanel1, "Chưa chọn loại tìm kiếm!");
+            }
+        }
+        else{
+            JOptionPane.showMessageDialog(jPanel1, "Chọn khoảng thời gian!");
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+        // TODO add your handling code here:
+        resetall();
+        jTextField1.setText("");
+        jTextField2.setText("");
+        jTextField3.setText("");
+        jTextField4.setText("");
+        jTextField5.setText("");
+        jComboBox1.setSelectedItem("Loại");
+    }//GEN-LAST:event_jButton8ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private com.raven.chart.Chart chart1;
+    private com.raven.datechooser.DateChooser dateChooser1;
+    private com.raven.datechooser.DateChooser dateChooser2;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton8;
+    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextField jTextField3;
+    private javax.swing.JTextField jTextField4;
+    private javax.swing.JTextField jTextField5;
+    private javax.swing.JTextField jTextField6;
     // End of variables declaration//GEN-END:variables
 }

@@ -3,7 +3,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
 package GUI;
-
+import BUS.*;
+import DTO.*;
+import java.sql.SQLException;
+import java.text.ParseException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 /**
  *
  * @author Hieu PC
@@ -13,10 +19,25 @@ public class GUIPhanQuyen extends javax.swing.JPanel {
     /**
      * Creates new form GUIPhanQuyen
      */
+    BUSPhanQuyen phanquyen = new BUSPhanQuyen();
+    BUSChucVu chucvu = new BUSChucVu();
+    BUSChucNang chucnang = new BUSChucNang();
     public GUIPhanQuyen() {
         initComponents();
+        resetall();
     }
-
+    public void resetall(){
+        jTextField3.setText("");
+        try {
+            phanquyen.jtimport(jTable1, phanquyen.getlist());
+            phanquyen.cbcnimport(jComboBox3, chucnang.getlist());
+            phanquyen.cbcvimport(jComboBox1, chucvu.getlist());
+        } catch (SQLException ex) {
+            Logger.getLogger(GUIPhanQuyen.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
+            Logger.getLogger(GUIPhanQuyen.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -26,8 +47,6 @@ public class GUIPhanQuyen extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-<<<<<<< Updated upstream
-=======
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -268,20 +287,177 @@ public class GUIPhanQuyen extends javax.swing.JPanel {
 
         jPanel1.add(jPanel3, java.awt.BorderLayout.PAGE_END);
 
->>>>>>> Stashed changes
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 1152, Short.MAX_VALUE)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 786, Short.MAX_VALUE)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+        resetall();
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        // TODO add your handling code here:
+        int index = jTable1.getSelectedRow();
+        jTextField3.setText(jTable1.getValueAt(index, 0).toString());
+        jComboBox1.setSelectedItem(jTable1.getValueAt(index, 1).toString());
+        jComboBox3.setSelectedItem(jTable1.getValueAt(index, 2).toString());
+    }//GEN-LAST:event_jTable1MouseClicked
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        if(!jComboBox1.getSelectedItem().equals("Chức vụ") && !jComboBox3.getSelectedItem().equals("Chức năng")){
+            DTOChucVu cv = new DTOChucVu();
+            DTOChucNang cn = new DTOChucNang();
+            cv.setTenChucVu(jComboBox1.getSelectedItem().toString());
+            cn.setTenChucNang(jComboBox3.getSelectedItem().toString());
+            try {
+                int macv = chucvu.getmacv(cv.getTenChucVu());
+                int macn = chucnang.getcnbyname(cn).getMaChucNang();
+                if(phanquyen.checkpq(macv, macn)){
+                    DTOPhanQuyen pq = new DTOPhanQuyen();
+                    pq.setMaChucVu(macv);
+                    pq.setMaChucNang(macn);
+                    phanquyen.addphanquyen(pq);
+                    JOptionPane.showMessageDialog(jPanel1, "Thêm thành công!");
+                    resetall();
+                }
+                else{
+                    JOptionPane.showMessageDialog(jPanel1, "Phân quyền hiện đã có!");
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(GUIPhanQuyen.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ParseException ex) {
+                Logger.getLogger(GUIPhanQuyen.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        else{
+            JOptionPane.showMessageDialog(jPanel1, "Hãy chọn đầy đủ thông tin trước khi thêm!");
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        if(!jTextField3.getText().isEmpty()){
+                if(!jComboBox1.getSelectedItem().equals("Chức vụ") && !jComboBox3.getSelectedItem().equals("Chức năng")){
+                    DTOChucVu cv = new DTOChucVu();
+                    DTOChucNang cn = new DTOChucNang();
+                    cv.setTenChucVu(jComboBox1.getSelectedItem().toString());
+                    cn.setTenChucNang(jComboBox3.getSelectedItem().toString());
+                    try{
+                    int macv = chucvu.getmacv(cv.getTenChucVu());
+                    int macn = chucnang.getcnbyname(cn).getMaChucNang();
+                    if(phanquyen.checkpqedit(Integer.parseInt(jTextField3.getText().toString()),macv, macn)){
+                        DTOPhanQuyen pq = new DTOPhanQuyen();
+                        pq.setMaChucVu(macv);
+                        pq.setMaChucNang(macn);
+                        phanquyen.updatephanquyen(pq);
+                        JOptionPane.showMessageDialog(jPanel1, "Sửa thành công!");
+                        resetall();
+                    }
+                    else{
+                        JOptionPane.showMessageDialog(jPanel1, "Phân quyền hiện đã có!");
+                    }
+                } catch (SQLException ex) {
+                    Logger.getLogger(GUIPhanQuyen.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (ParseException ex) {
+                    Logger.getLogger(GUIPhanQuyen.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            else{
+                JOptionPane.showMessageDialog(jPanel1, "Hãy chọn phân quyền để sửa!");
+            }
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        if(!jTextField3.getText().isEmpty()){
+            DTOPhanQuyen pq = new DTOPhanQuyen();
+            pq.setMaPhanQuyen(Integer.parseInt(jTextField3.getText().toString()));
+            try {
+                phanquyen.deletephanquyen(pq);
+                JOptionPane.showMessageDialog(jPanel1, "Xóa thành công!");
+                resetall();
+            } catch (SQLException ex) {
+                Logger.getLogger(GUIPhanQuyen.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+        }
+        else{
+            JOptionPane.showMessageDialog(jPanel1, "Hãy chọn phân quyền để xóa!");
+        }
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        // TODO add your handling code here:
+        new GUIChucNang().setVisible(true);
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
+        // TODO add your handling code here:
+        DTOPhanQuyen pq = new DTOPhanQuyen();
+        if(jCheckBox1.isSelected()){
+            if(jComboBox1.getSelectedItem() != null ){
+                if(!jComboBox1.getSelectedItem().equals("Chức vụ")){ 
+                    DTOChucVu cv = new DTOChucVu();
+                    cv.setTenChucVu(jComboBox1.getSelectedItem().toString());
+                    try {
+                        int ma = chucvu.getmacv(cv.getTenChucVu()); 
+                        pq.setMaChucVu(ma);
+                        phanquyen.jtimport(jTable1,  phanquyen.listpqcv(pq));
+                    } catch (SQLException ex) {
+                        Logger.getLogger(GUIPhanQuyen.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (ParseException ex) {
+                        Logger.getLogger(GUIPhanQuyen.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
+        }
+        else{
+            resetall();
+        }
+    }//GEN-LAST:event_jCheckBox1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
+    private javax.swing.JCheckBox jCheckBox1;
+    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JComboBox<String> jComboBox3;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTable1;
+    private javax.swing.JTextField jTextField3;
     // End of variables declaration//GEN-END:variables
 }

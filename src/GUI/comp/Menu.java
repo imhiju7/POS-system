@@ -1,11 +1,18 @@
 package GUI.comp;
 
+import BUS.*;
+import DTO.*;
 import java.awt.Component;
+import java.sql.SQLException;
+import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import net.miginfocom.swing.MigLayout;
 
 public class Menu extends PanelTransparent {
-
+    static int macv;
     public boolean isShowMenu() {
         return showMenu;
     }
@@ -25,18 +32,14 @@ public class Menu extends PanelTransparent {
     public void addEventShowPopup(EventShowPopupMenu eventShowPopup) {
         this.eventShowPopup = eventShowPopup;
     }
-<<<<<<< Updated upstream
-
-=======
     int ma;
->>>>>>> Stashed changes
     private final MigLayout layout;
     private EventMenuSelected event;
     private EventShowPopupMenu eventShowPopup;
     private boolean enableMenu = true;
     private boolean showMenu = true;
 
-    public Menu() {
+    public Menu(int mcv) {
         initComponents();
         setOpaque(false);
         sp.getViewport().setOpaque(false);
@@ -44,8 +47,6 @@ public class Menu extends PanelTransparent {
         layout = new MigLayout("wrap, fillx, insets 0", "[fill]", "[]0[]");
         panel.setLayout(layout);
         setTransparent(1f);
-<<<<<<< Updated upstream
-=======
         ma = mcv;
     }
     public void initsubmenu(){
@@ -77,29 +78,9 @@ public class Menu extends PanelTransparent {
         
         
         
->>>>>>> Stashed changes
     }
-
     public void initMenuItem(int menu) {
-        if(menu == 1){
-            addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/SOURCE/Icon/user.png")), "Cài đặt","Tài khoản","Đăng xuất"));
-        }
-        else if(menu == 2){
-            addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/SOURCE/Icon/user.png")), "Cài đặt","Tài khoản","Đăng xuất"));
-        }
-        else if(menu == 3){
-            addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/SOURCE/Icon/user.png")), "Cài đặt","Tài khoản","Đăng xuất"));
-        }
-        else{
-            addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/SOURCE/Icon/user.png")), "Quầy","Order","Hóa đơn"));
-            addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/SOURCE/Icon/user.png")), "Nhân viên","Thông tin nhân viên","Tài khoản","Phân quyền","Chức vụ"));
-            addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/SOURCE/Icon/user.png")), "Nhập kho","Phiếu nhập","Nhà cung cấp"));
-            addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/SOURCE/Icon/user.png")), "Sản phẩm"));
-            addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/SOURCE/Icon/user.png")), "Khuyến mãi"));
-            addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/SOURCE/Icon/user.png")), "Khách hàng"));
-            addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/SOURCE/Icon/user.png")), "Thống kê"));
-            addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/SOURCE/Icon/user.png")), "Cài đặt","Tài khoản","Đăng xuất"));
-        }
+        initsubmenu();
     }
 
     private void addMenu(ModelMenu menu) {
@@ -145,7 +126,7 @@ public class Menu extends PanelTransparent {
         panel = new javax.swing.JPanel();
         profile1 = new GUI.comp.Profile();
 
-        setBackground(new java.awt.Color(255, 153, 0));
+        setBackground(new java.awt.Color(161, 204, 209));
 
         sp.setBackground(new java.awt.Color(255, 153, 0));
         sp.setBorder(null);

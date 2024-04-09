@@ -12,17 +12,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 /**
  *
  * @author Hieu PC
  */
 public class DAOKhuyenMai {
-<<<<<<< Updated upstream
-    public ArrayList<DTOKhuyenMai> getlist() throws SQLException, ParseException{
-        Connection con = Connect.connection();
-        String sql = "SELECT * FROM khuyenmai";
-=======
     public DTOKhuyenMai getkm(DTOKhuyenMai i) throws SQLException{
         Connection con = Connect.connection();
         String sql = "SELECT * FROM khuyenmai WHERE maKhuyenMai = ?";
@@ -66,7 +63,6 @@ public class DAOKhuyenMai {
     public ArrayList<DTOKhuyenMai> getlist() throws SQLException, ParseException{
         Connection con = Connect.connection();
         String sql = "SELECT * FROM khuyenmai WHERE ishidden = 0 and soLuong > soLuongDaDung";
->>>>>>> Stashed changes
         PreparedStatement pst =  con.prepareStatement(sql);
         ResultSet rs = pst.executeQuery();
         ArrayList<DTOKhuyenMai> list = new ArrayList<>();
@@ -80,44 +76,69 @@ public class DAOKhuyenMai {
             km.setSoLuong(rs.getInt("soLuong"));
             km.setSoLuongDaDung(rs.getInt("soLuongDaDung"));
             km.setIshidden(rs.getInt("ishidden"));
-            km.setIsdelete(rs.getInt("isdelete"));
             list.add(km);
         }
         con.close();
+        Collections.sort(list, new Comparator<DTOKhuyenMai>() {
+            @Override
+            public int compare(DTOKhuyenMai person1, DTOKhuyenMai person2) {
+                return person2.getNgayBatDau().compareTo(person1.getNgayBatDau());
+            }
+        });
         return list;
-    }
-    public int getrowcount() throws SQLException, ParseException{
-        return getlist().size();
     }
     public int addKhuyenMai(DTOKhuyenMai km) throws SQLException{
         Connection con = Connect.connection();
-        String sql = "INSERT INTO khuyenmai(tenKhuyenMai,ngayBatDau,ngayHetHan,phanTram,soLuong,ishidden,isdelete) VALUES(?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO khuyenmai(tenKhuyenMai,ngayBatDau,ngayHetHan,phanTram,soLuong,ishidden,soLuongDaDung) VALUES(?,?,?,?,?,?,?)";
         PreparedStatement pst = con.prepareStatement(sql);
         pst.setString(1, km.getTenKhuyenMai());
-        pst.setDate(2, (Date) km.getNgayBatDau());
-        pst.setDate(3, (Date) km.getNgayHetHan());
+        pst.setDate(2, new java.sql.Date(km.getNgayBatDau().getTime()));
+        pst.setDate(3, new java.sql.Date(km.getNgayHetHan().getTime()));
         pst.setInt(4, km.getPhanTram());
         pst.setInt(5, km.getSoLuong());
         pst.setInt(6, km.getIshidden());
-        pst.setInt(7, km.getIsdelete());
+        pst.setInt(7, km.getSoLuongDaDung());
         int rowaffect = pst.executeUpdate();
         con.close();
         return rowaffect;
     }
     public int updateKhuyenMai(DTOKhuyenMai km) throws SQLException{
         Connection con = Connect.connection();
-        String sql = "UPDATE khuyenmai set tenKhuyenMai = ?,ngayBatDau = ?,ngayHetHan = ?,phanTram = ?,soLuong WHERE maKhuyenMai= ?";
+        String sql = "UPDATE khuyenmai set tenKhuyenMai = ?,ngayBatDau = ?,ngayHetHan = ?,phanTram = ?,soLuong=?,ishidden = ?,soLuongDaDung = ? WHERE maKhuyenMai= ?";
         PreparedStatement pst = con.prepareStatement(sql);
         pst.setString(1, km.getTenKhuyenMai());
-        pst.setDate(2, (Date) km.getNgayBatDau());
-        pst.setDate(3, (Date) km.getNgayHetHan());
+        pst.setDate(2, new java.sql.Date(km.getNgayBatDau().getTime()));
+        pst.setDate(3,  new java.sql.Date(km.getNgayHetHan().getTime()));
         pst.setInt(4, km.getPhanTram());
         pst.setInt(5, km.getSoLuong());
         pst.setInt(6, km.getIshidden());
-        pst.setInt(7, km.getIsdelete());
+        pst.setInt(7, km.getSoLuongDaDung());
         pst.setInt(8, km.getMaKhuyenMai());
         int rowaffect = pst.executeUpdate();
         con.close();
         return rowaffect;
+    }
+    public int deletekhuyenmai(DTOKhuyenMai km) throws SQLException{
+        Connection con = Connect.connection();
+        String sql = "DELETE FROM khuyenmai WHERE maKhuyenMai = ?";
+        PreparedStatement pst = con.prepareStatement(sql);
+        pst.setInt(1, km.getMaKhuyenMai());
+        int rowaffect = pst.executeUpdate();
+        con.close();
+        return rowaffect;
+    }
+    public boolean checkdel(DTOKhuyenMai km) throws SQLException{
+         Connection con = Connect.connection();
+        String sql = "SELECT * FROM hoadon WHERE maKhuyenMai = ?";
+        PreparedStatement pst =  con.prepareStatement(sql);
+        pst.setInt(1, km.getMaKhuyenMai());
+        ResultSet rs = pst.executeQuery();
+        int count = 0;
+        while(rs.next()){
+            count++;
+        }
+        con.close();
+        if(count > 0 ) return false;
+        else return true;
     }
 }

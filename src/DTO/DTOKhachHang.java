@@ -10,13 +10,12 @@ package DTO;
  */
 public class DTOKhachHang {
     public DTOKhachHang(){}
-    public DTOKhachHang(int maKhachHang, String tenKhachHang, String SDT, int diemTichLuy, int maUuDai,int isBlock) {
+    public DTOKhachHang(int maKhachHang, String tenKhachHang, String SDT, int diemTichLuy, int maUuDai) {
         this.maKhachHang = maKhachHang;
         this.tenKhachHang = tenKhachHang;
         this.SDT = SDT;
         this.diemTichLuy = diemTichLuy;
         this.maUuDai = maUuDai;
-        this.isBlock = isBlock;
     }
 
     public int getMaKhachHang() {
@@ -64,13 +63,4 @@ public class DTOKhachHang {
     private String SDT;
     private int diemTichLuy;
     private int maUuDai;
-
-    public int getIsBlock() {
-        return isBlock;
-    }
-
-    public void setIsBlock(int isBlock) {
-        this.isBlock = isBlock;
-    }
-    private int isBlock;
 }

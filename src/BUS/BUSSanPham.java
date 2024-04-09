@@ -7,13 +7,19 @@ import DAO.*;
 import DTO.*;
 import java.sql.SQLException;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import javax.swing.JComboBox;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 /**
  *
  * @author Hieu PC
  */
 public class BUSSanPham {
     DAOSanPham DAO = new DAOSanPham();
+    DAOPhanLoai DAOpl = new DAOPhanLoai();
     public ArrayList<DTOSanPham> getlist() throws SQLException, ParseException{
         return DAO.getlist();
     }
@@ -23,8 +29,6 @@ public class BUSSanPham {
     public int updatesanpham(DTOSanPham i) throws SQLException{
         return DAO.updatesanpham(i);
     }
-<<<<<<< Updated upstream
-=======
     public String getname(DTOSanPham i) throws SQLException{
         return DAO.getsp(i).getTenSanPham();
     }
@@ -171,5 +175,4 @@ public class BUSSanPham {
     public int updategianhap(DTOSanPham i) throws SQLException{
         return DAO.updategianhap(i);
     }
->>>>>>> Stashed changes
 }

@@ -300,11 +300,8 @@ public class GUIOrder extends javax.swing.JPanel {
         // TODO add your handling code here:
         try {
             sanpham.cbplimport(cbbTimKiem, phanloai.getlist());
-            listsp = sanpham.getlistorder();
             loadData(listsp);
         } catch (SQLException ex) {
-            Logger.getLogger(GUIOrder.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ParseException ex) {
             Logger.getLogger(GUIOrder.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButton8ActionPerformed

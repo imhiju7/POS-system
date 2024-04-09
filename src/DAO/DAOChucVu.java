@@ -18,10 +18,54 @@ import java.util.Collections;
  * @author buile
  */
 public class DAOChucVu {
-
+    public int getmachucvu(String tencv) throws SQLException{
+        Connection con = Connect.connection();
+        String sql = "SELECT * FROM chucvu WHERE tenChucVu = ?";
+        PreparedStatement pst =  con.prepareStatement(sql);
+        pst.setString(1, tencv);
+        ResultSet rs = pst.executeQuery();
+        DTOChucVu cv = new DTOChucVu();
+        while(rs.next()){
+            cv.setMaChucVu(rs.getInt("maChucVu"));
+            cv.setTenChucVu(rs.getString("tenChucVu"));
+            cv.setIsHidden(rs.getInt("isDelete"));
+        }
+        con.close();
+        return cv.getMaChucVu();
+    }
+    public boolean checktencv(String tencv) throws SQLException{
+        Connection con = Connect.connection();
+        String sql = "SELECT * FROM chucvu WHERE isDelete = 0 and tenChucVu = ?";
+        PreparedStatement pst =  con.prepareStatement(sql);
+        pst.setString(1, tencv);
+        ResultSet rs = pst.executeQuery();
+        int count = 0;
+        while(rs.next()){
+            count++;
+        }
+        con.close();
+        
+        if(count > 0) return false;
+        else return true;
+    }
+    public DTOChucVu getcv(DTOChucVu i) throws SQLException{
+        Connection con = Connect.connection();
+        String sql = "SELECT * FROM chucvu WHERE isDelete = 0 and maChucVu = ?";
+        PreparedStatement pst =  con.prepareStatement(sql);
+        pst.setInt(1, i.getMaChucVu());
+        ResultSet rs = pst.executeQuery();
+        DTOChucVu cv = new DTOChucVu();
+        while(rs.next()){
+            cv.setMaChucVu(rs.getInt("maChucVu"));
+            cv.setTenChucVu(rs.getString("tenChucVu"));
+            cv.setIsHidden(rs.getInt("isDelete"));
+        }
+        con.close();
+        return cv;
+    }
     public ArrayList<DTOChucVu> getlist() throws SQLException, ParseException{
         Connection con = Connect.connection();
-        String sql = "SELECT * FROM chucvu";
+        String sql = "SELECT * FROM chucvu WHERE isDelete = 0";
         PreparedStatement pst =  con.prepareStatement(sql);
         ResultSet rs = pst.executeQuery();
         ArrayList<DTOChucVu> list = new ArrayList<>();

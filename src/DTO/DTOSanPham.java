@@ -63,20 +63,16 @@ public class DTOSanPham {
     public int getIshidden() {
         return ishidden;
     }
-
-    public void setIshidden(int ishidden) {
-        this.ishidden = ishidden;
+    public void setIshidden(int hidden){
+        this.ishidden = hidden;
+    }
+    public void setautoishidden() {
+        if(this.getSoLuong() == 0) this.ishidden = 1;
+        else this.ishidden = 0;
     }
 
-    public int getIsdelete() {
-        return isdelete;
-    }
-
-    public void setIsdelete(int isdelete) {
-        this.isdelete = isdelete;
-    }
     public DTOSanPham(){}
-    public DTOSanPham(int maSanPham, String tenSanPham, double giaBan, int soLuong, Date ngayThem, String img, int ishidden, int isdelete) {
+    public DTOSanPham(int maSanPham, String tenSanPham, double giaBan, int soLuong, Date ngayThem, String img, int ishidden,int maphanloai,double giaNhap) {
         this.maSanPham = maSanPham;
         this.tenSanPham = tenSanPham;
         this.giaBan = giaBan;
@@ -84,9 +80,18 @@ public class DTOSanPham {
         this.ngayThem = ngayThem;
         this.img = img;
         this.ishidden = ishidden;
-        this.isdelete = isdelete;
+        this.maPhanLoai = maphanloai;
+        this.giaNhap = giaNhap;
     }
-    
+
+    public int getMaPhanLoai() {
+        return maPhanLoai;
+    }
+
+    public void setMaPhanLoai(int maPhanLoai) {
+        this.maPhanLoai = maPhanLoai;
+    }
+    private int maPhanLoai;
     private int maSanPham;
     private String tenSanPham;
     private double giaBan;
@@ -94,5 +99,13 @@ public class DTOSanPham {
     private Date ngayThem;
     private String img;
     private int ishidden;
-    private int isdelete;
+
+    public double getGiaNhap() {
+        return giaNhap;
+    }
+
+    public void setGiaNhap(double giaNhap) {
+        this.giaNhap = giaNhap;
+    }
+    private double giaNhap;
 }

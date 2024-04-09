@@ -3,10 +3,16 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package GUI;
-
+import BUS.*;
+import DTO.*;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.sql.SQLException;
+import java.text.ParseException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -17,6 +23,7 @@ public class GUITichDiem extends javax.swing.JFrame {
     /**
      * Creates new form GUITichDiem
      */
+    BUSTichDiem tichdiem = new BUSTichDiem();
     public GUITichDiem() {
         initComponents();
         
@@ -32,7 +39,13 @@ public class GUITichDiem extends javax.swing.JFrame {
         // Đặt vị trí của form
         this.setResizable(false);
         this.setLocation(x, y);
-        
+        try {
+            tichdiem.jtimport(jTable1, tichdiem.getlist());
+        } catch (SQLException ex) {
+            Logger.getLogger(GUITichDiem.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
+            Logger.getLogger(GUITichDiem.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     public void resetall(){
         jTextField1.setText("");
@@ -113,12 +126,8 @@ public class GUITichDiem extends javax.swing.JFrame {
         jTextField2.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-<<<<<<< Updated upstream
-        jLabel4.setText("Tiền");
-=======
         jLabel4.setForeground(new java.awt.Color(0, 0, 0));
         jLabel4.setText("Điểm");
->>>>>>> Stashed changes
 
         jTextField3.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 
@@ -155,24 +164,44 @@ public class GUITichDiem extends javax.swing.JFrame {
                 .addContainerGap(18, Short.MAX_VALUE))
         );
 
-<<<<<<< Updated upstream
-=======
         jPanel5.setBackground(new java.awt.Color(245, 232, 183));
 
         jButton1.setBackground(new java.awt.Color(161, 204, 209));
->>>>>>> Stashed changes
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/SOURCE/Icon/add.png"))); // NOI18N
         jButton1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
+        jButton2.setBackground(new java.awt.Color(161, 204, 209));
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/SOURCE/Icon/edit.png"))); // NOI18N
         jButton2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
+        jButton3.setBackground(new java.awt.Color(161, 204, 209));
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/SOURCE/Icon/trash.png"))); // NOI18N
         jButton3.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
+        jButton4.setBackground(new java.awt.Color(161, 204, 209));
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/SOURCE/Icon/reset.png"))); // NOI18N
         jButton4.setToolTipText("");
         jButton4.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -212,6 +241,11 @@ public class GUITichDiem extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -243,8 +277,6 @@ public class GUITichDiem extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-<<<<<<< Updated upstream
-=======
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
         // TODO add your handling code here:
         int index = jTable1.getSelectedRow();
@@ -332,7 +364,6 @@ public class GUITichDiem extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton3ActionPerformed
 
->>>>>>> Stashed changes
     /**
      * @param args the command line arguments
      */

@@ -11,15 +11,34 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 /**
  *
  * @author Hieu PC
  */
 public class DAOUuDai {
+    
+    public DTOUuDai getud(DTOUuDai i) throws SQLException, ParseException{
+        Connection con = Connect.connection();
+        String sql = "SELECT * FROM uudai WHERE maUuDai = ?";
+        PreparedStatement pst =  con.prepareStatement(sql);
+        pst.setInt(1, i.getMaUuDai());
+        ResultSet rs = pst.executeQuery();
+        DTOUuDai ud = new DTOUuDai();
+        while(rs.next()){
+            ud.setMaUuDai(rs.getInt("maUuDai"));
+            ud.setMocUuDai(rs.getInt("mocUuDai"));
+            ud.setTiLeGiam(rs.getInt("tiLeGiam"));
+            ud.setIsHidden(rs.getInt("isDelete"));
+        }
+        con.close();
+        return ud;
+    }
     public ArrayList<DTOUuDai> getlist() throws SQLException, ParseException{
         Connection con = Connect.connection();
-        String sql = "SELECT * FROM uudai";
+        String sql = "SELECT * FROM uudai WHERE isDelete = 0";
         PreparedStatement pst =  con.prepareStatement(sql);
         ResultSet rs = pst.executeQuery();
         ArrayList<DTOUuDai> list = new ArrayList<>();
@@ -32,10 +51,13 @@ public class DAOUuDai {
             list.add(ud);
         }
         con.close();
+        Collections.sort(list, new Comparator<DTOUuDai>() {
+            @Override
+            public int compare(DTOUuDai person1, DTOUuDai person2) {
+                return Integer.compare(person1.getMocUuDai(), person2.getMocUuDai());
+            }
+        });
         return list;
-    }
-    public int getrowcount() throws SQLException, ParseException{
-        return getlist().size();
     }
     public int adduudai(DTOUuDai ud) throws SQLException{
         Connection con = Connect.connection();
@@ -50,7 +72,7 @@ public class DAOUuDai {
     }
     public int updateuudai(DTOUuDai ud) throws SQLException{
         Connection con = Connect.connection();
-        String sql = "UPDATE uudai set mocUuDai = ?,tiLeGiam = ?,isDelete =? WHERE maUuDai= ?";
+        String sql = "UPDATE uudai set mocUuDai = ?,tiLeGiam = ?,isDelete = ? WHERE maUuDai= ?";
         PreparedStatement pst = con.prepareStatement(sql);
         pst.setInt(1, ud.getMocUuDai());
         pst.setInt(2, ud.getTiLeGiam());

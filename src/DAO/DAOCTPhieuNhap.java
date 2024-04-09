@@ -17,54 +17,52 @@ import javax.swing.JOptionPane;
 public class DAOCTPhieuNhap {
     public DAOCTPhieuNhap(){
         
-    }/*
-    public boolean check2sp(int mapn,int mactpn,int masp) throws SQLException{
-        int maspgoc = 0;
-        ArrayList<DTOCTPhieuNhap> list = getlist(mapn);
-        for(DTOCTPhieuNhap i : list){
-            if(i.getMaCTPhieuNhap() == mactpn){
-                maspgoc = i.getMaSanPham();
-            }
+    }
+    public DTOCTPhieuNhap getctpn(int maCTPhieuNhap) throws SQLException{
+        Connection con = Connect.connection();
+        String sql = "SELECT * FROM chitietphieunhap WHERE maCTPhieuNhap=? ";
+        PreparedStatement pst =  con.prepareStatement(sql);
+        pst.setInt(1, maCTPhieuNhap);
+        ResultSet rs = pst.executeQuery();
+        DTOCTPhieuNhap ctpn = new DTOCTPhieuNhap();
+        while(rs.next()){
+            ctpn.setMaCTPhieuNhap(rs.getInt("maCTPhieuNhap"));
+            ctpn.setMaSanPham(rs.getInt("maSanPham"));
+            ctpn.setMaPhieuNhap(rs.getInt("maPhieuNhap"));
+            ctpn.setDonGia(rs.getFloat("donGia"));
+            ctpn.setSoLuong(rs.getInt("soLuong"));
+            ctpn.setGhichu(rs.getString("ghiChu"));
+            ctpn.setNgayhethan(rs.getDate("ngayHetHan"));
+            ctpn.setSoluongtonkho(rs.getInt("soLuongTonKho"));
         }
+        con.close();
+        return ctpn;
+    }
+    public boolean checksp(int masp,int mactpn,int mapn) throws SQLException{
+        Connection con = Connect.connection();
+        int i = 0;
         boolean key = false;
-        if(maspgoc == masp){
-            key = true;
+        String sql = "SELECT * FROM chitietphieunhap where maPhieuNhap = ? and maCTPhieuNhap != ? and maSanPham = ? ";
+        PreparedStatement pst =  con.prepareStatement(sql);
+        pst.setInt(1, mapn);
+        pst.setInt(2, mactpn);
+        pst.setInt(3, masp);
+        ResultSet rs = pst.executeQuery();
+        while(rs.next()){
+            i++;
         }
+        con.close();
+        if(i > 0 ){
+            key = false;
+        }
+        else key = true;
         return key;
     }
-    public double pnmoney(int mapn) throws SQLException{
-        double money = 0;
-        ArrayList<DTOCTPhieuNhap> list = getlist(mapn);
-        for(DTOCTPhieuNhap i: list){
-            money += i.getDonGia()*i.getSoLuong();
-        }
-        return money;
-    }
-    public boolean checksp(int mapn,int masp) throws SQLException{
-        boolean key = false;
-        ArrayList<DTOCTPhieuNhap> list = getlist(mapn);
-        for(DTOCTPhieuNhap i: list){
-            if(i.getMaSanPham() == masp){
-                key = true;
-            }
-        }
-        return key;
-    }
-    public boolean checksoluong(int mapn) throws SQLException{
-        boolean key = false;
-        if(soluong(mapn) > 0){
-            key = true;
-        }
-        return key;
-    }
-    public int soluong(int mapn) throws SQLException{
-        ArrayList<DTOCTPhieuNhap> list = getlist(mapn);
-        return list.size();
-    }*/
     public ArrayList<DTOCTPhieuNhap> getlist(int maPhieuNhap) throws SQLException{
         Connection con = Connect.connection();
-        String sql = "SELECT * FROM chitietphieunhap WHERE maPhieuNhap= "+maPhieuNhap;
+        String sql = "SELECT * FROM chitietphieunhap WHERE maPhieuNhap=? ";
         PreparedStatement pst =  con.prepareStatement(sql);
+        pst.setInt(1, maPhieuNhap);
         ResultSet rs = pst.executeQuery();
         ArrayList<DTOCTPhieuNhap> list = new ArrayList<>();
         while(rs.next()){
@@ -82,11 +80,26 @@ public class DAOCTPhieuNhap {
         con.close();
         return list;
     }
-    public int getlistcount(int maPhieuNhap) throws SQLException{
-        int count;
-        ArrayList<DTOCTPhieuNhap> ctpn = getlist(maPhieuNhap);
-        count = ctpn.size();
-        return count;
+    public ArrayList<DTOCTPhieuNhap> getalllist() throws SQLException{
+        Connection con = Connect.connection();
+        String sql = "SELECT * FROM chitietphieunhap WHERE ngayHetHan > NOW() ";
+        PreparedStatement pst =  con.prepareStatement(sql);
+        ResultSet rs = pst.executeQuery();
+        ArrayList<DTOCTPhieuNhap> list = new ArrayList<>();
+        while(rs.next()){
+            DTOCTPhieuNhap ctpn = new DTOCTPhieuNhap();
+            ctpn.setMaCTPhieuNhap(rs.getInt("maCTPhieuNhap"));
+            ctpn.setMaSanPham(rs.getInt("maSanPham"));
+            ctpn.setMaPhieuNhap(rs.getInt("maPhieuNhap"));
+            ctpn.setDonGia(rs.getFloat("donGia"));
+            ctpn.setSoLuong(rs.getInt("soLuong"));
+            ctpn.setGhichu(rs.getString("ghiChu"));
+            ctpn.setNgayhethan(rs.getDate("ngayHetHan"));
+            ctpn.setSoluongtonkho(rs.getInt("soLuongTonKho"));
+            list.add(ctpn);
+        }
+        con.close();
+        return list;
     }
     
     public int addctphieunhap(DTOCTPhieuNhap ctpn) throws SQLException{

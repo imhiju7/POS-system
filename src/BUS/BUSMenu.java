@@ -3,15 +3,19 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package BUS;
-
+import DTO.*;
+import DAO.*;
+import java.sql.SQLException;
+import java.text.ParseException;
+import java.util.ArrayList;
+import javax.swing.JComboBox;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 /**
  *
  * @author Hieu PC
  */
 public class BUSMenu {
-<<<<<<< Updated upstream
-    
-=======
     DAOSanPham DAO = new DAOSanPham();
     public int updateslsp(DTOSanPham i) throws SQLException{
         return DAO.updatesoluong(i);
@@ -57,5 +61,4 @@ public class BUSMenu {
         }
         return tongtien;
     }
->>>>>>> Stashed changes
 }

@@ -18,9 +18,17 @@ public class DTOKhuyenMai {
     private int soLuong;
     private int phanTram;
     private int ishidden;
-    private int isdelete;
-    public DTOKhuyenMai(){}
-    public DTOKhuyenMai(int maKhuyenMai, String tenKhuyenMai, Date ngayBatDau, Date ngayHetHan, int soLuong, int phanTram, int ishidden, int isdelete) {
+
+    public int getSoLuongDaDung() {
+        return soLuongDaDung;
+    }
+
+    public void setSoLuongDaDung(int soLuongDaDung) {
+        this.soLuongDaDung = soLuongDaDung;
+    }
+    private int soLuongDaDung;
+
+    public DTOKhuyenMai(int maKhuyenMai, String tenKhuyenMai, Date ngayBatDau, Date ngayHetHan, int soLuong, int phanTram, int ishidden, int soLuongDaDung) {
         this.maKhuyenMai = maKhuyenMai;
         this.tenKhuyenMai = tenKhuyenMai;
         this.ngayBatDau = ngayBatDau;
@@ -28,8 +36,9 @@ public class DTOKhuyenMai {
         this.soLuong = soLuong;
         this.phanTram = phanTram;
         this.ishidden = ishidden;
-        this.isdelete = isdelete;
+        this.soLuongDaDung = soLuongDaDung;
     }
+    public DTOKhuyenMai(){}
 
     public int getMaKhuyenMai() {
         return maKhuyenMai;
@@ -87,11 +96,4 @@ public class DTOKhuyenMai {
         this.ishidden = ishidden;
     }
 
-    public int getIsdelete() {
-        return isdelete;
-    }
-
-    public void setIsdelete(int isdelete) {
-        this.isdelete = isdelete;
-    }
 }

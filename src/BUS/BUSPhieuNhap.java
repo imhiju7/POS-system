@@ -7,24 +7,31 @@ import DAO.*;
 import DTO.*;
 import java.sql.SQLException;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JComboBox;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 /**
  *
  * @author Hieu PC
  */
 public class BUSPhieuNhap {
     DAOPhieuNhap DAO = new DAOPhieuNhap();
+    DAONhaCungCap DAOncc = new DAONhaCungCap();
+    DAONhanVien DAOnv = new DAONhanVien();
     public ArrayList<DTOPhieuNhap> getlist() throws SQLException, ParseException{
         return DAO.getlist();
     }
     public int addphieunhap(DTOPhieuNhap i) throws SQLException{
         return DAO.addphieunhap(i);
     }
-    public int updatePhieuNhap(DTOPhieuNhap i) throws SQLException{
+    public int updatephieunhap(DTOPhieuNhap i) throws SQLException{
         return DAO.updatephieunhap(i);
     }
-<<<<<<< Updated upstream
-=======
     public DTOPhieuNhap getpn(int mapn) throws SQLException, ParseException{
         return DAO.getpn(mapn);
     }
@@ -154,5 +161,4 @@ public class BUSPhieuNhap {
     public boolean checkpn(DTOPhieuNhap i) throws SQLException, ParseException{
         return DAO.checkpn(i);
     }
->>>>>>> Stashed changes
 }

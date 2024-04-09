@@ -14,15 +14,6 @@ public class DTOPhanQuyen {
     private int maChucVu;
     private int maChucNang;
 
-    public int getIsHidden() {
-        return isHidden;
-    }
-
-    public void setIsHidden(int isHidden) {
-        this.isHidden = isHidden;
-    }
-    private int isHidden;
-
     public int getMaPhanQuyen() {
         return maPhanQuyen;
     }
@@ -47,11 +38,10 @@ public class DTOPhanQuyen {
         this.maChucNang = maChucNang;
     }
     public DTOPhanQuyen(){}
-    public DTOPhanQuyen(int maPhanQuyen, int maChucVu, int maChucNang,int isHidden) {
+    public DTOPhanQuyen(int maPhanQuyen, int maChucVu, int maChucNang) {
         this.maPhanQuyen = maPhanQuyen;
         this.maChucVu = maChucVu;
         this.maChucNang = maChucNang;
-        this.isHidden = isHidden;
     }
 
 }

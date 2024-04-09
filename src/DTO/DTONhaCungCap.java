@@ -67,8 +67,16 @@ public class DTONhaCungCap {
     public void setNgayTao(Date ngayTao) {
         this.ngayTao = ngayTao;
     }
+    public String trangthaistr(){
+        if(this.trangThai == 1) return "Dừng cung ứng";
+        else return "Đang cung ứng";
+    }
+    public void settrangthaistr(String tt){
+        if(tt.equals("Dừng cung ứng")) this.trangThai = 1;
+        else this.trangThai = 0;
+    }
     public DTONhaCungCap(){}
-    public DTONhaCungCap(int maNhaCungCap, String tenNhaCungCap, String SDT, String Email, String diaChi, int trangThai, Date ngayTao,int isHidden) {
+    public DTONhaCungCap(int maNhaCungCap, String tenNhaCungCap, String SDT, String Email, String diaChi, int trangThai, Date ngayTao) {
         this.maNhaCungCap = maNhaCungCap;
         this.tenNhaCungCap = tenNhaCungCap;
         this.SDT = SDT;
@@ -76,7 +84,6 @@ public class DTONhaCungCap {
         this.diaChi = diaChi;
         this.trangThai = trangThai;
         this.ngayTao = ngayTao;
-        this.isHidden = isHidden;
     }
     private int maNhaCungCap;
     private String tenNhaCungCap;
@@ -85,13 +92,4 @@ public class DTONhaCungCap {
     private String diaChi;
     private int trangThai;
     private Date ngayTao;
-
-    public int getIsHidden() {
-        return isHidden;
-    }
-
-    public void setIsHidden(int isHidden) {
-        this.isHidden = isHidden;
-    }
-    private int isHidden;
 }
