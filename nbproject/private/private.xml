@@ -3,12 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/One%20Drive/code/OneDrive%20-%20coder7/Project/Java/POS-system/src/GUI/Nofication.java</file>
+            <file>file:/C:/One%20Drive/code/OneDrive%20-%20coder7/Project/Java/POS-system/src/GUI/GUINhanVien.java</file>
             <file>file:/C:/One%20Drive/code/OneDrive%20-%20coder7/Project/Java/POS-system/src/QLCH.java</file>
-            <file>file:/C:/One%20Drive/code/OneDrive%20-%20coder7/Project/Java/POS-system/src/GUI/GUIThongKe.java</file>
-            <file>file:/C:/One%20Drive/code/OneDrive%20-%20coder7/Project/Java/POS-system/src/GUI/Main.java</file>
-            <file>file:/C:/One%20Drive/code/OneDrive%20-%20coder7/Project/Java/POS-system/src/GUI/GUITrangChu.java</file>
-            <file>file:/C:/One%20Drive/code/OneDrive%20-%20coder7/Project/Java/POS-system/src/GUI/GUITichDiem.java</file>
+            <file>file:/C:/One%20Drive/code/OneDrive%20-%20coder7/Project/Java/POS-system/src/DAO/DAOSanPham.java</file>
+            <file>file:/C:/One%20Drive/code/OneDrive%20-%20coder7/Project/Java/POS-system/src/GUI/GUIThanhToan.java</file>
+            <file>file:/C:/One%20Drive/code/OneDrive%20-%20coder7/Project/Java/POS-system/src/GUI/GUICTPhieuNhap.java</file>
         </group>
     </open-files>
 </project-private>
